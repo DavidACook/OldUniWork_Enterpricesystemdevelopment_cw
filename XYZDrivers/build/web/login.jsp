@@ -6,9 +6,12 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+<<<<<<< HEAD
+=======
 
 
 <!-- Testing --> 
+>>>>>>> david
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -16,6 +19,8 @@
     </head>
     <body>
         <h1>Oh look a login page!</h1>
+<<<<<<< HEAD
+=======
         
       
         
@@ -44,5 +49,6 @@
         
         
         
+>>>>>>> david
     </body>
 </html>

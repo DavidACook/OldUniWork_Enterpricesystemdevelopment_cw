@@ -13,6 +13,8 @@
     </head>
     <body>
         <h1>Oh look a member dashboard!</h1>
+<<<<<<< HEAD
+=======
         
         
         
@@ -39,5 +41,6 @@
 </a>  
         
         
+>>>>>>> david
     </body>
 </html>

@@ -13,6 +13,8 @@
     </head>
     <body>
         <h1>Oh look an admin dashboard!</h1>
+<<<<<<< HEAD
+=======
         
         
         
@@ -38,5 +40,6 @@
     />
 </a>  
         
+>>>>>>> david
     </body>
 </html>
