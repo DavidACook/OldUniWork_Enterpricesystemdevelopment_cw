@@ -6,24 +6,28 @@
 package com.xyzdrivers;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.servlet.*;
 
 /**
  *
  * @author Chris
+ * Servlet Context class to initiate database connection at start of web app.
+ * can add more init params if required.
  */
 public class XYZDriversServletListener implements ServletContextListener {
     private Connection conn = null;
     
-    @Override
     public void contextInitialized(ServletContextEvent event) {
         ServletContext sc = event.getServletContext();
-        String db = sc.getInitParameter("");
+        String db = sc.getInitParameter("...");
+        //need to add name for database here
         
         try{
-            Class.forName("org.apache.derby.jdbc.");
-            conn = .getConnection("jdbc:derby://locahlhost:1527/"+db.trim(),",<USERNAME>","<PASSWORD>");
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            conn = DriverManager.getConnection("jdbc:derby://locahlhost:1527/..."+db.trim(),",<USERNAME>","<PASSWORD>");
+            //add db name to end of string
         }
         catch(ClassNotFoundException | SQLException e){
             sc.setAttribute("error", e);
@@ -32,7 +36,6 @@ public class XYZDriversServletListener implements ServletContextListener {
         
     }
     
-    @Override
     public void contextDestroyed(ServletContextEvent event){
         try{conn.close();} catch(SQLException e){}
     }
