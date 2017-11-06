@@ -4,9 +4,33 @@
         <servlet-name>AdminDashboard</servlet-name>
         <servlet-class>com.xyzdrivers.AdminDashboard</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>MemberDashboard</servlet-name>
+        <servlet-class>com.xyzdrivers.MemberDashboard</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>com.xyzdrivers.Login</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>Register</servlet-name>
+        <servlet-class>com.xyzdrivers.Register</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminDashboard</servlet-name>
         <url-pattern>/AdminDashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MemberDashboard</servlet-name>
+        <url-pattern>/MemberDashboard</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Register</servlet-name>
+        <url-pattern>/Register</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
