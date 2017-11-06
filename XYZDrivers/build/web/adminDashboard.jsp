@@ -1,6 +1,6 @@
 <%-- 
-    Document   : register
-    Created on : 06-Nov-2017, 11:27:11
+    Document   : adminDashboard
+    Created on : 06-Nov-2017, 11:15:59
     Author     : Colin Berry
 --%>
 
@@ -9,15 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Register Page</title>
+        <title>Admin Dashboard</title>
     </head>
     <body>
-        <h1>Oh look a register page!</h1>
-<<<<<<< HEAD
-=======
-        
-        
-        
+        <h1>Oh look an admin dashboard!</h1>
         
         
         
@@ -26,7 +21,7 @@
           <a id="Navigate" href="./index.html">
   <input 
     
-    type="button"
+	type="button"
     id="homeButton"
     style="
 	
@@ -43,7 +38,5 @@
     />
 </a>  
         
-    <p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>    
->>>>>>> david
     </body>
 </html>

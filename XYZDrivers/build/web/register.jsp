@@ -13,8 +13,6 @@
     </head>
     <body>
         <h1>Oh look a register page!</h1>
-<<<<<<< HEAD
-=======
         
         
         
@@ -44,6 +42,5 @@
 </a>  
         
     <p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>    
->>>>>>> david
     </body>
 </html>
