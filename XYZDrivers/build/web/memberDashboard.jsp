@@ -1,32 +1,24 @@
 <%-- 
-    Document   : login
-    Created on : 06-Nov-2017, 11:27:06
+    Document   : memberDashboard
+    Created on : 06-Nov-2017, 11:26:26
     Author     : Colin Berry
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<<<<<<< HEAD
-=======
-
-
-<!-- Testing --> 
->>>>>>> david
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login Page</title>
+        <title>Member Dashboard</title>
     </head>
     <body>
-        <h1>Oh look a login page!</h1>
-<<<<<<< HEAD
-=======
-        
-      
+        <h1>Oh look a member dashboard!</h1>
         
         
         
-    <a id="Navigate" href="./index.html">
+        
+        
+          <a id="Navigate" href="./index.html">
   <input 
     
 	type="button"
@@ -44,11 +36,8 @@
       border-color:#000;
       border-width: 3px;" title="Navigate"
     />
-</a>    
+</a>  
         
         
-        
-        
->>>>>>> david
     </body>
 </html>

@@ -1,35 +1,30 @@
 <%-- 
-    Document   : login
-    Created on : 06-Nov-2017, 11:27:06
+    Document   : register
+    Created on : 06-Nov-2017, 11:27:11
     Author     : Colin Berry
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<<<<<<< HEAD
-=======
-
-
-<!-- Testing --> 
->>>>>>> david
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Login Page</title>
+        <title>Register Page</title>
     </head>
     <body>
-        <h1>Oh look a login page!</h1>
-<<<<<<< HEAD
-=======
-        
-      
+        <h1>Oh look a register page!</h1>
         
         
         
-    <a id="Navigate" href="./index.html">
+        
+        
+        
+        
+        
+          <a id="Navigate" href="./index.html">
   <input 
     
-	type="button"
+    type="button"
     id="homeButton"
     style="
 	
@@ -44,11 +39,8 @@
       border-color:#000;
       border-width: 3px;" title="Navigate"
     />
-</a>    
+</a>  
         
-        
-        
-        
->>>>>>> david
+    <p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>    
     </body>
 </html>
