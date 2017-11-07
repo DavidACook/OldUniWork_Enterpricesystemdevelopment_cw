@@ -18,6 +18,13 @@
         <title>Login Page</title>
     </head>
     <body>
+        
+        <form action="Login" method="POST">
+            Enter username :<input type="text" name="username"> <br>
+            Enter password :<input type="password" name="password"> <br>
+            <input type="submit" value="Login">            
+        </form
+            
         <h1>Oh look a login page!</h1>
 <<<<<<< HEAD
 =======

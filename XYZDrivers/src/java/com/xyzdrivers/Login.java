@@ -34,6 +34,19 @@ public class Login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher view = request.getRequestDispatcher("login.jsp");
         view.forward(request, response);
+        String user = request.getParameter("username");
+        String pass = request.getParameter("password");
+        
+        if(user.equals("admin") && pass.equals("admin")){
+            response.sendRedirect("/AdminDashboard");
+        }
+        else if(validateUser(user, pass)){
+            response.sendRedirect("/MemberDashboard");
+        }
+        else{
+            response.sendRedirect("/Register");
+            
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -74,5 +87,17 @@ public class Login extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
+    public static boolean validateUser(String user, String pass){
+        boolean ch = false;
+        
+        try{
+            //need to implement database connection here.
+            //then check database to confirm username and password exist
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return ch;
+    }
 }
