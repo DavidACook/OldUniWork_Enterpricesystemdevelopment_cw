@@ -12,16 +12,9 @@
         <title>Register Page</title>
     </head>
     <body>
-        <h1>Oh look a register page!</h1>
-        <<<<<<< HEAD
-        =======
+        <h1>Oh look a denk register page!</h1>
 
-
-
-
-
-
-
+        <form action="/Register.java" method="post">
 
         <a id="Navigate" href="./index.html">
             <input 
@@ -43,20 +36,33 @@
                 />
         </a>  
         <p>
-          <label>Name:</label>
-          <input type = "text"
-                 id = "nameText"
-                 value = "" />
+            <label>Name:</label>
+            <input type = "text"
+                   id = "nameText"
+                   value = "" 
+                   name = "name"/>
         </p>
-        
         <p>
-            <input type ="button"
-                   id ="registerButton"
-                   value ="Register"
-        
+            <label>Address:</label>
+            <textarea id="addrText" name="address"/>
+            
+            </textarea> 
         </p>
+        <p>
+            <label>D.O.B:</label>
+            <input type="date" id="dob" value="dd/mm/yyyy" name="dob" >
+        </p>
+        
+    </p>
 
-        <p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>    
-        >>>>>>> david
-    </body>
+    <p>
+        <input type ="button"
+               id ="registerButton"
+               value ="Register"
+               name="register"
+
+    </p>
+    </form>
+    <p>Today's date: <%= (new java.util.Date()).toLocaleString()%></p>    
+</body>
 </html>

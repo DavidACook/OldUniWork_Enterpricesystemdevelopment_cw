@@ -46,12 +46,16 @@ public class Register extends HttpServlet {
         info[0] = request.getParameter("name");
         info[1] = request.getParameter("address");
         info[2] = request.getParameter("dob");
-
-        try {
+        boolean registerPress = request.getParameter("register") != null;
+        
+        if(registerPress){
+          try {
             registerMember(info);
         } catch (SQLException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }  
         }
+        
     }
 
     public void registerMember(String[] info) throws SQLException {
