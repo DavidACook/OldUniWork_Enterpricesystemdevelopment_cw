@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  *
@@ -343,4 +344,39 @@ public class AdminDB {
         }
     }
     
+    public static float getAnnualRevenue(Date date){
+        float totalRevenue = 0;
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+
+        // Set end date to a year from now
+        Calendar cal = Calendar.getInstance();
+        cal.setTimeInMillis(date.getTime());
+        cal.add(Calendar.YEAR, 1);
+        Date nextYear = new Date(cal.getTimeInMillis());
+        
+        try {
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("SELECT * FROM Payments WHERE \"status\" = 'APPROVED'"
+                    + "AND \"date\" >= %s AND date <= %s",nextYear.toString() ,date.toString());
+            rs = stmt.executeQuery(query);
+            
+            while(rs.next()){
+                totalRevenue += rs.getFloat("amount");
+            }
+            
+            return totalRevenue;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return 0;
+        
+    }
 }
