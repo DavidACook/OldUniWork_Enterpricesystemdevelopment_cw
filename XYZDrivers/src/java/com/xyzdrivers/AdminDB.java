@@ -64,8 +64,6 @@ public class AdminDB {
         updateClaim(claim);
         claims = getAllClaimsByStatus("APPROVED");
         System.out.println(claims.get(0));
-        
-        
     }
     
     private static final String HOST = "jdbc:derby://localhost:1527/webapp";
