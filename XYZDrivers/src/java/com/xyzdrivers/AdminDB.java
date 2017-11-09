@@ -27,6 +27,7 @@ public class AdminDB {
         for(Member m : memberList){
             System.out.println(m);
         }
+        
         Member member = getMemberByID("m-wood");
         System.out.println("\nBy ID");
         System.out.println(member);
@@ -92,6 +93,44 @@ public class AdminDB {
         }
     }
     
+    private static ArrayList<Member> getMemberList(ResultSet rs) throws Exception{
+        ArrayList<Member> memberList = new ArrayList<>();
+        
+        while(rs.next()){
+                String id = rs.getString("id");
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                Date dob = rs.getDate("dob");
+                Date dor = rs.getDate("dor");
+                String status = rs.getString("status");
+                float balance = rs.getFloat("balance");
+                
+                Member member = new Member(id, name, address, dob, dor, status, balance);
+                memberList.add(member);
+                
+            }
+        
+        return memberList;
+    }
+    
+    private static ArrayList<Claim> getClaimList(ResultSet rs) throws Exception{
+        ArrayList<Claim> claimList = new ArrayList<>();
+        
+        while(rs.next()){
+                int id = rs.getInt("id");
+                String mem_id = rs.getString("mem_id");
+                Date date = rs.getDate("date");
+                String rationale = rs.getString("rationale");
+                String status = rs.getString("status");
+                float amount = rs.getFloat("amount");
+                
+                Claim claim = new Claim(id, mem_id, date, rationale, status, amount);
+                claimList.add(claim);
+            }
+        
+        return claimList;
+    }
+    
     public static ArrayList<Member> getAllMembers(){
         ArrayList<Member> memberList = new ArrayList<>();
         Connection con = null;
@@ -105,19 +144,55 @@ public class AdminDB {
             String query = "SELECT * FROM Members";
             rs = stmt.executeQuery(query);
             
-            while(rs.next()){
-                String id = rs.getString("id");
-                String name = rs.getString("name");
-                String address = rs.getString("address");
-                Date dob = rs.getDate("dob");
-                Date dor = rs.getDate("dor");
-                String status = rs.getString("status");
-                float balance = rs.getFloat("balance");
-                
-                Member member = new Member(id, name, address, dob, dor, status, balance);
-                memberList.add(member);
-                
-            }
+            return getMemberList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return memberList;
+    }
+    
+    public static ArrayList<Member> getAllMembersOutstanding(){
+        ArrayList<Member> memberList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = "SELECT * FROM Members WHERE \"balance\" > 0";
+            rs = stmt.executeQuery(query);
+            
+            return getMemberList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return memberList;
+    }
+    
+    public static ArrayList<Member> getAllMembersByStatus(String status){
+        ArrayList<Member> memberList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("SELECT * FROM Members WHERE \"status\" = '%s'", status);
+            rs = stmt.executeQuery(query);
+            
+            return getMemberList(rs);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -140,17 +215,7 @@ public class AdminDB {
             String query = String.format("SELECT * FROM Members WHERE \"id\" = '%s'", id);
             rs = stmt.executeQuery(query);
             
-            while(rs.next()){
-                String name = rs.getString("name");
-                String address = rs.getString("address");
-                Date dob = rs.getDate("dob");
-                Date dor = rs.getDate("dor");
-                String status = rs.getString("status");
-                float balance = rs.getFloat("balance");
-
-                Member member = new Member(id, name, address, dob, dor, status, balance);
-                return member;
-            }
+            return getMemberList(rs).get(0);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -197,17 +262,7 @@ public class AdminDB {
             String query = "SELECT * FROM Claims";
             rs = stmt.executeQuery(query);
             
-            while(rs.next()){
-                int id = rs.getInt("id");
-                String mem_id = rs.getString("mem_id");
-                Date date = rs.getDate("date");
-                String rationale = rs.getString("rationale");
-                String status = rs.getString("status");
-                float amount = rs.getFloat("amount");
-                
-                Claim claim = new Claim(id, mem_id, date, rationale, status, amount);
-                claims.add(claim);
-            }
+            return getClaimList(rs);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -230,16 +285,7 @@ public class AdminDB {
             String query = String.format("SELECT * FROM Claims WHERE \"status\" = '%s'", status);
             rs = stmt.executeQuery(query);
             
-            while(rs.next()){
-                int id = rs.getInt("id");
-                String mem_id = rs.getString("mem_id");
-                Date date = rs.getDate("date");
-                String rationale = rs.getString("rationale");
-                float amount = rs.getFloat("amount");
-                
-                Claim claim = new Claim(id, mem_id, date, rationale, status, amount);
-                claims.add(claim);
-            }
+            return getClaimList(rs);
             
         } catch (Exception e) {
             e.printStackTrace();
@@ -262,16 +308,7 @@ public class AdminDB {
             String query = String.format("SELECT * FROM Claims WHERE \"mem_id\" = '%s'", mem_id);
             rs = stmt.executeQuery(query);
             
-            while(rs.next()){
-                int id = rs.getInt("id");
-                Date date = rs.getDate("date");
-                String rationale = rs.getString("rationale");
-                String status = rs.getString("status");
-                float amount = rs.getFloat("amount");
-                
-                Claim claim = new Claim(id, mem_id, date, rationale, status, amount);
-                claims.add(claim);
-            }
+            return getClaimList(rs);
             
         } catch (Exception e) {
             e.printStackTrace();
