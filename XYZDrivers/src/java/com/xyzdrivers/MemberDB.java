@@ -51,6 +51,7 @@ public class MemberDB {
             Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
         }    
         try{
+            if(memberCanMakeClaim(memID)){
         //Get number of claims
         statement = con.createStatement();
         String sql ="SELECT COUNT(*) FROM APP.\"CLAIMS\"";
@@ -78,6 +79,7 @@ public class MemberDB {
         statement.close(); 
         prepStat.close();
         con.close();
+            }
         }
         catch (SQLException s){
             System.out.println("SQL statement is not executed!");
@@ -89,7 +91,7 @@ public class MemberDB {
     //A member can only make two claims a year
     //A member can only make a claim after 6 months of registration
     //A member cannot make a claim if their account has been suspended
-    public boolean memberCanMakeClaim(String memID){
+    public static boolean memberCanMakeClaim(String memID){
         boolean canClaim = true;
         Connection con = null;
         Statement statement = null;
@@ -101,10 +103,12 @@ public class MemberDB {
         //Number of claims sql
         DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
         java.util.Date date = Calendar.getInstance().getTime();
-        String curDate = df.format(date);
+        Calendar dateMoreOneYear = Calendar.getInstance();
+        dateMoreOneYear.add(Calendar.YEAR, -1);
+        String curDate = df.format(dateMoreOneYear.getTime());
         String sqlNumClaims ="SELECT COUNT(*) FROM APP.\"CLAIMS\" "
-                + "WHERE \"id\" = '" + memID +"'"
-                + "AND \"date\" > DATEADD(year, -1, " + curDate + ")";
+                + "WHERE \"mem_id\" = '" + memID +"' "
+                + "AND \"date\" >=  '" + curDate + "'";
         
         //Member status sql
         String sqlMemStatus = "SELECT \"status\" FROM APP.\"MEMBERS\" "
@@ -128,28 +132,30 @@ public class MemberDB {
             resultSet.next();
             LocalDate resultDate = resultSet.getDate(1).toLocalDate();
             resultDate.plusMonths(6);
-            if(date.before(Date.valueOf(resultDate)))
+            if(date.before(java.sql.Date.valueOf(resultDate.plusMonths(6)))){
                 canClaim = false;
-            
+            }
+                
             //Check user hasnt made for than two claims
             resultSet = statement.executeQuery(sqlNumClaims);
             resultSet.next();
             int numClaims = resultSet.getInt(1);
-            if(numClaims >= 2)
+            if(numClaims >= 2){
                 canClaim = false;
+            }
             
             //Check user is APPROVED
             resultSet = statement.executeQuery(sqlMemStatus);
             resultSet.next();
             String memStatus = resultSet.getString(1);
-            if(!memStatus.equals("APPROVED"))
+            if(!memStatus.equals("APPROVED")){
                 canClaim = false;
+            }
             
             //Close connections
             resultSet.close();
             statement.close(); 		
             con.close();   
-            System.out.println("\n");
         }
         catch (SQLException s){
             System.out.println("SQL statement is not executed!");
