@@ -42,11 +42,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MemberEdit</servlet-name>
-        <url-pattern>/MemberEdit</url-pattern>
+        <url-pattern>/AdminDashboard/MemberEdit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>ClaimEdit</servlet-name>
-        <url-pattern>/ClaimEdit</url-pattern>
+        <url-pattern>/AdminDashboard/ClaimEdit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -59,7 +59,7 @@
                 </tr>
             </table>
         </form>
-        <form action="AdminDashboard">
+        <form action="../AdminDashboard">
             <input type="hidden" name="type" value="View Claims"/>
             <input type="submit" value="Back to Admin Dashboard"/>
         </form>

@@ -20,7 +20,7 @@
             <input type="submit" name="type" value="View Members">
             <input type="submit" name="type" value="View Claims">
         </form>
-        <form action="MemberEdit">
+        <form action="AdminDashboard/MemberEdit">
             <table id="members" border="1" cellpadding="5">
                 <tr>
                     <th>ID</th>
