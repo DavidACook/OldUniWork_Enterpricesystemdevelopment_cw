@@ -25,7 +25,7 @@ input[type="submit"]{
     cursor: pointer;
 }
 
-input[type="date"], input[type="text"]{
+input[type="date"], input[type="text"], input[type="number"]{
     color:  black;
     box-sizing: border-box;
     width: 240px;

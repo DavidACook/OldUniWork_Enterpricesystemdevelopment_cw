@@ -6,6 +6,7 @@
 
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/table.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
 <!DOCTYPE html>
 <html>
