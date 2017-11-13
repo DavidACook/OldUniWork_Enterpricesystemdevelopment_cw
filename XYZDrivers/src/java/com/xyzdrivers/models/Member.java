@@ -28,6 +28,7 @@ public class Member {
         this.name = name;
         this.address = address;
         this.dob = dob;
+        this.dor = dor;
         this.status = status;
         this.balance = balance;
     }
