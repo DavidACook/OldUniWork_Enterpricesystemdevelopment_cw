@@ -13,8 +13,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-/**
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+/*
  *
  * @author Colin Berry
  */
@@ -32,21 +34,58 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-        view.forward(request, response);
         String user = request.getParameter("username");
         String pass = request.getParameter("password");
-        
+                
         if(user.equals("admin") && pass.equals("admin")){
-            response.sendRedirect("/AdminDashboard");
+            //admin doesn't need checking, gets redirected
+            RequestDispatcher rs = request.getRequestDispatcher("/AdminDashboard");
+            rs.forward(request, response);
         }
         else if(validateUser(user, pass)){
-            response.sendRedirect("/MemberDashboard");
+            //check if user exists in database
+            request.setAttribute("memID", user);
+            RequestDispatcher rs = request.getRequestDispatcher("/MemberDashboard");
+            rs.forward(request, response);
         }
         else{
-            response.sendRedirect("/Register");
-            
+            //user doesn't exist, they need to register
+            RequestDispatcher rs = request.getRequestDispatcher("/Register");
+            rs.forward(request, response);
         }
+    }
+    
+    public static boolean validateUser(String user, String pass){
+        boolean ch = false; //Set correct user to false.
+        String dbUser, dbPass;
+        String host = "jdbc:derby://localhost:1527/webapp";
+        String db = "app";
+        String dataPass = "app";
+        String query = "SELECT * FROM APP.users";
+ 
+        //Establish connections
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            Connection con = DriverManager.getConnection(host, db, dataPass);
+            Statement stmt = (Statement) con.createStatement();
+            stmt.executeQuery(query);
+            ResultSet rs = stmt.getResultSet();
+            //check over result set for the entered id and password.
+            while(rs.next()){
+                dbUser = rs.getString("id");
+                dbPass = rs.getString("password");
+                //if the user exists, ch is set to true and they can login.
+                if(dbUser.equals(user) && dbPass.equals(pass)){
+                    ch = true;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ 
+        return ch;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -88,16 +127,5 @@ public class Login extends HttpServlet {
         return "Short description";
     }// </editor-fold>
     
-    public static boolean validateUser(String user, String pass){
-        boolean ch = false;
-        
-        try{
-            //need to implement database connection here.
-            //then check database to confirm username and password exist
-            
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return ch;
-    }
+    
 }
