@@ -21,7 +21,7 @@ input[type="submit"]{
     box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
     padding: 15px 35px;
     border: 0;
-    margin: 55px auto 0;
+    margin: 1px auto 0;
     cursor: pointer;
 }
 

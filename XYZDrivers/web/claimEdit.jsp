@@ -13,9 +13,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Claim</title>
     </head>
+    
+    <script>
+        function onSubmit(){
+            alert("Saved Claim Data");
+        }
+    </script>
+    
     <body>
         <h1>Editing Claim</h1>
-        <form action="ClaimEdit" method="POST">
+        <form onsubmit="onSubmit()" action="ClaimEdit" method="POST">
             <% Claim claim = (Claim) request.getAttribute("claim"); %>
             <input name="id" type="hidden" value="<%= claim.getId() %>"/>
             <table id="claim" border="1" cellpadding="5">

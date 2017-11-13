@@ -13,9 +13,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Edit Member</title>
     </head>
+    
+    <script>
+        function onSubmit(){
+            alert("Saved Member Data");
+        }
+    </script>
+    
     <body>
         <h1>Editing Member</h1>
-        <form action="MemberEdit" method="POST">
+        <form onsubmit="onSubmit()" action="MemberEdit" method="POST">
             <% Member member = (Member) request.getAttribute("member"); %>
             <input name="id" type="hidden" value="<%= member.getId() %>"/>
             <table id="member" border="1" cellpadding="5">
