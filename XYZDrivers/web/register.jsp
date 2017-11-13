@@ -41,8 +41,16 @@
             <input type = "text"
                    id = "nameText"
                    value = "" 
-                   name = "name"
+                   name = "fname"
                    required
+                   placeholder="First Name"
+                   /><br>
+            <input type = "text"
+                   id = "nameText2"
+                   value = "" 
+                   name = "lname"
+                   required
+                   placeholder="Last Name"
                    />
         </p>
         <p>

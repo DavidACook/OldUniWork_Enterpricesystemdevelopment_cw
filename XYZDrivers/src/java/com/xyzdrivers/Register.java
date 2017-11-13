@@ -42,7 +42,7 @@ public class Register extends HttpServlet {
         RequestDispatcher view = request.getRequestDispatcher("register.jsp");
         view.forward(request, response);
         String[] info = new String[3];
-        info[0] = request.getParameter("name");
+        info[0] = request.getParameter("fname").trim() + " " + request.getParameter("lname").trim();
         info[1] = request.getParameter("addr1") + ", " + request.getParameter("addr2") + ", " + request.getParameter("addr3") + ", " + request.getParameter("addr4");
         info[2] = request.getParameter("dob");
         
