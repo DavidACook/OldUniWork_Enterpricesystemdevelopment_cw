@@ -5,6 +5,8 @@ table{
 
 th{
     background-color: lightgreen;
+    color: white;
+    font-weight: bold;
     height: 50px;
     text-align: left;
 }
