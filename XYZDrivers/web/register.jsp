@@ -14,7 +14,7 @@
     <body>
         <h1>Oh look a denk register page!</h1>
 
-        <form action="/Register.java" method="post">
+        
 
         <a id="Navigate" href="./index.html">
             <input 
@@ -34,7 +34,8 @@
                 border-color:#000;
                 border-width: 3px;" title="Navigate"
                 />
-        </a>  
+        </a> 
+        <form action="Register" method="post">
         <p>
             <label>Name:</label>
             <input type = "text"
@@ -56,7 +57,7 @@
     </p>
 
     <p>
-        <input type ="button"
+        <input type ="submit"
                id ="registerButton"
                value ="Register"
                name="register"

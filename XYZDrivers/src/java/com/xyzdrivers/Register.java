@@ -6,10 +6,8 @@
 package com.xyzdrivers;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
@@ -21,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.DateFormatter;
 
 /**
  *
@@ -42,48 +41,62 @@ public class Register extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher view = request.getRequestDispatcher("register.jsp");
         view.forward(request, response);
-        String[] info = new String[2];
+        String[] info = new String[3];
         info[0] = request.getParameter("name");
         info[1] = request.getParameter("address");
         info[2] = request.getParameter("dob");
-        boolean registerPress = request.getParameter("register") != null;
         
-        if(registerPress){
+        
+        
+        System.out.println("name: " + info[0]);
+        System.out.println("address: " + info[1]);
+        System.out.println("dob: " + info[2]);
+        
+        
           try {
             registerMember(info);
         } catch (SQLException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }  
-        }
+        
         
     }
 
     public void registerMember(String[] info) throws SQLException {
-        String host = "jdbc:derby//localhost:1527/ESD";
+        String host = "jdbc:derby://localhost:1527/Webapp";
         String user = "root";
+        Connection con = null;
 
-        Connection con = DriverManager.getConnection(host, user, null);
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection(host, user, null);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         String name = info[0];
-        String address = info[1];
+        //name = name.replaceAll("\\s+","_");
+        String addr = info[1];
         String dob = info[2];
         LocalDate registerDate = LocalDate.now();
         String status = "APPLIED";
         double balance = 0;
-
+        
         String id = generateID(name);
 
-        String members = "INSERT INTO 'MEMBERS' ('id','name','address','dob','dor','status','balance')"
-                + "VALUES ('" + id + "','" + name + "','" + address + "','" + dob + "','" + registerDate + "','" + status + "','" + balance + "')";
+       // String members = "INSERT INTO 'MEMBERS' ('id','name','address','dob','dor','status','balance')"
+        //        + "VALUES ('" + id + "','" + name + "','" + address + "','" + dob + "','" + registerDate + "','" + status + "','" + balance + "')";
 
-        String users = "INSERT INTO 'USERS' ('id','password','status'"
+        
+        String members = "INSERT INTO APP.MEMBERS VALUES ('" + id + "','" + name.trim() + "'," + addr + ",'" + dob + "','" + registerDate + "','" + status + "'," + balance + ")";
+        String users = "INSERT INTO APP.USERS " 
                 + "VALUES ('" + id + "','" + generatePassword() + "','" + status + "')";
 
         Statement state;
         try {
             state = con.createStatement();
-            state.executeQuery(members);
-            state.executeQuery(users);
+            state.executeUpdate(members);
+            state.executeUpdate(users);
 
         } catch (SQLException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
@@ -112,7 +125,7 @@ public class Register extends HttpServlet {
         for (int i = 0; i < 6; i++) {
             password.append(chars.charAt(ran.nextInt(6)));
         }
-
+        System.out.println("Password: " + password.toString());
         return password.toString();
     }
 
