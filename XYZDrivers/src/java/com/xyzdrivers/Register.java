@@ -75,7 +75,6 @@ public class Register extends HttpServlet {
         }
 
         String name = info[0];
-        //name = name.replaceAll("\\s+","_");
         String addr = info[1];
         String dob = info[2];
         LocalDate registerDate = LocalDate.now();
@@ -83,14 +82,12 @@ public class Register extends HttpServlet {
         double balance = 0;
         
         String id = generateID(name);
-
-       // String members = "INSERT INTO 'MEMBERS' ('id','name','address','dob','dor','status','balance')"
-        //        + "VALUES ('" + id + "','" + name + "','" + address + "','" + dob + "','" + registerDate + "','" + status + "','" + balance + "')";
-
         
-        String members = "INSERT INTO APP.MEMBERS VALUES ('" + id + "','" + name.trim() + "'," + addr + ",'" + dob + "','" + registerDate + "','" + status + "'," + balance + ")";
-        String users = "INSERT INTO APP.USERS " 
-                + "VALUES ('" + id + "','" + generatePassword() + "','" + status + "')";
+        
+        
+        
+        String members = "INSERT INTO APP.MEMBERS VALUES ('" + id + "','" + name.trim() + "','" + addr.trim() + "','" + dob + "','" + registerDate + "','" + status + "'," + balance + ")";
+        String users = "INSERT INTO APP.USERS VALUES ('" + id + "','" + generatePassword() + "','" + status + "')";
 
         Statement state;
         try {
@@ -108,8 +105,14 @@ public class Register extends HttpServlet {
         StringBuilder id = new StringBuilder();
 
         id.append(name.charAt(0)).append("-");
-
-        int space = name.indexOf(' ');
+        int space = 0;
+        
+        try{
+            space = name.indexOf(' ');
+        }catch(Exception e){
+            
+        }
+        
 
         for (int i = space + 1; i < name.length(); i++) {
             id.append(name.charAt(i));
@@ -128,7 +131,7 @@ public class Register extends HttpServlet {
         System.out.println("Password: " + password.toString());
         return password.toString();
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
