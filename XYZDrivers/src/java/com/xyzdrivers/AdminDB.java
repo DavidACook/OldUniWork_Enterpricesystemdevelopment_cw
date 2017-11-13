@@ -64,6 +64,13 @@ public class AdminDB {
         updateClaim(claim);
         claims = getAllClaimsByStatus("APPROVED");
         System.out.println(claims.get(0));
+        
+        System.out.println("\nAnnual Revenue");
+        Calendar cal = Calendar.getInstance();
+        cal.set(2016, 0, 1);
+        Date yearAgo = new Date(cal.getTimeInMillis());
+        float revenue = getAnnualRevenue(yearAgo);
+        System.out.println(revenue);
     }
     
     private static final String HOST = "jdbc:derby://localhost:1527/webapp";
@@ -327,7 +334,7 @@ public class AdminDB {
             
             stmt = con.createStatement();
             String query = String.format("UPDATE Claims SET \"mem_id\" = '%s',"
-                    + "\"date\" = CAST('%s' AS DATE),"
+                    + "\"date\" = '%s',"
                     + "\"rationale\" = '%s',"
                     + "\"status\" = '%s',"
                     + "\"amount\" = %f"
@@ -340,6 +347,12 @@ public class AdminDB {
         } finally {
             closeConnection(con, stmt, rs);
         }
+    }
+    
+    // Overload function to deal with the 'other' Date format
+    public static float getAnnualRevenue(java.util.Date date){
+        Date newDate = new Date(date.getTime());
+        return getAnnualRevenue(newDate);
     }
     
     public static float getAnnualRevenue(Date date){
@@ -358,8 +371,8 @@ public class AdminDB {
             con = getConnection();
             
             stmt = con.createStatement();
-            String query = String.format("SELECT * FROM Payments WHERE \"status\" = 'APPROVED'"
-                    + "AND \"date\" >= %s AND date <= %s",nextYear.toString() ,date.toString());
+            String query = String.format("SELECT * FROM Payments WHERE "
+                    + "\"date\" BETWEEN '%s' AND '%s'", date.toString(), nextYear.toString());
             rs = stmt.executeQuery(query);
             
             while(rs.next()){
