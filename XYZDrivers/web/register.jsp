@@ -37,21 +37,26 @@
         </a> 
         <form action="Register" method="post">
         <p>
-            <label>Name:</label>
+            <label>Name:</label><br><br>
             <input type = "text"
                    id = "nameText"
                    value = "" 
-                   name = "name"/>
+                   name = "name"
+                   required
+                   />
         </p>
         <p>
-            <label>Address:</label>
-            <textarea id="addrText" name="address"/>
+            <label>Address:</label><br><br>
+         
+            <input type="text" id="addr1Text" name="addr1" required placeholder="Street"/><br>            
+            <input type="text" id="addr2Text" name="addr2" required placeholder="Town"/><br>
+            <input type="text" id="addr3Text" name="addr3" required placeholder="City"/><br>
+            <input type="text" id="addr4Text" name="addr4" required placeholder="Post Code"/><br>
             
-            </textarea> 
         </p>
         <p>
             <label>D.O.B:</label>
-            <input type="date" id="dob" value="dd/mm/yyyy" name="dob" >
+            <input type="date" id="dob" value="dd/mm/yyyy" name="dob" required >
         </p>
         
     </p>
@@ -61,6 +66,7 @@
                id ="registerButton"
                value ="Register"
                name="register"
+               title="Register"/>
 
     </p>
     </form>
