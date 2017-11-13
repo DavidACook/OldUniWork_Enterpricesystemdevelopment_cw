@@ -1,9 +1,10 @@
 <%-- 
-    Document   : adminDashboard
-    Created on : 06-Nov-2017, 11:15:59
+    Document   : adminDashboardClaims.jsp
+    Created on : 13-Nov-2017, 14:55:25
     Author     : Colin Berry
 --%>
 
+<%@page import="com.xyzdrivers.models.Claim"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -18,6 +19,32 @@
         <form action="AdminDashboard">
             <input type="submit" name="type" value="View Members">
             <input type="submit" name="type" value="View Claims">
+        </form>
+        <form action="ClaimEdit">
+            <table id="members" border="1" cellpadding="5">
+                <tr>
+                    <th>ID</th>
+                    <th>Member ID</th>
+                    <th>Date</th>
+                    <th>Rationale</th>
+                    <th>Status</th>
+                    <th>Amount</th>
+                </tr>
+                <% for(Claim c : (ArrayList<Claim>) request.getAttribute("claimsList")) { %>
+                <tr>
+                    <td><%= c.getId() %></td>
+                    <td><%= c.getMem_id() %></td>
+                    <td><%= c.getDate() %></td>
+                    <td><%= c.getRationale() %></td>
+                    <td><%= c.getStatus() %></td>
+                    <td><%= c.getAmount() %></td>
+                    <td>
+                        <input type="radio" name="id" value="<%= c.getId() %>"/>
+                    </td>
+                </tr>
+                <% } %>
+            </table>
+            <input type="submit" value="Select Claim"/>
         </form>
           <a id="Navigate" href="./index.html">
             <input 

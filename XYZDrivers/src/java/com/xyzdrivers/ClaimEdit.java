@@ -9,7 +9,9 @@ import com.xyzdrivers.models.Claim;
 import com.xyzdrivers.models.Member;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Colin Berry
  */
-public class AdminDashboard extends HttpServlet {
+public class ClaimEdit extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,25 +36,10 @@ public class AdminDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        
-        String type = request.getParameter("type");
-        System.out.println(type);
-        String jsp = "adminDashboard.jsp";
-        
-        if(type != null){
-            if(type.equals("View Members")){
-                ArrayList<Member> members = AdminDB.getAllMembers();
-                request.setAttribute("membersList", members);
-                jsp = "adminDashboardMembers.jsp";
-            }
-            if(type.equals("View Claims")){
-                ArrayList<Claim> claims = AdminDB.getAllClaims();
-                request.setAttribute("claimsList", claims);
-                jsp = "adminDashboardClaims.jsp";
-            }
-        }
-        
-        RequestDispatcher view = request.getRequestDispatcher(jsp);
+        int id = Integer.parseInt(request.getParameter("id"));
+        Claim claim = AdminDB.getClaimByID(id);
+        request.setAttribute("claim", claim);
+        RequestDispatcher view = request.getRequestDispatcher("claimEdit.jsp");
         view.forward(request, response);
     }
 
@@ -82,6 +69,24 @@ public class AdminDashboard extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try{
+            int id = Integer.parseInt(request.getParameter("id"));
+            String mem_id = request.getParameter("mem_id");
+
+            String dateString = request.getParameter("date");
+            java.util.Date dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+            Date date = new Date(dateUtil.getTime());
+
+            String rationale = request.getParameter("rationale");
+            String status = request.getParameter("status");
+            float amount = Float.parseFloat(request.getParameter("amount"));
+
+            Claim claim = new Claim(id, mem_id, date, rationale, status, amount);
+            AdminDB.updateClaim(claim);
+
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
         processRequest(request, response);
     }
 
