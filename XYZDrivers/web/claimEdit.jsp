@@ -53,12 +53,8 @@
                         <input name="amount" type="number" value="<%= claim.getAmount() %>"/>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <input type="submit" value="Save"/>
-                    </td>
-                </tr>
             </table>
+            <input type="submit" value="Save"/>
         </form>
         <form action="../AdminDashboard">
             <input type="hidden" name="type" value="View Claims"/>

@@ -59,12 +59,8 @@
                         <input name="balance" type="number" value="<%= member.getBalance() %>"/>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <input type="submit" value="Save"/>
-                    </td>
-                </tr>
             </table>
+            <input type="submit" value="Save"/>
         </form>
         <form action="../AdminDashboard">
             <input type="hidden" name="type" value="View Members"/>
