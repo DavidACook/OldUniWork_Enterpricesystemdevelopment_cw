@@ -37,6 +37,7 @@ public class MemberEdit extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         String id = request.getParameter("id");
+        System.out.println(id);
         Member member = AdminDB.getMemberByID(id);
         request.setAttribute("member", member);
         RequestDispatcher view = request.getRequestDispatcher("../memberEdit.jsp");

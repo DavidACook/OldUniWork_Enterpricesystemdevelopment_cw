@@ -8,9 +8,10 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/table.css" />
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/clickableTable.js" />
+<link rel="stylesheet" type="text/css" href="styles/table.css" />
+<link rel="stylesheet" type="text/css" href="styles/main.css" />
+<script type="text/javascript" src="javascript/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="javascript/clickableTable.js" ></script>
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,7 +24,7 @@
             <input type="submit" name="type" value="View Members">
             <input type="submit" name="type" value="View Claims">
         </form>
-        <form id="edit" action="AdminDashboard/ClaimEdit">
+        <form id="form" onsubmit="submitRow()" action="AdminDashboard/ClaimEdit">
             <table id="table">
                 <tr>
                     <th>ID</th>
@@ -41,13 +42,12 @@
                     <td><%= c.getRationale() %></td>
                     <td><%= c.getStatus() %></td>
                     <td><%= c.getAmount() %></td>
-                    <td>
-                        <input type="radio" name="id" value="<%= c.getId() %>"/>
-                    </td>
                 </tr>
                 <% } %>
             </table>
-            <button onclick="onClick()">Select Claim</button>
+            <p>
+                <input type="submit" value="Edit Claim"/>
+            </p>
         </form>
           <a id="Navigate" href="./index.html">
             <input 
