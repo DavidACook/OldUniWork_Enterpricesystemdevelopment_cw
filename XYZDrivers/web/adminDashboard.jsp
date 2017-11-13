@@ -14,7 +14,7 @@
         <title>Admin Dashboard</title>
     </head>
     <body>
-        <h1>Oh look an admin dashboard!</h1>
+        <h1>Admin Dashboard</h1>
         <form action="AdminDashboard">
             <input type="submit" name="type" value="View Members">
             <input type="submit" name="type" value="View Claims">

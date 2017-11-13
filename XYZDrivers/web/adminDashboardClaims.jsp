@@ -8,6 +8,9 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/table.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/clickableTable.js" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,13 +18,13 @@
         <title>Admin Dashboard</title>
     </head>
     <body>
-        <h1>Oh look an admin dashboard!</h1>
+        <h1>Admin Dashboard</h1>
         <form action="AdminDashboard">
             <input type="submit" name="type" value="View Members">
             <input type="submit" name="type" value="View Claims">
         </form>
-        <form action="AdminDashboard/ClaimEdit">
-            <table id="members" border="1" cellpadding="5">
+        <form id="edit" action="AdminDashboard/ClaimEdit">
+            <table id="table">
                 <tr>
                     <th>ID</th>
                     <th>Member ID</th>
@@ -44,7 +47,7 @@
                 </tr>
                 <% } %>
             </table>
-            <input type="submit" value="Select Claim"/>
+            <button onclick="onClick()">Select Claim</button>
         </form>
           <a id="Navigate" href="./index.html">
             <input 

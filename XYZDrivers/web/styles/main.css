@@ -1,0 +1,7 @@
+input, .button {
+    border-width: 4px;
+}
+
+input:hover, .button:hover {
+    color: darkred;
+}
