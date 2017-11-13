@@ -7,11 +7,13 @@ package com.xyzdrivers;
 
 import com.xyzdrivers.models.Claim;
 import com.xyzdrivers.models.Member;
+import com.xyzdrivers.models.Payment;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -64,6 +66,13 @@ public class AdminDB {
         updateClaim(claim);
         claims = getAllClaimsByStatus("APPROVED");
         System.out.println(claims.get(0));
+        
+        System.out.println("\nAnnual Revenue");
+        Calendar cal = Calendar.getInstance();
+        cal.set(2016, 0, 1);
+        Date yearAgo = new Date(cal.getTimeInMillis());
+        float revenue = getAnnualRevenue(yearAgo);
+        System.out.println(revenue);
     }
     
     private static final String HOST = "jdbc:derby://localhost:1527/webapp";
@@ -128,6 +137,24 @@ public class AdminDB {
             }
         
         return claimList;
+    }
+    
+    private static ArrayList<Payment> getPaymentList(ResultSet rs) throws Exception{
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        
+        while(rs.next()){
+            int id = rs.getInt("id");
+            String mem_id = rs.getString("mem_id");
+            String type_of_payment = rs.getString("type_of_payment");
+            float amount = rs.getFloat("amount");
+            Date date = rs.getDate("date");
+            Time time = rs.getTime("time");
+            
+            Payment payment = new Payment(id, mem_id, type_of_payment, amount, date, time);
+            paymentList.add(payment);
+        }
+        
+        return paymentList;
     }
     
     public static ArrayList<Member> getAllMembers(){
@@ -327,7 +354,7 @@ public class AdminDB {
             
             stmt = con.createStatement();
             String query = String.format("UPDATE Claims SET \"mem_id\" = '%s',"
-                    + "\"date\" = CAST('%s' AS DATE),"
+                    + "\"date\" = '%s',"
                     + "\"rationale\" = '%s',"
                     + "\"status\" = '%s',"
                     + "\"amount\" = %f"
@@ -340,6 +367,86 @@ public class AdminDB {
         } finally {
             closeConnection(con, stmt, rs);
         }
+    }
+    
+    public ArrayList<Payment> getAllPayments(){
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = "SELECT * FROM Payments";
+            rs = stmt.executeQuery(query);
+            
+            return getPaymentList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return paymentList;
+    }
+    
+    public static ArrayList<Payment> getAllPaymentsUnapproved(){
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = "SELECT * FROM Payments WHERE \"";
+            rs = stmt.executeQuery(query);
+            
+            return getPaymentList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return paymentList;
+    }
+    
+    public static void updatePayment(Payment payment){
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("UPDATE Payments SET \"mem_id\" = '%s',"
+                    + "\"type_of_payment\" = '%s',"
+                    + "\"amount\" = %f,"
+                    + "\"date\" = '%s',"
+                    + "\"time\" = '%s' "
+                    + "WHERE \"id\" = %d",
+                    payment.getMem_id(), payment.getType_of_payment(), payment.getAmount(),
+                    payment.getDate(), payment.getTime(), payment.getId());
+            stmt.executeUpdate(query);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+    }
+    
+    // Overload function to deal with the 'other' Date format
+    public static float getAnnualRevenue(java.util.Date date){
+        Date newDate = new Date(date.getTime());
+        return getAnnualRevenue(newDate);
     }
     
     public static float getAnnualRevenue(Date date){
@@ -358,8 +465,8 @@ public class AdminDB {
             con = getConnection();
             
             stmt = con.createStatement();
-            String query = String.format("SELECT * FROM Payments WHERE \"status\" = 'APPROVED'"
-                    + "AND \"date\" >= %s AND date <= %s",nextYear.toString() ,date.toString());
+            String query = String.format("SELECT * FROM Payments WHERE "
+                    + "\"date\" BETWEEN '%s' AND '%s'", date.toString(), nextYear.toString());
             rs = stmt.executeQuery(query);
             
             while(rs.next()){
