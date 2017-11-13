@@ -368,6 +368,28 @@ public class AdminDB {
             closeConnection(con, stmt, rs);
         }
     }
+
+    static Claim getClaimByID(int id) {
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("SELECT * FROM Claims WHERE \"id\" = %d", id);
+            rs = stmt.executeQuery(query);
+            
+            return getClaimList(rs).get(0);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        return null;
+    }
     
     public ArrayList<Payment> getAllPayments(){
         ArrayList<Payment> paymentList = new ArrayList<>();

@@ -6,15 +6,23 @@
 
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Edit Member</title>
     </head>
+    
+    <script>
+        function onSubmit(){
+            alert("Saved Member Data");
+        }
+    </script>
+    
     <body>
         <h1>Editing Member</h1>
-        <form action="MemberEdit" method="POST">
+        <form onsubmit="onSubmit()" action="MemberEdit" method="POST">
             <% Member member = (Member) request.getAttribute("member"); %>
             <input name="id" type="hidden" value="<%= member.getId() %>"/>
             <table id="member" border="1" cellpadding="5">
@@ -58,14 +66,11 @@
                         <input name="balance" type="number" value="<%= member.getBalance() %>"/>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <input type="submit" value="Save"/>
-                    </td>
-                </tr>
             </table>
+            <input type="submit" value="Save"/>
         </form>
-        <form action="AdminDashboard">
+        <form action="../AdminDashboard">
+            <input type="hidden" name="type" value="View Members"/>
             <input type="submit" value="Back to Admin Dashboard"/>
         </form>
     </body>

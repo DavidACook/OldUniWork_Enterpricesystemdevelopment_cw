@@ -14,34 +14,10 @@
         <title>Admin Dashboard</title>
     </head>
     <body>
-        <h1>Oh look an admin dashboard!</h1>
-        <form action="MemberEdit">
-            <table id="members" border="1" cellpadding="5">
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Address</th>
-                    <th>Date of Birth</th>
-                    <th>Date of Registration</th>
-                    <th>Status</th>
-                    <th>Balance</th>
-                </tr>
-                <% for(Member m : (ArrayList<Member>) request.getAttribute("membersList")) { %>
-                <tr>
-                    <td><%= m.getId() %></td>
-                    <td><%= m.getName() %></td>
-                    <td><%= m.getAddress() %></td>
-                    <td><%= m.getDob() %></td>
-                    <td><%= m.getDor() %></td>
-                    <td><%= m.getStatus() %></td>
-                    <td><%= m.getBalance() %></td>
-                    <td>
-                        <input type="radio" name="id" value="<%= m.getId() %>"/>
-                    </td>
-                </tr>
-                <% } %>
-            </table>
-            <input type="submit" value="Select Member"/>
+        <h1>Admin Dashboard</h1>
+        <form action="AdminDashboard">
+            <input type="submit" name="type" value="View Members">
+            <input type="submit" name="type" value="View Claims">
         </form>
           <a id="Navigate" href="./index.html">
             <input 

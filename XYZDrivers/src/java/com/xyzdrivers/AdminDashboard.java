@@ -5,6 +5,7 @@
  */
 package com.xyzdrivers;
 
+import com.xyzdrivers.models.Claim;
 import com.xyzdrivers.models.Member;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,11 +35,24 @@ public class AdminDashboard extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         
-        ArrayList<Member> members = AdminDB.getAllMembers();
-        request.setAttribute("membersList", members);
-        request.setAttribute("memberCount", 1);
+        String type = request.getParameter("type");
+        System.out.println(type);
+        String jsp = "adminDashboard.jsp";
         
-        RequestDispatcher view = request.getRequestDispatcher("adminDashboard.jsp");
+        if(type != null){
+            if(type.equals("View Members")){
+                ArrayList<Member> members = AdminDB.getAllMembers();
+                request.setAttribute("membersList", members);
+                jsp = "adminDashboardMembers.jsp";
+            }
+            if(type.equals("View Claims")){
+                ArrayList<Claim> claims = AdminDB.getAllClaims();
+                request.setAttribute("claimsList", claims);
+                jsp = "adminDashboardClaims.jsp";
+            }
+        }
+        
+        RequestDispatcher view = request.getRequestDispatcher(jsp);
         view.forward(request, response);
     }
 
