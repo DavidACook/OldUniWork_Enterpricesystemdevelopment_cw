@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,6 +32,7 @@ public class MemberDB {
     //It will generate id based on number of claims in CLAIMS table
     //It will get the date from the computer
     //It will set the status too APPLIED
+    //TODO check user hasnt made more than two claims
     public static void makeClaim(String memID, String rationale, double amount){
         //Ensure ammount is x.00 format
         amount = ((double)((int)(amount*100)))/100;
@@ -81,6 +83,79 @@ public class MemberDB {
             System.out.println("SQL statement is not executed!");
             s.printStackTrace();
         }
+    }
+    
+    //This method checks if a member is able to make a claim
+    //A member can only make two claims a year
+    //A member can only make a claim after 6 months of registration
+    //A member cannot make a claim if their account has been suspended
+    public boolean memberCanMakeClaim(String memID){
+        boolean canClaim = true;
+        Connection con = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        //Date of register SQL
+        String sqlDor ="SELECT \"dor\" FROM APP.\"MEMBERS\" "
+                + "WHERE \"id\" = '" + memID +"'";
+        
+        //Number of claims sql
+        DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+        java.util.Date date = Calendar.getInstance().getTime();
+        String curDate = df.format(date);
+        String sqlNumClaims ="SELECT COUNT(*) FROM APP.\"CLAIMS\" "
+                + "WHERE \"id\" = '" + memID +"'"
+                + "AND \"date\" > DATEADD(year, -1, " + curDate + ")";
+        
+        //Member status sql
+        String sqlMemStatus = "SELECT \"status\" FROM APP.\"MEMBERS\" "
+                + "WHERE \"id\" = '" + memID +"'";
+        
+        //Establish connections
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection("jdbc:derby://localhost:1527/myUse",null, null);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        try{
+            //Check DOR > 6months ago
+            statement = con.createStatement();
+            resultSet = statement.executeQuery(sqlDor);
+            resultSet.next();
+            LocalDate resultDate = resultSet.getDate(1).toLocalDate();
+            resultDate.plusMonths(6);
+            if(date.before(Date.valueOf(resultDate)))
+                canClaim = false;
+            
+            //Check user hasnt made for than two claims
+            resultSet = statement.executeQuery(sqlNumClaims);
+            resultSet.next();
+            int numClaims = resultSet.getInt(1);
+            if(numClaims >= 2)
+                canClaim = false;
+            
+            //Check user is APPROVED
+            resultSet = statement.executeQuery(sqlMemStatus);
+            resultSet.next();
+            String memStatus = resultSet.getString(1);
+            if(!memStatus.equals("APPROVED"))
+                canClaim = false;
+            
+            //Close connections
+            resultSet.close();
+            statement.close(); 		
+            con.close();   
+            System.out.println("\n");
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            s.printStackTrace();
+        }
+        return canClaim;
     }
     
     //This method will be called to get a string containing the memebrs balance
