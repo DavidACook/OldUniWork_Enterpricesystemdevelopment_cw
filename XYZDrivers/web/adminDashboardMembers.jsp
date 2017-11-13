@@ -23,6 +23,7 @@
         <form action="AdminDashboard">
             <input type="submit" name="type" value="View Members">
             <input type="submit" name="type" value="View Claims">
+            <input type="submit" value="Edit Member"/>
         </form>
         <form id="form" onsubmit="submitRow()" action="AdminDashboard/MemberEdit">
             <table id="table">
@@ -48,7 +49,7 @@
                 <% } %>
             </table>
             <p>
-                <input type="submit" value="Edit Member"/>
+                
             </p>
         </form>
     </body>

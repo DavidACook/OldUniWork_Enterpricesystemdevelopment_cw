@@ -23,6 +23,7 @@
         <form action="AdminDashboard">
             <input type="submit" name="type" value="View Members">
             <input type="submit" name="type" value="View Claims">
+            <input type="submit" value="Edit Claim"/>
         </form>
         <form id="form" onsubmit="submitRow()" action="AdminDashboard/ClaimEdit">
             <table id="table">
@@ -45,9 +46,7 @@
                 </tr>
                 <% } %>
             </table>
-            <p>
-                <input type="submit" value="Edit Claim"/>
-            </p>
+
         </form>
           <a id="Navigate" href="./index.html">
             <input 
