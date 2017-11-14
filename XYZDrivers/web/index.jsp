@@ -15,25 +15,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>     
-        <h1> XYZ Drivers </h1>
-        
+        <h1>XYZ Drivers</h1>
         <br>
-        <br>
-        
-        
-        <form method="get" action="login.jsp">
+        <form method="get" action="/Login">
             <input name ="button" type="submit" value="Login"/>
         </form>
-        
-        <br>
-                        
-        <form method="get" action="register.jsp">
+        <br>              
+        <form method="get" action="/Register">
          <input name ="button" type="submit" value="Register"/>   
         </form>          
-        
-        
-        
-        
-   
     </body>
 </html>
