@@ -10,19 +10,22 @@
 <html>
     <link href="styles/main.css" rel="stylesheet"/>
     <head>
-        <title>XYZ Drivers</title>
+        <title>Home</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>     
-        <h1> Home </h1>
+        <h1> XYZ Drivers </h1>
         
+        <br>
+        <br>
         
         
         <form method="get" action="login.jsp">
-            <input name ="button" type="submit" value="Login"/><br>  
+            <input name ="button" type="submit" value="Login"/>
         </form>
         
+        <br>
                         
         <form method="get" action="register.jsp">
          <input name ="button" type="submit" value="Register"/>   

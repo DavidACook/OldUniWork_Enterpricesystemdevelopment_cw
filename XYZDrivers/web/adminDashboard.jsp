@@ -14,9 +14,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Admin Dashboard</title>
+    <h1>Admin Dashboard</h1>
 </head>
 <body>
-    <h1>Admin Dashboard</h1>
+    
     <form action="AdminDashboard">
         <input type="submit" name="type" value="View Members">
         <input type="submit" name="type" value="View Claims">

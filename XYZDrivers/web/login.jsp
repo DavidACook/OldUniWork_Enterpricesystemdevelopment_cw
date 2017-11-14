@@ -17,7 +17,7 @@
         <title>Login Page</title>
     </head>
     <body>
-        <h1>Login:</h1>
+        <h1>Login</h1>
         <form method="post" action="Login">
             <input type="text" name="username" placeholder="Username" /> <br>
             <input type="password" name="password" placeholder="Password"/> <br>

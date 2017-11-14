@@ -9,10 +9,11 @@
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
 
 <t:wrapper>
-    <jsp:attribute name="header"></jsp:attribute>
-    <jsp:attribute name="footer">
-        <form action="index.html">
-            <input type="submit" value="Return to Homepage"/>
+    <jsp:attribute name="footer"></jsp:attribute>
+    <jsp:attribute name="header">
+        <form action="index.html"  align="left">
+            <input type="submit" value="Return to Homepage"/> <label>${pageTitle}</labe>
         </form>
+
     </jsp:attribute>
 </t:wrapper>

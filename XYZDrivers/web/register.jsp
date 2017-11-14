@@ -52,11 +52,13 @@
         </p>
         
     </p>
+    <p align="right">
         <input type ="submit" 
                id ="registerButton"
                value ="Register"
                name="register"
                title="Register"/>
+    </p>
 
     
     </form>
