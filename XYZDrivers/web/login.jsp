@@ -15,10 +15,10 @@
         <title>Login Page</title>
     </head>
     <body>
-        
+        <h1>Please enter your Username and Password to login:</h1>
         <form method="post" action="Login">
-            Enter username :<input type="text" name="username" /> <br>
-            Enter password :<input type="password" name="password" /> <br>
+            Enter username: <input type="text" name="username" /> <br>
+            Enter password: <input type="password" name="password" /> <br>
             <input name="button" type="submit" value="Login" />            
         </form      
 
