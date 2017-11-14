@@ -24,6 +24,10 @@
         <servlet-name>ClaimEdit</servlet-name>
         <servlet-class>com.xyzdrivers.ClaimEdit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Index</servlet-name>
+        <servlet-class>com.xyzdrivers.Index</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminDashboard</servlet-name>
         <url-pattern>/AdminDashboard</url-pattern>
@@ -48,9 +52,18 @@
         <servlet-name>ClaimEdit</servlet-name>
         <url-pattern>/AdminDashboard/ClaimEdit</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Index</servlet-name>
+        <url-pattern>/Index</url-pattern>
+        
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+     <welcome-file-list>
+        <welcome-file>Index</welcome-file>
+    </welcome-file-list>
+
 </web-app>

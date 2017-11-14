@@ -5,13 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link rel="stylesheet" type="text/css" href="styles/centered.css" />
 <link rel="stylesheet" type="text/css" href="styles/main.css" />
 <!DOCTYPE html>
 <html>
     <link href="styles/main.css" rel="stylesheet"/>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Register Page</title>
+        <title>Register</title>
     <h1>Register</h1>
     </head>
      

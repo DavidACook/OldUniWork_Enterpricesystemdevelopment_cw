@@ -1,17 +1,21 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<%-- 
+    Document   : index
+    Created on : 14-Nov-2017, 16:33:52
+    Author     : Harry
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/centered.css" />
 <html>
+    <link href="styles/main.css" rel="stylesheet"/>
     <head>
-        <title>TODO supply a title</title>
+        <title>XYZ Drivers</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>     
-        <div> Enterprise System - Home page </div>
+        <h1> Home </h1>
         
         
         

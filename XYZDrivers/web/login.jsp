@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<link href="styles/main.css" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="styles/centered.css" />
 <!DOCTYPE html>
 
 
@@ -15,11 +17,13 @@
         <title>Login Page</title>
     </head>
     <body>
-        <h1>Please enter your Username and Password to login:</h1>
+        <h1>Login:</h1>
         <form method="post" action="Login">
-            Enter username: <input type="text" name="username" /> <br>
-            Enter password: <input type="password" name="password" /> <br>
-            <input name="button" type="submit" value="Login" />            
+            <input type="text" name="username" placeholder="Username" /> <br>
+            <input type="password" name="password" placeholder="Password"/> <br>
+            <p>
+            <input name="button" type="submit" value="Login" />      
+            </p>
         </form      
 
     </body>

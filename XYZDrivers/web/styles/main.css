@@ -3,14 +3,13 @@ h1{
     text-align: center;
 }
 h3{
-    text-indent: 555px;
+    
     text-align: left;
 }
 
 body{
     font: bold 14px sans-serif;
     text-align: center;
-    
 }
 
 input[type="submit"]{
@@ -25,7 +24,7 @@ input[type="submit"]{
     cursor: pointer;
 }
 
-input[type="date"], input[type="text"], input[type="number"]{
+input[type="date"], input[type="text"], input[type="number"], input[type="password"], input[type="button"]{
     color:  black;
     box-sizing: border-box;
     width: 240px;
@@ -34,7 +33,7 @@ input[type="date"], input[type="text"], input[type="number"]{
     font: normal 13px sans-serif;
     padding: 12px;
     border: 1px solid lightgrey;
-    
+
 }
 
 input:focus{
