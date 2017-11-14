@@ -17,11 +17,11 @@
     <body>     
         <h1>XYZ Drivers</h1>
         <br>
-        <form method="get" action="/Login">
+        <form method="get" action="Login">
             <input name ="button" type="submit" value="Login"/>
         </form>
         <br>              
-        <form method="get" action="/Register">
+        <form method="get" action="Register">
          <input name ="button" type="submit" value="Register"/>   
         </form>          
     </body>
