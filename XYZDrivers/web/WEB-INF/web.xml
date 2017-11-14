@@ -20,6 +20,10 @@
         <servlet-name>MemberEdit</servlet-name>
         <servlet-class>com.xyzdrivers.MemberEdit</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ClaimEdit</servlet-name>
+        <servlet-class>com.xyzdrivers.ClaimEdit</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminDashboard</servlet-name>
         <url-pattern>/AdminDashboard</url-pattern>
@@ -38,7 +42,11 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MemberEdit</servlet-name>
-        <url-pattern>/MemberEdit</url-pattern>
+        <url-pattern>/AdminDashboard/MemberEdit</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClaimEdit</servlet-name>
+        <url-pattern>/AdminDashboard/ClaimEdit</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,11 +1,11 @@
-package com.xyzdrivers;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package com.xyzdrivers;
 
+import com.xyzdrivers.models.Claim;
 import com.xyzdrivers.models.Member;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Colin Berry
  */
-public class MemberEdit extends HttpServlet {
+public class ClaimEdit extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,11 +36,10 @@ public class MemberEdit extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        String id = request.getParameter("id");
-        System.out.println(id);
-        Member member = AdminDB.getMemberByID(id);
-        request.setAttribute("member", member);
-        RequestDispatcher view = request.getRequestDispatcher("../memberEdit.jsp");
+        int id = Integer.parseInt(request.getParameter("id"));
+        Claim claim = AdminDB.getClaimByID(id);
+        request.setAttribute("claim", claim);
+        RequestDispatcher view = request.getRequestDispatcher("../claimEdit.jsp");
         view.forward(request, response);
     }
 
@@ -56,7 +55,6 @@ public class MemberEdit extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         processRequest(request, response);
     }
 
@@ -72,24 +70,19 @@ public class MemberEdit extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
-            String id = request.getParameter("id");
-            String name = request.getParameter("name");
-            String address = request.getParameter("address");
+            int id = Integer.parseInt(request.getParameter("id"));
+            String mem_id = request.getParameter("mem_id");
 
-            String dobString = request.getParameter("dob");
-            System.out.println("DOB:" + dobString);
-            java.util.Date dobUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dobString);
-            Date dob = new Date(dobUtil.getTime());
+            String dateString = request.getParameter("date");
+            java.util.Date dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+            Date date = new Date(dateUtil.getTime());
 
-            String dorString = request.getParameter("dob");
-            java.util.Date dorUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dorString);
-            Date dor = new Date(dorUtil.getTime());
-
+            String rationale = request.getParameter("rationale");
             String status = request.getParameter("status");
-            float balance = Float.parseFloat(request.getParameter("balance"));
+            float amount = Float.parseFloat(request.getParameter("amount"));
 
-            Member member = new Member(id, name, address, dob, dor, status, balance);
-            AdminDB.updateMember(member);
+            Claim claim = new Claim(id, mem_id, date, rationale, status, amount);
+            AdminDB.updateClaim(claim);
 
         } catch (ParseException e){
             e.printStackTrace();
