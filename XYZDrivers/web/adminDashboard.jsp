@@ -7,6 +7,8 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@include file="common.jsp"%>
+<link rel="stylesheet" type="text/css" href="styles/table.css" />
+<link rel="stylesheet" type="text/css" href="styles/main.css" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
