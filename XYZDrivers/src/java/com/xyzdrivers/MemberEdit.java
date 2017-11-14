@@ -40,7 +40,7 @@ public class MemberEdit extends HttpServlet {
         System.out.println(id);
         Member member = AdminDB.getMemberByID(id);
         request.setAttribute("member", member);
-        RequestDispatcher view = request.getRequestDispatcher("../memberEdit.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("/adminEditMember.jsp");
         view.forward(request, response);
     }
 

@@ -1,0 +1,11 @@
+table {
+    border-collapse: collapse;
+}
+
+th{
+    background-color: lightgreen;
+    color: black;
+    font-weight: bold;
+    height: 50px;
+    text-align: left;
+}

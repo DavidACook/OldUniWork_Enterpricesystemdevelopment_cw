@@ -6,7 +6,9 @@
 
 <%@page import="com.xyzdrivers.models.Claim"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/edittable.css" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -23,41 +25,40 @@
     <body>
         <h1>Editing Claim</h1>
         <form onsubmit="onSubmit()" action="ClaimEdit" method="POST">
-            <% Claim claim = (Claim) request.getAttribute("claim"); %>
-            <input name="id" type="hidden" value="<%= claim.getId() %>"/>
+            <input name="id" type="hidden" value="${claim.id}"/>
             <table id="claim" border="1" cellpadding="5">
                 <tr>
                     <th>ID: </th>
-                    <td><%= claim.getId() %></td>
+                    <td><c:out value="${claim.id}"/></td>
                 </tr>
                 <tr>
                     <th>Member ID: </th>
                     <td>
-                        <input name="mem_id" type="text" value="<%= claim.getMem_id() %>"/>
+                        <input name="mem_id" type="text" value="${claim.mem_id}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>Date: </th>
                     <td>
-                        <input name="date" type="date" value="<%= claim.getDate() %>"/>
+                        <input name="date" type="date" value="${claim.date}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>Rationale: </th>
                     <td>
-                        <input name="rationale" type="text" value="<%= claim.getRationale() %>"/>
+                        <input name="rationale" type="text" value="${claim.rationale}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>Status: </th>
                     <td>
-                        <input name="status" type="text" value="<%= claim.getStatus() %>"/>
+                        <input name="status" type="text" value="${claim.status}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>Amount: </th>
                     <td>
-                        <input name="amount" type="number" value="<%= claim.getAmount() %>"/>
+                        <input name="amount" type="number" step="0.01" value="${claim.amount}"/>
                     </td>
                 </tr>
             </table>

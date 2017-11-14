@@ -6,8 +6,13 @@
 
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<<<<<<< HEAD:XYZDrivers/web/memberEdit.jsp
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/table.css" />
+=======
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+>>>>>>> colin:XYZDrivers/web/adminEditMember.jsp
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/edittable.css" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -24,47 +29,46 @@
     <body>
         <h1>Editing Member</h1>
         <form onsubmit="onSubmit()" action="MemberEdit" method="POST">
-            <% Member member = (Member) request.getAttribute("member"); %>
-            <input name="id" type="hidden" value="<%= member.getId() %>"/>
+            <input name="id" type="hidden" value="${member.id}"/>
             <table id="member" border="1" cellpadding="5">
                 <tr>
                     <th>ID: </th>
-                    <td><%= member.getId() %></td>
+                    <td><c:out value="${member.id}"/></td>
                 </tr>
                 <tr>
                     <th>Name: </th>
                     <td>
-                        <input name="name" type="text" value="<%= member.getName() %>"/>
+                        <input name="name" type="text" value="${member.name}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>Address: </th>
                     <td>
-                        <input name="address" type="text" value="<%= member.getAddress() %>"/>
+                        <input name="address" type="text" value="${member.address}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>DOB: </th>
                     <td>
-                        <input name="dob" type="date" value="<%= member.getDob()%>"/>
+                        <input name="dob" type="date" value="${member.dob}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>DOR: </th>
                     <td>
-                        <input name="dor" type="date" value="<%= member.getDor() %>"/>
+                        <input name="dor" type="date" value="${member.dor}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>Status: </th>
                     <td>
-                        <input name="status" type="text" value="<%= member.getStatus() %>"/>
+                        <input name="status" type="text" value="${member.status}"/>
                     </td>
                 </tr>
                 <tr>
                     <th>Balance: </th>
                     <td>
-                        <input name="balance" type="number" value="<%= member.getBalance() %>"/>
+                        <input name="balance" type="number" step="0.01" value="${member.balance}"/>
                     </td>
                 </tr>
             </table>
