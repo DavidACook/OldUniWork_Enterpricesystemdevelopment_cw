@@ -2,28 +2,21 @@
     Document   : adminDashboardMembers.jsp
     Created on : 13-Nov-2017, 14:47:07
     Author     : Colin Berry
+    Desc       : Lists all members, inherits adminDashboard.jsp
 --%>
-
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="adminDashboard.jsp"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" type="text/css" href="styles/table.css" />
 <link rel="stylesheet" type="text/css" href="styles/main.css" />
 <script type="text/javascript" src="javascript/jquery-3.2.1.js"></script>
 <script type="text/javascript" src="javascript/clickableTable.js"></script>
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Admin Dashboard</title>
-    </head>
     <body>
-        <h1>Admin Dashboard</h1>
-        <form action="AdminDashboard">
-            <input type="submit" name="type" value="View Members">
-            <input type="submit" name="type" value="View Claims">
-        </form>
         <form id="form" onsubmit="submitRow()" action="AdminDashboard/MemberEdit">
             <input type="submit" value="Edit Member"/>
             <table id="table">
@@ -36,22 +29,18 @@
                     <th>Status</th>
                     <th>Balance</th>
                 </tr>
-                <% for(Member m : (ArrayList<Member>) request.getAttribute("membersList")) { %>
+                <c:forEach items="${membersList}" var="member">
                 <tr>
-                    <td><%= m.getId() %></td>
-                    <td><%= m.getName() %></td>
-                    <td><%= m.getAddress() %></td>
-                    <td><%= m.getDob() %></td>
-                    <td><%= m.getDor() %></td>
-                    <td><%= m.getStatus() %></td>
-                    <td><%= m.getBalance() %></td>
+                    <td><c:out value="${member.id}"/></td>
+                    <td><c:out value="${member.name}"/></td>
+                    <td><c:out value="${member.address}"/></td>
+                    <td><c:out value="${member.dob}"/></td>
+                    <td><c:out value="${member.dor}"/></td>
+                    <td><c:out value="${member.status}"/></td>
+                    <td><c:out value="${member.balance}"/></td>
                 </tr>
-                <% } %>
+                </c:forEach>
             </table>
-            <p>
-                
-            </p>
         </form>
     </body>
 </html>
-
