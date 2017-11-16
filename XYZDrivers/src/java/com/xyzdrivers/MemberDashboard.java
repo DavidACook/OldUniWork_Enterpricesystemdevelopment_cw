@@ -32,7 +32,7 @@ public class MemberDashboard extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //String memID = request.getParameter("memID");
-        String memID = "mem-3";
+        String memID = "e-simons";
         String type = request.getParameter("type");
         String output = "";
         String jsp = "memberDashboard.jsp";
