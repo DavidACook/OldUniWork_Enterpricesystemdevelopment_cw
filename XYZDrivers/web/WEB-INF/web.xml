@@ -24,6 +24,13 @@
         <servlet-name>ClaimEdit</servlet-name>
         <servlet-class>com.xyzdrivers.ClaimEdit</servlet-class>
     </servlet>
+<<<<<<< HEAD
+=======
+    <servlet>
+        <servlet-name>MakeClaim</servlet-name>
+        <servlet-class>com.xyzdrivers.MakeClaim</servlet-class>
+    </servlet>
+>>>>>>> master
     <servlet-mapping>
         <servlet-name>AdminDashboard</servlet-name>
         <url-pattern>/AdminDashboard</url-pattern>
@@ -48,6 +55,13 @@
         <servlet-name>ClaimEdit</servlet-name>
         <url-pattern>/AdminDashboard/ClaimEdit</url-pattern>
     </servlet-mapping>
+<<<<<<< HEAD
+=======
+    <servlet-mapping>
+        <servlet-name>MakeClaim</servlet-name>
+        <url-pattern>/MakeClaim</url-pattern>
+    </servlet-mapping>
+>>>>>>> master
     <session-config>
         <session-timeout>
             30
