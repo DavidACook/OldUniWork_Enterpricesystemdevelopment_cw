@@ -14,7 +14,7 @@ body{
 
 input[type="submit"]{
     border-radius: 2px;
-    background-color:  lightgreen;
+    background-color:  cornflowerblue;
     color: white;
     font-weight: bold;
     box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
@@ -37,7 +37,7 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 }
 
 input:focus{
-    outline-color: lightgreen
+    outline-color: cornflowerblue;
 }
 
 table {

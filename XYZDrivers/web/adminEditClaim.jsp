@@ -64,7 +64,7 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" value="Save"/>
+                    <br><input type="submit" value="Save"/>
         </form>
         <form action="../AdminDashboard">
             <input type="hidden" name="type" value="View Claims"/>
