@@ -11,7 +11,7 @@ package com.xyzdrivers.models;
  */
 public class DBConnection {
     
-    public static final String HOST = "jdbc:derby://localhost:1527/xyzdrivers";
+    public static final String HOST = "jdbc:derby://localhost:1527/myUse";
     public static final String USER = "app";
     public static final String PASS = "app";
     
