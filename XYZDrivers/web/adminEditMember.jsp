@@ -12,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/centered.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/edittable.css" />
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/logo/favicon.ico" />
 <!DOCTYPE html>
 <html>
     <head>
@@ -73,7 +74,7 @@
             </table>
             <input type="submit" value="Save"/>
         </form>
-        <form action="../AdminDashboard">
+        <form action="View">
             <input type="hidden" name="type" value="View Members"/>
             <input type="submit" value="Back to Admin Dashboard"/>
         </form>

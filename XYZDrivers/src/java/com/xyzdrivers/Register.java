@@ -47,13 +47,13 @@ public class Register extends HttpServlet {
     }
 
     public void registerMember(String[] info) throws SQLException {
-        String host = "jdbc:derby://localhost:1527/Webapp";
-        String user = "root";
+        String host = "jdbc:derby://localhost:1527/myUse";
+        //String user = "root";
         Connection con = null;
 
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            con = DriverManager.getConnection(host, user, null);
+            con = DriverManager.getConnection(host, null, null);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -158,7 +158,9 @@ public class Register extends HttpServlet {
         } catch (SQLException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }  
-        processRequest(request, response);
+        RequestDispatcher view = request.getRequestDispatcher("/Index");
+        view.forward(request, response);
+        
         
     }
 

@@ -41,7 +41,7 @@ public class LoginFilter implements Filter {
             response.sendRedirect(request.getContextPath() + "/Login");
         } else {
             User user = (User) session.getAttribute("user");
-            if(user.getStatus().equals("ADMIN")){
+            if(user.getStatus().trim().toUpperCase().equals("ADMIN")){
                 chain.doFilter(req, res);
             } else {
                 response.sendRedirect(request.getContextPath() + "/Login");
