@@ -1,12 +1,11 @@
 table{
-    margin: 15px auto 0;
     width: 100%;
     border-collapse: collapse;
 }
 
 th{
     background-color: lightgreen;
-    color: white;
+    color: black;
     font-weight: bold;
     height: 50px;
     text-align: left;
