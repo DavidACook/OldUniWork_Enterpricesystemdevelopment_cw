@@ -5,6 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<<<<<<< HEAD
+<%@include file="common.jsp" %>
+<link rel="stylesheet" type="text/css" href="styles/main.css" />
+<link rel="stylesheet" type="text/css" href="styles/centered.css" />
+
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/logo/favicon.ico" />
 <!DOCTYPE html>
 <html>
@@ -30,22 +35,5 @@
                    /><br>
             <input type="submit" name="type" value="Submit Claim">
         </form>
-        <p>
-            <a id="Navigate" href="./index.html">
-                <input type="button" id="homeButton"
-                    style="
-                    background-image: url(http://cdn3.blogsdna.com/wp-content/uploads/2010/03/Windows-Phone-7-Series-Icons-Pack.png);
-                    background-repeat: no-repeat;
-                    background-position: -272px -112px;
-                    cursor:pointer;
-                    height: 40px;
-                    width: 40px;
-                    border-radius: 26px;
-                    border-style: solid;
-                    border-color:#000;
-                    border-width: 3px;" title="Navigate"
-              />
-          </a> 
-        </p>
     </body>
 </html>
