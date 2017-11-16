@@ -27,13 +27,36 @@ public class MemberDB {
         userID = memID;
     }
 
+    //This method allows the user to pay their entire outstanding balance
+    //  It checks if the user has a balance > 0
+    //  If balance is 10, type is Fee
+    //  Else type is ClaimShare
+    //IMPORTANT status is left alone as an Admin needs to approve the payment
+    //          before reinstating user
+    public void makePayment(String memID){
+        //Get member balance
+        
+        //If bal is 0, reutrn
+        //Else if bal is 10, type is Fee
+        //Else type is ClaimsShare
+        
+        //Generate paymentID
+        //Get current date
+        //Get current time
+        
+        //Generate SQL statement
+        //Run Sql statement
+        //Update member balance to 0       
+    }
+    
     //This method acts as the back end for making a claim
     //It will take mem_id, rationale and amount as input
     //It will generate id based on number of claims in CLAIMS table
     //It will get the date from the computer
     //It will set the status too APPLIED
     //TODO check user hasnt made more than two claims
-    public static void makeClaim(String memID, String rationale, double amount){
+    public static boolean makeClaim(String memID, String rationale, double amount){
+        boolean success = false;
         //Ensure ammount is x.00 format
         amount = ((double)((int)(amount*100)))/100;
         //Establish connections with database
@@ -52,39 +75,41 @@ public class MemberDB {
         }    
         try{
             if(memberCanMakeClaim(memID)){
-        //Get number of claims
-        statement = con.createStatement();
-        String sql ="SELECT COUNT(*) FROM APP.\"CLAIMS\"";
-        resultSet = statement.executeQuery(sql);
-        //id = numClaims + 
-        resultSet.next();
-        id += resultSet.getInt(1);
-        
-        //Get date from computer
-        DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
-        java.util.Date date = Calendar.getInstance().getTime();
-        String curDate = df.format(date);
-        
-        //Generate sql string
-        String sqlInsert = "INSERT INTO APP.\"CLAIMS\" "
-                        + "VALUES (" + id+ ", '" +memID+ "', '"
-                    + curDate+"', '" + rationale +"', 'APPLIED', "
-                    + Double.toString(amount) + ")";
-        //Prepare statement
-        PreparedStatement prepStat = con.prepareStatement(sqlInsert);       
-        //Execute update
-        prepStat.executeUpdate();
-        
-        //Close connections with database
-        statement.close(); 
-        prepStat.close();
-        con.close();
+                success = true;
+                //Get number of claims
+                statement = con.createStatement();
+                String sql ="SELECT COUNT(*) FROM APP.\"CLAIMS\"";
+                resultSet = statement.executeQuery(sql);
+                //id = numClaims + 
+                resultSet.next();
+                id += resultSet.getInt(1);
+
+                //Get date from computer
+                DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+                java.util.Date date = Calendar.getInstance().getTime();
+                String curDate = df.format(date);
+
+                //Generate sql string
+                String sqlInsert = "INSERT INTO APP.\"CLAIMS\" "
+                                + "VALUES (" + id+ ", '" +memID+ "', '"
+                            + curDate+"', '" + rationale +"', 'APPLIED', "
+                            + Double.toString(amount) + ")";
+                //Prepare statement
+                PreparedStatement prepStat = con.prepareStatement(sqlInsert);       
+                //Execute update
+                prepStat.executeUpdate();
+
+                //Close connections with database
+                statement.close(); 
+                prepStat.close();
+                con.close();
             }
         }
         catch (SQLException s){
             System.out.println("SQL statement is not executed!");
             s.printStackTrace();
         }
+        return success;
     }
     
     //This method checks if a member is able to make a claim
@@ -165,7 +190,7 @@ public class MemberDB {
     }
     
     //This method will be called to get a string containing the memebrs balance
-    public String checkBalance(String memID){
+    public static String checkBalance(String memID){
         Connection con = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -208,12 +233,12 @@ public class MemberDB {
     }
     
     //This method returns a list of all claims made by a certain member
-    public String listAllClaims(String memID){
+    public static String listAllClaims(String memID){
         return listAllDBAcess(true, memID);
     }
     
     //This method returns a list of all claims made by a certain member
-    public String listAllPayments(String memID){
+    public static String listAllPayments(String memID){
         return listAllDBAcess(false, memID);
     }
     
@@ -221,7 +246,7 @@ public class MemberDB {
     //all claims or all payments made by this member.
     //For claims, choice == true
     //For payments choice == false;
-    public String listAllDBAcess(boolean choice, String memID){
+    public static String listAllDBAcess(boolean choice, String memID){
         Connection con = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -260,14 +285,14 @@ public class MemberDB {
                     //Output data
                     System.out.print(temp);
                 }
-                results+="\n";
+                results+="<p>";
                 System.out.println();
             }
             //Close connections
             resultSet.close();
             statement.close(); 		
             con.close();   
-            System.out.println("\n");
+            System.out.println("<p>");
             return results;
         }
         catch (SQLException s){
@@ -278,7 +303,7 @@ public class MemberDB {
     }
      
     //This method checks if a double is in currency format i.e 2 decimals after digit
-    public boolean isCurrencyFormat(double d){
+    public static boolean isCurrencyFormat(double d){
         String text = Double.toString(Math.abs(d));
         int decimalPlaces = text.length() - text.indexOf('.') - 1;
         if(decimalPlaces <= 2)

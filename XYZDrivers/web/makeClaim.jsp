@@ -1,7 +1,7 @@
 <%-- 
-    Document   : memberDashboard
-    Created on : 06-Nov-2017, 11:26:26
-    Author     : Colin Berry
+    Document   : makeClaim
+    Created on : 16-Nov-2017, 10:46:06
+    Author     : Charles
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -9,19 +9,26 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Member Dashboard</title>
+        <title>Make Claim</title>
     </head>
     <body>
-        <h1>Welcome ${memID}</h1>
         <form method="post" action="MemberDashboard">
-            <input type="submit" name="type" value="Check Balance">
-            <input type="submit" name="type" value="View Claims">
-            <input type="submit" name="type" value="View Payments">           
+            <input type = "text"
+                   id = "raitonale"
+                   value = "" 
+                   name = "rationale"
+                   required
+                   placeholder="Enter rationale"
+                   /><br>
+            <input type = "text"
+                   id = "amount"
+                   value = "" 
+                   name = "amount"
+                   required
+                   placeholder="Enter amount"
+                   /><br>
+            <input type="submit" name="type" value="Submit Claim">
         </form>
-        <form method="post" action="MakeClaim">
-            <input type="submit" name="type" value="Make Claim">
-        </form>
-        ${output}
         <p>
             <a id="Navigate" href="./index.html">
                 <input type="button" id="homeButton"
