@@ -74,7 +74,7 @@
             </table>
             <input type="submit" value="Save"/>
         </form>
-        <form action="../AdminDashboard">
+        <form action="View">
             <input type="hidden" name="type" value="View Members"/>
             <input type="submit" value="Back to Admin Dashboard"/>
         </form>

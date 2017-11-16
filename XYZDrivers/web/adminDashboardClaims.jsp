@@ -10,8 +10,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@include file="adminDashboard.jsp"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<script type="text/javascript" src="javascript/jquery-3.2.1.js"></script>
-<script type="text/javascript" src="javascript/clickableTable.js" ></script>
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/logo/favicon.ico" />
 <!DOCTYPE html>
 <html>
