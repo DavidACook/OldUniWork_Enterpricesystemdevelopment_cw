@@ -5,6 +5,7 @@
  */
 package com.xyzdrivers;
 
+import com.xyzdrivers.models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -32,7 +34,9 @@ public class MemberDashboard extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //String memID = request.getParameter("memID");
-        String memID = request.getSession().getId();
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        String memID = user.getId();
         String type = request.getParameter("type");
         String output = "";
         String jsp = "memberDashboard.jsp";

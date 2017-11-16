@@ -9,6 +9,7 @@
 <%@include file="common.jsp"%>
 <link rel="stylesheet" type="text/css" href="styles/table.css" />
 <link rel="stylesheet" type="text/css" href="styles/main.css" />
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/logo/favicon.ico" />
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
