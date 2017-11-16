@@ -1,0 +1,43 @@
+h1{
+    font: bold sans-serif;
+    text-align: center;
+}
+h3{
+    text-indent: 555px;
+    text-align: left;
+}
+
+body{
+    font: bold 14px sans-serif;
+    text-align: center;
+    
+}
+
+input[type="submit"]{
+    border-radius: 2px;
+    background-color:  lightgreen;
+    color: white;
+    font-weight: bold;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
+    padding: 15px 35px;
+    border: 0;
+    margin: 1px auto 0;
+    cursor: pointer;
+}
+
+input[type="date"], input[type="text"]{
+    color:  black;
+    box-sizing: border-box;
+    width: 240px;
+    height: 40px;
+    box-shadow: 1px 2px 4px 0 rgba(0, 0, 0, 0.08);
+    font: normal 13px sans-serif;
+    padding: 12px;
+    border: 1px solid lightgrey;
+    
+}
+
+input:focus{
+    outline-color: lightgreen
+}
+

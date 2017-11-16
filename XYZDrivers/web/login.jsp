@@ -6,12 +6,21 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
+
+
+<!-- Testing --> 
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login Page</title>
     </head>
     <body>
-        <h1>Oh look a login page!</h1>
+        <h1>Please enter your Username and Password to login:</h1>
+        <form method="post" action="Login">
+            Enter username: <input type="text" name="username" /> <br>
+            Enter password: <input type="password" name="password" /> <br>
+            <input name="button" type="submit" value="Login" />            
+        </form      
+
     </body>
 </html>
