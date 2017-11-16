@@ -5,6 +5,7 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="com.xyzdrivers.models.User"%>
 <link href="styles/main.css" rel="stylesheet"/>
 <link rel="stylesheet" type="text/css" href="styles/centered.css" />
 <!DOCTYPE html>
@@ -24,7 +25,7 @@
             <p>
             <input name="button" type="submit" value="Login" />      
             </p>
-        </form      
+        </form>
 
     </body>
 </html>
