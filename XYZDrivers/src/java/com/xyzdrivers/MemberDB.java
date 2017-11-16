@@ -1,7 +1,7 @@
 package com.xyzdrivers;
 
+import com.xyzdrivers.models.DBConnection;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -66,7 +66,7 @@ public class MemberDB {
         int id=1;
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            con = DriverManager.getConnection("jdbc:derby://localhost:1527/myUse",null, null);
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -142,7 +142,7 @@ public class MemberDB {
         //Establish connections
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            con = DriverManager.getConnection("jdbc:derby://localhost:1527/myUse",null, null);
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -198,7 +198,7 @@ public class MemberDB {
         //Establish connections
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            con = DriverManager.getConnection("jdbc:derby://localhost:1527/myUse",null, null);
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -257,7 +257,7 @@ public class MemberDB {
         //Establish connections
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            con = DriverManager.getConnection("jdbc:derby://localhost:1527/myUse",null, null);
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
         }

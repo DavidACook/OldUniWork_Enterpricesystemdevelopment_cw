@@ -7,6 +7,7 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@include file="common.jsp"%>
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/logo/favicon.ico" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/table.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/jquery-3.2.1.js"></script>
