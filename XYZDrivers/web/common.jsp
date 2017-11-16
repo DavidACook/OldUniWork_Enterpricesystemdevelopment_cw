@@ -11,9 +11,8 @@
 <t:wrapper>
     <jsp:attribute name="footer"></jsp:attribute>
     <jsp:attribute name="header">
-        <form action="index.html"  align="left">
+        <form action="Index"  align="left">
             <input type="submit" value="Return to Homepage"/> <label>${pageTitle}</labe>
         </form>
-
     </jsp:attribute>
 </t:wrapper>
