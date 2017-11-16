@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <form id="form" onsubmit="submitRow()" action="AdminDashboard/MemberEdit">
+        <form id="form" onsubmit="submitRow()" action="MemberEdit">
             <input type="submit" value="Edit Member"/>
             <table id="table">
                 <tr>

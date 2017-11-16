@@ -13,7 +13,7 @@
 <!DOCTYPE html>
 <html>
     <body>
-        <form id="form" onsubmit="submitRow()" action="AdminDashboard/ClaimEdit">
+        <form id="form" onsubmit="submitRow()" action="ClaimEdit">
             <input type="submit" value="Edit Claim"/>
             <table id="table">
                 <tr>
