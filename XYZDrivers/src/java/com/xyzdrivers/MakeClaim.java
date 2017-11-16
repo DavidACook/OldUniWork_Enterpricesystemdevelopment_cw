@@ -15,9 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author Colin Berry
+ * @author Charles
  */
-public class MemberDashboard extends HttpServlet {
+public class MakeClaim extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,30 +31,7 @@ public class MemberDashboard extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        //String memID = request.getParameter("memID");
-        String memID = "mem-3";
-        String type = request.getParameter("type");
-        String output = "";
-        String jsp = "memberDashboard.jsp";
-        if(type != null){
-            switch(type){
-                case "Check Balance": output = "Member balance: " 
-                        + MemberDB.checkBalance(memID); break;
-                case "View Claims": output = MemberDB.listAllClaims(memID); break;
-                case "View Payments": output = MemberDB.listAllPayments(memID); break;
-                case "Submit Claim": String rationale = request.getParameter("rationale");
-                    double amount = Double.valueOf(request.getParameter("amount"));
-                    if(MemberDB.makeClaim(memID, rationale, amount))
-                        output = "Claim successfull";
-                    else
-                        output = "Claim unsuccessfull";
-                    break;
-                default: output = "error"; break;
-            }
-            request.setAttribute("output", output);
-        }
-        request.setAttribute("memID", memID);
-        RequestDispatcher view = request.getRequestDispatcher(jsp);
+        RequestDispatcher view = request.getRequestDispatcher("makeClaim.jsp");
         view.forward(request, response);
     }
 
