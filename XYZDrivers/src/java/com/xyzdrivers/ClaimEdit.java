@@ -39,7 +39,7 @@ public class ClaimEdit extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         Claim claim = AdminDB.getClaimByID(id);
         request.setAttribute("claim", claim);
-        RequestDispatcher view = request.getRequestDispatcher("../claimEdit.jsp");
+        RequestDispatcher view = request.getRequestDispatcher("/adminEditClaim.jsp");
         view.forward(request, response);
     }
 

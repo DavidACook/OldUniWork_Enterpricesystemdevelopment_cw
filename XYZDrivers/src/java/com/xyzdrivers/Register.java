@@ -41,23 +41,7 @@ public class Register extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher view = request.getRequestDispatcher("register.jsp");
         view.forward(request, response);
-        String[] info = new String[3];
-        info[0] = request.getParameter("fname").trim() + " " + request.getParameter("lname").trim();
-        info[1] = request.getParameter("addr1") + ", " + request.getParameter("addr2") + ", " + request.getParameter("addr3") + ", " + request.getParameter("addr4");
-        info[2] = request.getParameter("dob");
         
-        
-        
-        System.out.println("name: " + info[0]);
-        System.out.println("address: " + info[1]);
-        System.out.println("dob: " + info[2]);
-        
-        
-          try {
-            registerMember(info);
-        } catch (SQLException ex) {
-            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
-        }  
         
         
     }
@@ -81,13 +65,10 @@ public class Register extends HttpServlet {
         String status = "APPLIED";
         double balance = 0;
         
-        String id = generateID(name);
-        
-        
-        
+        String id = generateID(name).toLowerCase();
         
         String members = "INSERT INTO APP.MEMBERS VALUES ('" + id + "','" + name.trim() + "','" + addr.trim() + "','" + dob + "','" + registerDate + "','" + status + "'," + balance + ")";
-        String users = "INSERT INTO APP.USERS VALUES ('" + id + "','" + generatePassword() + "','" + status + "')";
+        String users = "INSERT INTO APP.USERS VALUES ('" + id + "','" + generatePassword(dob) + "','" + status + "')";
 
         Statement state;
         try {
@@ -121,15 +102,17 @@ public class Register extends HttpServlet {
         return id.toString();
     }
 
-    public String generatePassword() {
-        String chars = "AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890";
-        StringBuilder password = new StringBuilder();
-        Random ran = new Random();
-        for (int i = 0; i < 6; i++) {
-            password.append(chars.charAt(ran.nextInt(6)));
-        }
-        System.out.println("Password: " + password.toString());
-        return password.toString();
+    public String generatePassword(String dob) {
+        
+        
+        dob = dob.replaceAll("-", "");
+        
+        
+        StringBuilder password = new StringBuilder(dob.substring(2)).reverse();
+        
+        
+
+      return password.toString();
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -158,7 +141,25 @@ public class Register extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String[] info = new String[3];
+        info[0] = request.getParameter("fname").trim() + " " + request.getParameter("lname").trim();
+        info[1] = request.getParameter("addr1") + ", " + request.getParameter("addr2") + ", " + request.getParameter("addr3") + ", " + request.getParameter("addr4");
+        info[2] = request.getParameter("dob");
+        
+        
+        
+        System.out.println("name: " + info[0]);
+        System.out.println("address: " + info[1]);
+        System.out.println("dob: " + info[2]);
+        
+        
+          try {
+            registerMember(info);
+        } catch (SQLException ex) {
+            Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
+        }  
         processRequest(request, response);
+        
     }
 
     /**

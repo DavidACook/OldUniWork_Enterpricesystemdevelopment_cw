@@ -1,3 +1,4 @@
+// Selects a clicked row, removes previous selection
 $(document).ready(function() {
     $('tr').click(function() {
         $('.selected').removeClass('selected');
@@ -5,8 +6,10 @@ $(document).ready(function() {
     });
 });
 
+// When time to submit, add id of selected row to the form as a parameter
 function submitRow(){
     var id = $('.selected').children(':first').text();
+    // Prevent submission is no row is selected
     if(!id){
         alert('Select a row first.');
         event.preventDefault();
