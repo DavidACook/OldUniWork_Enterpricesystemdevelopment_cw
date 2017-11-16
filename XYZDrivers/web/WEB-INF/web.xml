@@ -17,6 +17,10 @@
         <servlet-class>com.xyzdrivers.MemberDashboard</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>MakeClaim</servlet-name>
+        <servlet-class>com.xyzdrivers.MakeClaim</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>Login</servlet-name>
         <servlet-class>com.xyzdrivers.Login</servlet-class>
     </servlet>
@@ -51,6 +55,10 @@
     <servlet-mapping>
         <servlet-name>Register</servlet-name>
         <url-pattern>/Register</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MakeClaim</servlet-name>
+        <url-pattern>/MakeClaim</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>MemberEdit</servlet-name>

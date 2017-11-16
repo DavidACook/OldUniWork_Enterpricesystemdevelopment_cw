@@ -6,6 +6,7 @@
 package com.xyzdrivers;
 
 import com.xyzdrivers.models.Claim;
+import com.xyzdrivers.models.DBConnection;
 import com.xyzdrivers.models.Member;
 import com.xyzdrivers.models.Payment;
 import java.sql.Connection;
@@ -75,13 +76,11 @@ public class AdminDB {
         System.out.println(revenue);
     }
     
-    private static final String HOST = "jdbc:derby://localhost:1527/webapp";
-    private static final String USERNAME = "app";
-    private static final String PASSWORD = "app";
+    
     
     private static Connection getConnection() throws Exception{
         Class.forName("org.apache.derby.jdbc.ClientDriver");
-        Connection con = DriverManager.getConnection(HOST, USERNAME, PASSWORD);
+        Connection con = DriverManager.getConnection(DBConnection.HOST, DBConnection.USER, DBConnection.PASS);
         return con;
     }
     
