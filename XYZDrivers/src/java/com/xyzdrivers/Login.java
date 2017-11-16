@@ -39,11 +39,10 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        RequestDispatcher view = request.getRequestDispatcher("login.jsp");
-        view.forward(request, response);
+       
+       
     }
-    
+    //finds user in database by username and password, returns the found user.
     public static User getUser(String uname, String pass){
         String dbUser, dbPass, dbStatus;
         String query = String.format("SELECT * FROM users WHERE \"id\" = '%s' AND \"password\" = '%s'",
@@ -85,6 +84,9 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+        view.forward(request, response);
         processRequest(request, response);
     }
 
@@ -99,21 +101,23 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //take values from login.jsp
         String uname = request.getParameter("username");
         String pass = request.getParameter("password");
         
         try{
             User user = getUser(uname, pass);
-            if (user != null){
-                System.out.println("FOUND USER");
-                HttpSession session = request.getSession();
+            if (user != null){ //check user exists
+                HttpSession session = request.getSession(); //create session
                 session.setAttribute("user", user);
-                
-                if(user.getStatus().equals("ADMIN")){
+                //check if user has status admin
+                if(user.getStatus().trim().toUpperCase().equals("ADMIN")){
                     response.sendRedirect(request.getContextPath() + "/AdminDashboard/View");
-                } else if(user.getStatus().equals("APPROVED")){
+                } else { //status approved or suspended go to memberdashboard
                     response.sendRedirect(request.getContextPath() + "/MemberDashboard");
                 }
+            }else{
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
             }
         } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
