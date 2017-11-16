@@ -106,7 +106,7 @@ public class Login extends HttpServlet {
         String pass = request.getParameter("password");
         
         try{
-            User user = getUser(uname, pass);
+            User user = getUser(uname, pass); //retrieve user from database if they exist
             if (user != null){ //check user exists
                 HttpSession session = request.getSession(); //create session
                 session.setAttribute("user", user);
@@ -116,7 +116,7 @@ public class Login extends HttpServlet {
                 } else { //status approved or suspended go to memberdashboard
                     response.sendRedirect(request.getContextPath() + "/MemberDashboard");
                 }
-            }else{
+            }else{ //user didn't exist, return them to home page to register.
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
             }
         } catch (Exception ex) {
