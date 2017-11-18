@@ -1,5 +1,6 @@
-// Selects a clicked row, removes previous selection
+// Add function on page load
 $(document).ready(function() {
+    // (func on table row click) Selects a clicked row, removes previous selection
     $('tr').click(function() {
         $('.selected').removeClass('selected');
         $(this).addClass('selected');
