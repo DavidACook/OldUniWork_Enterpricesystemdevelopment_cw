@@ -42,6 +42,7 @@ public class MemberDashboard extends HttpServlet {
         String jsp = "memberDashboard.jsp";
         if(type != null){
             switch(type){
+                case "Return": break;
                 case "Check Balance": output = "Member balance: " 
                         + MemberDB.checkBalance(memID); break;
                 case "View Claims": output = MemberDB.listAllClaims(memID); break;
@@ -57,6 +58,7 @@ public class MemberDashboard extends HttpServlet {
             request.setAttribute("output", output);
         }
         request.setAttribute("memID", memID);
+        request.setAttribute("name", MemberDB.getName(memID));
         RequestDispatcher view = request.getRequestDispatcher(jsp);
         view.forward(request, response);
     }

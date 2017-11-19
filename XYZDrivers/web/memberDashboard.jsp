@@ -17,13 +17,13 @@
         <title>Member Dashboard</title>
     </head>
     <body>
-        <h1>Welcome ${memID}</h1>
-        <form method="post" action="MemberDashboard">
-            <input type="submit" name="type" value="Check Balance">
+        <h1>Welcome ${name}</h1>
+        <form method="post" action="MemberDashboard">      
             <input type="submit" name="type" value="View Claims">
             <input type="submit" name="type" value="View Payments">           
             <input type="submit" name="type" value="Make Claim">
             <input type="submit" name="type" value="Make Payment">
+            <input type="submit" name="type" value="Check Balance">
         </form>
         ${output}
     </body>
