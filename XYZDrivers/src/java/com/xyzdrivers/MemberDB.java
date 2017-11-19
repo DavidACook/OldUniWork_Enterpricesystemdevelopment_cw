@@ -135,6 +135,40 @@ public class MemberDB {
         return retString;      
     }
     
+    //This method gets the users name
+    public static String getName(String memID){
+        String name = "";
+        Connection con = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        try{
+            statement = con.createStatement();
+            String sql = "SELECT \"name\" FROM APP.\"MEMBERS\""
+                    + " WHERE \"id\" = '" +memID+ "'";
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            name = resultSet.getString(1);
+            
+            statement.close(); 
+            resultSet.close();
+            con.close();
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            s.printStackTrace();
+        }
+        return name;
+    }
+    
     //This method acts as the back end for making a claim
     //It will take mem_id, rationale and amount as input
     //It will generate id based on number of claims in CLAIMS table
@@ -160,7 +194,8 @@ public class MemberDB {
             Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
         }    
         try{
-            if(memberCanMakeClaim(memID)){
+            retString += "<br>" +memberCanMakeClaim(memID)+ "</br>";
+            if(retString.equals("Claim unsuccessfull")){
                 retString = "Claim successfull";
                 //Get number of claims
                 statement = con.createStatement();
@@ -202,8 +237,8 @@ public class MemberDB {
     //A member can only make two claims a year
     //A member can only make a claim after 6 months of registration
     //A member cannot make a claim if their account has been suspended
-    public static boolean memberCanMakeClaim(String memID){
-        boolean canClaim = true;
+    public static String memberCanMakeClaim(String memID){
+        String retString = "";
         Connection con = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -244,7 +279,7 @@ public class MemberDB {
             LocalDate resultDate = resultSet.getDate(1).toLocalDate();
             resultDate.plusMonths(6);
             if(date.before(java.sql.Date.valueOf(resultDate.plusMonths(6)))){
-                canClaim = false;
+                retString = "You cannot make claims until you have been reigstered for 6 months!";
             }
                 
             //Check user hasnt made for than two claims
@@ -252,7 +287,7 @@ public class MemberDB {
             resultSet.next();
             int numClaims = resultSet.getInt(1);
             if(numClaims >= 2){
-                canClaim = false;
+                retString = "You can only make 2 claims per year!";
             }
             
             //Check user is APPROVED
@@ -260,7 +295,7 @@ public class MemberDB {
             resultSet.next();
             String memStatus = resultSet.getString(1);
             if(!memStatus.equals("APPROVED")){
-                canClaim = false;
+                retString = "You must be an APPROVED member to make claims!";
             }
             
             //Close connections
@@ -272,7 +307,7 @@ public class MemberDB {
             System.out.println("SQL statement is not executed!");
             s.printStackTrace();
         }
-        return canClaim;
+        return retString;
     }
     
     //This method will be called to get a string containing the memebrs balance
