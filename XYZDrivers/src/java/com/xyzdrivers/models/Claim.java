@@ -30,7 +30,8 @@ public class Claim {
     
     @Override
     public String toString(){
-        return String.format("ID %d - Mem_id %s - Date %s - Rationale %s - Status %s - Amount %f", id, mem_id, date, rationale, status, amount);
+        String strAmount = Float.toString(((float)((int)(amount * 100)))/100);
+        return String.format("ID %d - Mem_id %s - Date %s - Rationale %s - Status %s - Amount %s", id, mem_id, date, rationale, status, strAmount);
     }
 
     public int getId() {
