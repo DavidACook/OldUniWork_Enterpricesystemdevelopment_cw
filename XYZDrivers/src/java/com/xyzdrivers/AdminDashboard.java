@@ -9,6 +9,9 @@ import com.xyzdrivers.models.Claim;
 import com.xyzdrivers.models.Member;
 import com.xyzdrivers.models.Payment;
 import java.io.IOException;
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -43,7 +46,7 @@ public class AdminDashboard extends HttpServlet {
                 jsp = "/adminDashboardClaims.jsp";
             }
             if(type.equals("payments")){
-                ArrayList<Payment> payments = getFilteredPaymentsList(filter);
+                ArrayList<Payment> payments = getFilteredPaymentsList(filter, request);
                 request.setAttribute("paymentsList", payments);
                 jsp = "/adminDashboardPayments.jsp";
             }
@@ -76,8 +79,43 @@ public class AdminDashboard extends HttpServlet {
     private ArrayList<Claim> getFilteredClaimsList(String filter){
         return AdminDB.getAllClaims();
     }
-    private ArrayList<Payment> getFilteredPaymentsList(String filter){
-        return AdminDB.getAllPayments();
+    private ArrayList<Payment> getFilteredPaymentsList(String filter, HttpServletRequest request){
+        ArrayList<Payment> payments;
+        
+        if(filter != null){
+            switch(filter){
+                case "type":
+                    String type = request.getParameter("paymentType");
+                    payments = AdminDB.getAllPaymentsByType(type);
+                    break;
+                case "member":
+                    String id = request.getParameter("id");
+                    payments = AdminDB.getAllPaymentsByMember(id);
+                    break;
+                case "dates":
+                    try{
+                        String dateString = request.getParameter("date1");
+                        java.util.Date dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+                        Date date1 = new Date(dateUtil.getTime());
+
+
+                        dateString = request.getParameter("date2");
+                        dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+                        Date date2 = new Date(dateUtil.getTime()); 
+
+                        payments = AdminDB.getAllPaymentsBetweenDates(date1, date2);
+                    } catch (ParseException e){
+                        payments = AdminDB.getAllPayments();
+                    }
+                    break;
+                default:
+                    payments = AdminDB.getAllPayments();
+            }
+        } else {
+            payments = AdminDB.getAllPayments();
+        }
+        
+        return payments;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

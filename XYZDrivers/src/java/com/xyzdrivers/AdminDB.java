@@ -360,6 +360,78 @@ public class AdminDB {
         return paymentList;
     }
     
+    public static ArrayList<Payment> getAllPaymentsBetweenDates(Date date1, Date date2){
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("SELECT * FROM Payments WHERE \"date\" BETWEEN '%s' AND '%s'", date1, date2);
+            rs = stmt.executeQuery(query);
+            
+            return getPaymentList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return paymentList;
+    }
+    
+    public static ArrayList<Payment> getAllPaymentsByType(String type){
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("SELECT * FROM Payments WHERE \"type_of_payment\" = '%s'", type);
+            rs = stmt.executeQuery(query);
+            
+            return getPaymentList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return paymentList;
+    }
+    
+    public static ArrayList<Payment> getAllPaymentsByMember(String id){
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("SELECT * FROM Payments WHERE \"mem_id\" = '%s'", id);
+            rs = stmt.executeQuery(query);
+            
+            return getPaymentList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return paymentList;
+    }
+    
     public static void updatePayment(Payment payment){
         Connection con = null;
         Statement stmt = null;

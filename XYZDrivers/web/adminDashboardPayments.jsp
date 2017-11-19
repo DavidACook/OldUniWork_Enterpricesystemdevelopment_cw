@@ -38,6 +38,32 @@
                     </tbody>
                 </table>
             </div>
+            <div class="child">
+                <form action="View">
+                    <input type="hidden" name="type" value="payments"/>
+                    <button name="filter" class="fillbutton" value="dates">Filter Between Dates</button>
+                    <div>
+                        <input class="fillinput" name="date1" type="date" value="2015-01-01"/>
+                        <input class="fillinput" name="date2" type="date" value="2016-01-01"/>
+                    </div>
+                </form>
+                <form action="View">
+                    <input type="hidden" name="type" value="payments"/>
+                    <button name="filter" class="fillbutton" value="type">Filter by Type Of Payment</button>
+                    <select class="fillselect" name="paymentType">
+                        <option value="FEE">Fee</option>
+                        <option value="CLAIM">Claim</option>
+                    </select>
+                </form>
+                <form action="View">
+                    <input type="hidden" name="type" value="payments"/>
+                    <button name="filter" class="fillbutton" value="member">Filter by Member ID</button>
+                    <div>
+                    <input class="fillinput" type="text" name="id" placeholder="a-member"/>
+                    </div>
+                </form>
+                <form
+            </div>
         </div>
     </body>
 </html>

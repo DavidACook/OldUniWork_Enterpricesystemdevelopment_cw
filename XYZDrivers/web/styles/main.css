@@ -64,7 +64,11 @@ form{
 
 .fillselect {
     width: 90%;
-    border: 3px solid cornflowerblue;
+    border: 1px solid lightgrey;
+}
+
+.fillinput {
+    width: 90% !important
 }
 
 .footer {
