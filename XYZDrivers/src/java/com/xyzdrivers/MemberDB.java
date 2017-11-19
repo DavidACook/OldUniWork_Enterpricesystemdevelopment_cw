@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,20 +34,105 @@ public class MemberDB {
     //  Else type is ClaimShare
     //IMPORTANT status is left alone as an Admin needs to approve the payment
     //          before reinstating user
-    public void makePayment(String memID){
-        //Get member balance
-        
-        //If bal is 0, reutrn
-        //Else if bal is 10, type is Fee
-        //Else type is ClaimsShare
-        
-        //Generate paymentID
-        //Get current date
-        //Get current time
-        
-        //Generate SQL statement
-        //Run Sql statement
-        //Update member balance to 0       
+    public static String makePayment(String memID){
+        String retString = "";
+        double amount, balance = 0.0;
+        String type;
+        int id = 1;
+        DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+        Date date;
+        //Establish connections with database
+        Connection con = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+        try{
+            //Get member balance
+            String sql ="SELECT \"balance\" FROM APP.\"MEMBERS\" WHERE \"id\" = '" + memID +"'";
+            statement = con.createStatement();
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            balance = resultSet.getDouble(1);
+
+            //If bal is 0, reutrn
+            if(balance == 0.0){
+                return "No payments to be made!";
+            }
+            else{
+                //Generate query to check if memebr has made claim in last year
+                date = Calendar.getInstance().getTime();
+                Calendar dateMoreOneYear = Calendar.getInstance();
+                dateMoreOneYear.add(Calendar.YEAR, -1);
+                String curDate = df.format(dateMoreOneYear.getTime());
+                sql ="SELECT COUNT(*) FROM APP.\"PAYMENTS\" "
+                + "WHERE \"mem_id\" = '" + memID +"' "
+                + "AND \"type_of_payment\" = 'FEE' "
+                + "AND \"date\" >=  '" + curDate + "'";
+                
+                resultSet = statement.executeQuery(sql);
+                resultSet.next();
+                int numPayments = resultSet.getInt(1);
+
+                //If member has paid anual fee in last year
+                if(numPayments > 0){
+                    type = "CLAIM";
+                    amount = balance;
+                }
+                else{ 
+                    type = "FEE";
+                    amount = 10.00;
+                }
+            }
+              
+            //Generate paymentID
+            sql ="SELECT COUNT(*) FROM APP.\"PAYMENTS\"";
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            id += resultSet.getInt(1);
+ 
+            //Get current date
+            date = Calendar.getInstance().getTime();
+            Calendar dateMoreOneYear = Calendar.getInstance();
+            String curDate = df.format(dateMoreOneYear.getTime());
+            //Get current time
+            String curTime = time.format(date.getTime());
+            
+            retString = "Paying " +type+ " of " +amount;
+            
+            //Generate SQL statement
+            sql = "INSERT INTO APP.\"PAYMENTS\" "
+                + "VALUES (" +id+ ", '" +memID+ "', '"
+                + type+ "', " +Double.toString(amount)+ ", '"
+                + curDate+ "', '" +curTime+ "')";
+            PreparedStatement prepStat = con.prepareStatement(sql);       
+            prepStat.executeUpdate();
+
+            //Update member balance to 0 
+            balance -= amount;
+            sql = "UPDATE APP.\"MEMBERS\" SET \"balance\" = "+ Double.toString(balance)
+                    + " WHERE \"id\" = '" + memID +"'";
+            prepStat = con.prepareStatement(sql);       
+            prepStat.executeUpdate();
+            
+            //Close connections with database
+            statement.close(); 
+            // prepStat.close();
+            con.close();
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            s.printStackTrace();
+        }
+        return retString;      
     }
     
     //This method acts as the back end for making a claim
@@ -55,8 +141,8 @@ public class MemberDB {
     //It will get the date from the computer
     //It will set the status too APPLIED
     //TODO check user hasnt made more than two claims
-    public static boolean makeClaim(String memID, String rationale, double amount){
-        boolean success = false;
+    public static String makeClaim(String memID, String rationale, double amount){
+        String retString = "Claim unsuccessfull";
         //Ensure ammount is x.00 format
         amount = ((double)((int)(amount*100)))/100;
         //Establish connections with database
@@ -75,7 +161,7 @@ public class MemberDB {
         }    
         try{
             if(memberCanMakeClaim(memID)){
-                success = true;
+                retString = "Claim successfull";
                 //Get number of claims
                 statement = con.createStatement();
                 String sql ="SELECT COUNT(*) FROM APP.\"CLAIMS\"";
@@ -109,7 +195,7 @@ public class MemberDB {
             System.out.println("SQL statement is not executed!");
             s.printStackTrace();
         }
-        return success;
+        return retString;
     }
     
     //This method checks if a member is able to make a claim
