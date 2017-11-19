@@ -17,13 +17,13 @@
                 <table id="table">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Date of Birth</th>
-                            <th>Date of Registration</th>
-                            <th>Status</th>
-                            <th>Balance</th>
+                            <th id="header0" onclick="sortTable(0)">ID</th>
+                            <th id="header1" onclick="sortTable(1)">Name</th>
+                            <th id="header2" onclick="sortTable(2)">Address</th>
+                            <th id="header3" onclick="sortTable(3)">Date of Birth</th>
+                            <th id="header4" onclick="sortTable(4)">Date of Registration</th>
+                            <th id="header5" onclick="sortTable(5)">Status</th>
+                            <th id="header6" onclick="sortTable(6)">Balance</th>
                         </tr>
                     </thead>
                     <tbody>

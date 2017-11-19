@@ -75,7 +75,7 @@
             <input type="submit" value="Save"/>
         </form>
         <form action="View">
-            <input type="hidden" name="type" value="View Members"/>
+            <input type="hidden" name="type" value="members"/>
             <input type="submit" value="Back to Admin Dashboard"/>
         </form>
     </body>
