@@ -6,16 +6,22 @@ package com.xyzdrivers;
  * and open the template in the editor.
  */
 
+import com.xyzdrivers.models.DBConnection;
+import com.xyzdrivers.models.User;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpSession;
 /*
  *
  * @author Colin Berry
@@ -33,40 +39,19 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String user = request.getParameter("username");
-        String pass = request.getParameter("password");
-                
-        if(user.equals("admin") && pass.equals("admin")){
-            //admin doesn't need checking, gets redirected
-            RequestDispatcher rs = request.getRequestDispatcher("/AdminDashboard");
-            rs.forward(request, response);
-        }
-        else if(validateUser(user, pass)){
-            //check if user exists in database
-            request.setAttribute("memID", user);
-            RequestDispatcher rs = request.getRequestDispatcher("/MemberDashboard");
-            rs.forward(request, response);
-        }
-        else{
-            //user doesn't exist, they need to register
-            RequestDispatcher rs = request.getRequestDispatcher("/Register");
-            rs.forward(request, response);
-        }
+       
+       
     }
-    
-    public static boolean validateUser(String user, String pass){
-        boolean ch = false; //Set correct user to false.
-        String dbUser, dbPass;
-        String host = "jdbc:derby://localhost:1527/webapp";
-        String db = "app";
-        String dataPass = "app";
-        String query = "SELECT * FROM APP.users";
+    //finds user in database by username and password, returns the found user.
+    public static User getUser(String uname, String pass){
+        String dbUser, dbPass, dbStatus;
+        String query = String.format("SELECT * FROM users WHERE \"id\" = '%s' AND \"password\" = '%s'",
+                uname, pass);
  
         //Establish connections
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            Connection con = DriverManager.getConnection(host, db, dataPass);
+            Connection con = DriverManager.getConnection(DBConnection.HOST, DBConnection.USER, DBConnection.PASS);
             Statement stmt = (Statement) con.createStatement();
             stmt.executeQuery(query);
             ResultSet rs = stmt.getResultSet();
@@ -74,20 +59,19 @@ public class Login extends HttpServlet {
             while(rs.next()){
                 dbUser = rs.getString("id");
                 dbPass = rs.getString("password");
-                //if the user exists, ch is set to true and they can login.
-                if(dbUser.equals(user) && dbPass.equals(pass)){
-                    ch = true;
-                }
+                dbStatus = rs.getString("status");
+                
+                User user = new User(dbUser, dbPass, dbStatus);
+                return user;
             }
         } catch (SQLException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
- 
-        return ch;
+        return null;
     }
-
+    
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -100,6 +84,9 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        RequestDispatcher view = request.getRequestDispatcher("login.jsp");
+        view.forward(request, response);
         processRequest(request, response);
     }
 
@@ -114,6 +101,28 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        //take values from login.jsp
+        String uname = request.getParameter("username");
+        String pass = request.getParameter("password");
+        
+        try{
+            User user = getUser(uname, pass); //retrieve user from database if they exist
+            if (user != null){ //check user exists
+                HttpSession session = request.getSession(); //create session
+                session.setAttribute("user", user);
+                //check if user has status admin
+                if(user.getStatus().trim().toUpperCase().equals("ADMIN")){
+                    response.sendRedirect(request.getContextPath() + "/AdminDashboard/View");
+                } else { //status approved or suspended go to memberdashboard
+                    response.sendRedirect(request.getContextPath() + "/MemberDashboard");
+                }
+            }else{ //user didn't exist, return them to home page to register.
+                response.sendRedirect(request.getContextPath() + "/index.jsp");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }     
+        
         processRequest(request, response);
     }
 

@@ -8,7 +8,6 @@ package com.xyzdrivers;
 import com.xyzdrivers.models.Claim;
 import com.xyzdrivers.models.Member;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -37,21 +36,21 @@ public class AdminDashboard extends HttpServlet {
         
         String type = request.getParameter("type");
         System.out.println(type);
-        String jsp = "adminDashboard.jsp";
+        String jsp = "/adminDashboard.jsp";
         
         if(type != null){
             if(type.equals("View Members")){
                 ArrayList<Member> members = AdminDB.getAllMembers();
                 request.setAttribute("membersList", members);
-                jsp = "adminDashboardMembers.jsp";
+                jsp = "/adminDashboardMembers.jsp";
             }
             if(type.equals("View Claims")){
                 ArrayList<Claim> claims = AdminDB.getAllClaims();
                 request.setAttribute("claimsList", claims);
-                jsp = "adminDashboardClaims.jsp";
+                jsp = "/adminDashboardClaims.jsp";
             }
         }
-        
+        System.out.println(jsp);
         RequestDispatcher view = request.getRequestDispatcher(jsp);
         view.forward(request, response);
     }

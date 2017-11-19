@@ -7,8 +7,11 @@
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.xyzdrivers.models.Member"%>
 <%@include file="common.jsp"%>
-<link rel="stylesheet" type="text/css" href="styles/table.css" />
-<link rel="stylesheet" type="text/css" href="styles/main.css" />
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/logo/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/table.css" />
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/jquery-3.2.1.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/clickableTable.js" ></script>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <head>
@@ -18,7 +21,7 @@
 </head>
 <body>
     
-    <form action="AdminDashboard">
+    <form action="View">
         <input type="submit" name="type" value="View Members">
         <input type="submit" name="type" value="View Claims">
     </form>

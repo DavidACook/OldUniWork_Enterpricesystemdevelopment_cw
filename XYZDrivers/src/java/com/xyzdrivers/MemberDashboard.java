@@ -5,6 +5,7 @@
  */
 package com.xyzdrivers;
 
+import com.xyzdrivers.models.User;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.RequestDispatcher;
@@ -12,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /*
  *
@@ -32,28 +34,31 @@ public class MemberDashboard extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         //String memID = request.getParameter("memID");
-        String memID = "mem-3";
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        String memID = user.getId();
         String type = request.getParameter("type");
         String output = "";
         String jsp = "memberDashboard.jsp";
         if(type != null){
             switch(type){
+                case "Return": break;
                 case "Check Balance": output = "Member balance: " 
                         + MemberDB.checkBalance(memID); break;
                 case "View Claims": output = MemberDB.listAllClaims(memID); break;
                 case "View Payments": output = MemberDB.listAllPayments(memID); break;
+                case "Make Claim": jsp = "makeClaim.jsp"; break;
+                case "Make Payment": output = MemberDB.makePayment(memID); break;
                 case "Submit Claim": String rationale = request.getParameter("rationale");
                     double amount = Double.valueOf(request.getParameter("amount"));
-                    if(MemberDB.makeClaim(memID, rationale, amount))
-                        output = "Claim successfull";
-                    else
-                        output = "Claim unsuccessfull";
-                    break;
+                    output = MemberDB.makeClaim(memID, rationale, amount);    
+                    break;   
                 default: output = "error"; break;
             }
             request.setAttribute("output", output);
         }
         request.setAttribute("memID", memID);
+        request.setAttribute("name", MemberDB.getName(memID));
         RequestDispatcher view = request.getRequestDispatcher(jsp);
         view.forward(request, response);
     }
