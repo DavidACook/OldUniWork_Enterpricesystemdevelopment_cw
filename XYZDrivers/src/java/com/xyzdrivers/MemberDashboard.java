@@ -46,13 +46,12 @@ public class MemberDashboard extends HttpServlet {
                         + MemberDB.checkBalance(memID); break;
                 case "View Claims": output = MemberDB.listAllClaims(memID); break;
                 case "View Payments": output = MemberDB.listAllPayments(memID); break;
+                case "Make Claim": jsp = "makeClaim.jsp"; break;
+                case "Make Payment": output = MemberDB.makePayment(memID); break;
                 case "Submit Claim": String rationale = request.getParameter("rationale");
                     double amount = Double.valueOf(request.getParameter("amount"));
-                    if(MemberDB.makeClaim(memID, rationale, amount))
-                        output = "Claim successfull";
-                    else
-                        output = "Claim unsuccessfull";
-                    break;
+                    output = MemberDB.makeClaim(memID, rationale, amount);    
+                    break;   
                 default: output = "error"; break;
             }
             request.setAttribute("output", output);

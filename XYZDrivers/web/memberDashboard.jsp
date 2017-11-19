@@ -22,9 +22,8 @@
             <input type="submit" name="type" value="Check Balance">
             <input type="submit" name="type" value="View Claims">
             <input type="submit" name="type" value="View Payments">           
-        </form>
-        <form method="post" action="MakeClaim">
             <input type="submit" name="type" value="Make Claim">
+            <input type="submit" name="type" value="Make Payment">
         </form>
         ${output}
     </body>
