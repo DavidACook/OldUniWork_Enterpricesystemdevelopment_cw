@@ -17,12 +17,12 @@
                     <table id="table">
                         <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Member ID</th>
-                                <th>Date</th>
-                                <th>Rationale</th>
-                                <th>Status</th>
-                                <th>Amount</th>
+                                <th id="header0" onclick="sortTable(0)">ID</th>
+                                <th id="header1" onclick="sortTable(1)">Member ID</th>
+                                <th id="header2" onclick="sortTable(2)">Date</th>
+                                <th id="header3" onclick="sortTable(3)">Rationale</th>
+                                <th id="header4" onclick="sortTable(4)">Status</th>
+                                <th id="header5" onclick="sortTable(5)">Amount</th>
                             </tr>
                         </thead>
                         <tbody>

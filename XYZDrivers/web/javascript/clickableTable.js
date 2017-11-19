@@ -56,6 +56,7 @@ function headerSelect(column){
     header = $(id);
     order = 'asc';
     
+    // Toggle asc or desc for selected header
     if(header.hasClass('asc') || header.hasClass('desc')){
         header.toggleClass('asc');
         header.toggleClass('desc');
@@ -64,6 +65,7 @@ function headerSelect(column){
         header.addClass('asc');
     }
     
+    // Remove class from any different headers
     $('.asc:not(' + id + ')').removeClass('asc');
     $('.desc:not(' + id + ')').removeClass('desc');
     return order;
