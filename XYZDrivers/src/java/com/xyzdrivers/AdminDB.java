@@ -524,7 +524,7 @@ public class AdminDB {
             }
         }//End loop
     }
-      
+
     //This method returns 1 if the member has paid their fee for the year
         //or 0 if they havent
     private static int memberPaidFee(String memID){

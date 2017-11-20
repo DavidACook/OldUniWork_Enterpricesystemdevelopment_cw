@@ -66,6 +66,7 @@
                     </td>
                 </tr>
             </table>
+            <input type="hidden" name="type" value="member"/>
             <input type="submit" value="Save"/>
         </form>
         <form action="View">
