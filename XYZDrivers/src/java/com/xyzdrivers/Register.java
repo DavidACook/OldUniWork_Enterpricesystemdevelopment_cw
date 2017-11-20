@@ -5,6 +5,7 @@
  */
 package com.xyzdrivers;
 
+import com.xyzdrivers.models.DBConnection;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -47,13 +48,12 @@ public class Register extends HttpServlet {
     }
 
     public void registerMember(String[] info) throws SQLException {
-        String host = "jdbc:derby://localhost:1527/myUse";
         //String user = "root";
         Connection con = null;
 
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-            con = DriverManager.getConnection(host, null, null);
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(Register.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -63,7 +63,7 @@ public class Register extends HttpServlet {
         String dob = info[2];
         LocalDate registerDate = LocalDate.now();
         String status = "APPLIED";
-        double balance = 0;
+        double balance = 10;
         
         String id = generateID(name).toLowerCase();
         

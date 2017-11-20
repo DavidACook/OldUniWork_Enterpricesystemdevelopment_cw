@@ -33,7 +33,11 @@
                    required
                    placeholder="Enter amount"
                    /><br>
-            <input type="submit" name="type" value="Submit Claim">
+            
+            <input type="submit" name="type" value="Submit Claim"> 
+        </form>
+        <form method="post" action="MemberDashboard">
+            <input type="submit" value="Return">
         </form>
     </body>
 </html>

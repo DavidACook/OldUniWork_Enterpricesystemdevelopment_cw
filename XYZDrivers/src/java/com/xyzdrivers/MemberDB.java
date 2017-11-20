@@ -12,9 +12,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
+import com.xyzdrivers.models.Claim;
+import com.xyzdrivers.models.Payment;
+import java.util.ArrayList;
 /**
  *  This class will supply the back end functionality for the member dash board.
  *  It will provide the bridge between the UI and the database
@@ -33,20 +36,139 @@ public class MemberDB {
     //  Else type is ClaimShare
     //IMPORTANT status is left alone as an Admin needs to approve the payment
     //          before reinstating user
-    public void makePayment(String memID){
-        //Get member balance
-        
-        //If bal is 0, reutrn
-        //Else if bal is 10, type is Fee
-        //Else type is ClaimsShare
-        
-        //Generate paymentID
-        //Get current date
-        //Get current time
-        
-        //Generate SQL statement
-        //Run Sql statement
-        //Update member balance to 0       
+    public static String makePayment(String memID){
+        String retString = "";
+        double amount, balance = 0.0;
+        String type;
+        int id = 1;
+        DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+        SimpleDateFormat time = new SimpleDateFormat("HH:mm:ss");
+        Date date;
+        //Establish connections with database
+        Connection con = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+        try{
+            //Get member balance
+            String sql ="SELECT \"balance\" FROM APP.\"MEMBERS\" WHERE \"id\" = '" + memID +"'";
+            statement = con.createStatement();
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            balance = resultSet.getDouble(1);
+
+            //If bal is 0, reutrn
+            if(balance == 0.0){
+                return "No payments to be made!";
+            }
+            else{
+                //Generate query to check if memebr has made claim in last year
+                date = Calendar.getInstance().getTime();
+                Calendar dateMoreOneYear = Calendar.getInstance();
+                dateMoreOneYear.add(Calendar.YEAR, -1);
+                String curDate = df.format(dateMoreOneYear.getTime());
+                sql ="SELECT COUNT(*) FROM APP.\"PAYMENTS\" "
+                + "WHERE \"mem_id\" = '" + memID +"' "
+                + "AND \"type_of_payment\" = 'FEE' "
+                + "AND \"date\" >=  '" + curDate + "'";
+                
+                resultSet = statement.executeQuery(sql);
+                resultSet.next();
+                int numPayments = resultSet.getInt(1);
+
+                //If member has paid anual fee in last year
+                if(numPayments > 0){
+                    type = "CLAIM";
+                    amount = balance;
+                }
+                else{ 
+                    type = "FEE";
+                    amount = 10.00;
+                }
+            }
+              
+            //Generate paymentID
+            sql ="SELECT COUNT(*) FROM APP.\"PAYMENTS\"";
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            id += resultSet.getInt(1);
+ 
+            //Get current date
+            date = Calendar.getInstance().getTime();
+            Calendar dateMoreOneYear = Calendar.getInstance();
+            String curDate = df.format(dateMoreOneYear.getTime());
+            //Get current time
+            String curTime = time.format(date.getTime());
+            
+            retString = "Paying " +type+ " of " +amount;
+            
+            //Generate SQL statement
+            sql = "INSERT INTO APP.\"PAYMENTS\" "
+                + "VALUES (" +id+ ", '" +memID+ "', '"
+                + type+ "', " +Double.toString(amount)+ ", '"
+                + curDate+ "', '" +curTime+ "')";
+            PreparedStatement prepStat = con.prepareStatement(sql);       
+            prepStat.executeUpdate();
+
+            //Update member balance to 0 
+            balance -= amount;
+            sql = "UPDATE APP.\"MEMBERS\" SET \"balance\" = "+ Double.toString(balance)
+                    + " WHERE \"id\" = '" + memID +"'";
+            prepStat = con.prepareStatement(sql);       
+            prepStat.executeUpdate();
+            
+            //Close connections with database
+            statement.close(); 
+            prepStat.close();
+            con.close();
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            s.printStackTrace();
+        }
+        return retString;      
+    }
+    
+    //This method gets the users name
+    public static String getName(String memID){
+        String name = "";
+        Connection con = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        try{
+            statement = con.createStatement();
+            String sql = "SELECT \"name\" FROM APP.\"MEMBERS\""
+                    + " WHERE \"id\" = '" +memID+ "'";
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            name = resultSet.getString(1);
+            
+            statement.close(); 
+            resultSet.close();
+            con.close();
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            s.printStackTrace();
+        }
+        return name;
     }
     
     //This method acts as the back end for making a claim
@@ -55,8 +177,8 @@ public class MemberDB {
     //It will get the date from the computer
     //It will set the status too APPLIED
     //TODO check user hasnt made more than two claims
-    public static boolean makeClaim(String memID, String rationale, double amount){
-        boolean success = false;
+    public static String makeClaim(String memID, String rationale, double amount){
+        String retString = "Claim unsuccessfull";
         //Ensure ammount is x.00 format
         amount = ((double)((int)(amount*100)))/100;
         //Establish connections with database
@@ -74,8 +196,9 @@ public class MemberDB {
             Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
         }    
         try{
-            if(memberCanMakeClaim(memID)){
-                success = true;
+            retString += memberCanMakeClaim(memID);
+            if(retString.equals("Claim unsuccessfull")){
+                retString = "Claim successfull";
                 //Get number of claims
                 statement = con.createStatement();
                 String sql ="SELECT COUNT(*) FROM APP.\"CLAIMS\"";
@@ -109,15 +232,15 @@ public class MemberDB {
             System.out.println("SQL statement is not executed!");
             s.printStackTrace();
         }
-        return success;
+        return retString;
     }
     
     //This method checks if a member is able to make a claim
     //A member can only make two claims a year
     //A member can only make a claim after 6 months of registration
     //A member cannot make a claim if their account has been suspended
-    public static boolean memberCanMakeClaim(String memID){
-        boolean canClaim = true;
+    public static String memberCanMakeClaim(String memID){
+        String retString = "";
         Connection con = null;
         Statement statement = null;
         ResultSet resultSet = null;
@@ -158,7 +281,7 @@ public class MemberDB {
             LocalDate resultDate = resultSet.getDate(1).toLocalDate();
             resultDate.plusMonths(6);
             if(date.before(java.sql.Date.valueOf(resultDate.plusMonths(6)))){
-                canClaim = false;
+                retString = "<br>You cannot make claims until you have been reigstered for 6 months!";
             }
                 
             //Check user hasnt made for than two claims
@@ -166,7 +289,8 @@ public class MemberDB {
             resultSet.next();
             int numClaims = resultSet.getInt(1);
             if(numClaims >= 2){
-                canClaim = false;
+                System.out.println();
+                retString = "<br>You can only make 2 claims per year!";
             }
             
             //Check user is APPROVED
@@ -174,7 +298,7 @@ public class MemberDB {
             resultSet.next();
             String memStatus = resultSet.getString(1);
             if(!memStatus.equals("APPROVED")){
-                canClaim = false;
+                retString = "<br>You must be an APPROVED member to make claims!";
             }
             
             //Close connections
@@ -186,7 +310,7 @@ public class MemberDB {
             System.out.println("SQL statement is not executed!");
             s.printStackTrace();
         }
-        return canClaim;
+        return retString;
     }
     
     //This method will be called to get a string containing the memebrs balance
@@ -231,30 +355,15 @@ public class MemberDB {
         }
         return "";
     }
-    
-    //This method returns a list of all claims made by a certain member
-    public static String listAllClaims(String memID){
-        return listAllDBAcess(true, memID);
-    }
-    
-    //This method returns a list of all claims made by a certain member
-    public static String listAllPayments(String memID){
-        return listAllDBAcess(false, memID);
-    }
-    
-    //This methods establishes a connection with the database and lists either 
-    //all claims or all payments made by this member.
-    //For claims, choice == true
-    //For payments choice == false;
-    public static String listAllDBAcess(boolean choice, String memID){
+   
+    //This method accesses the database, searches for all Claims from 
+        //a specific member. It then returns these as an arrayList
+    public static ArrayList<Claim> getClaimList(String memID){
+        ArrayList<Claim> claimList = new ArrayList<>();
         Connection con = null;
         Statement statement = null;
-        ResultSet resultSet = null;
-        String results = "", temp = "";
-        String sql = (choice)?
-                "SELECT * FROM APP.\"CLAIMS\" WHERE \"mem_id\" = '" + memID +"'":
-                "SELECT * FROM APP.\"PAYMENTS\" WHERE \"mem_id\" = '" + memID +"'";
-        //Establish connections
+        ResultSet rs = null;
+        
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
             con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
@@ -265,43 +374,71 @@ public class MemberDB {
             Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
         }    
         try{
-            //Get Data
+            String sql = "SELECT * FROM APP.\"CLAIMS\" "
+                    + "WHERE \"mem_id\" = '" + memID + "'";
             statement = con.createStatement();
-            resultSet = statement.executeQuery(sql);        
-            ResultSetMetaData metaData =  resultSet.getMetaData();
-            int numberOfColumns = metaData.getColumnCount();
-            //Print collum names
-            for (int i = 1; i <= numberOfColumns; i++)   
-                System.out.print(metaData.getColumnName(i)+"\t\t");     
-            System.out.println();
-
-            //Get data from result set
-            while (resultSet.next()) {
-                for (int i = 1; i <= numberOfColumns; i++){
-                    //Get data
-                    temp = resultSet.getObject(i) +"\t\t";
-                    //Update return string
-                    results += temp;
-                    //Output data
-                    System.out.print(temp);
-                }
-                results+="<p>";
-                System.out.println();
-            }
-            //Close connections
-            resultSet.close();
-            statement.close(); 		
-            con.close();   
-            System.out.println("<p>");
-            return results;
+            rs = statement.executeQuery(sql);
+            
+            //Create Claim objects
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String mem_id = rs.getString("mem_id");
+                java.sql.Date date = rs.getDate("date");
+                String rationale = rs.getString("rationale");
+                String status = rs.getString("status");
+                float amount = rs.getFloat("amount");
+                Claim claim = new Claim(id, mem_id, date, rationale, status, amount);
+                claimList.add(claim);     
+            } 
         }
         catch (SQLException s){
             System.out.println("SQL statement is not executed!");
             s.printStackTrace();
         }
-        return results;
+        return claimList;
     }
-     
+    
+    public static ArrayList<Payment> getPaymentList(String memID){
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        Connection con = null;
+        Statement statement = null;
+        ResultSet rs = null;
+        
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+        try{
+            String sql = "SELECT * FROM APP.\"PAYMENTS\" "
+                    + "WHERE \"mem_id\" = '" + memID + "'";
+            statement = con.createStatement();
+            rs = statement.executeQuery(sql);
+            
+        
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String mem_id = rs.getString("mem_id");
+                String type = rs.getString("type_of_payment");
+                float amount = rs.getFloat("amount");
+                java.sql.Date date = rs.getDate("date");
+                java.sql.Time time = rs.getTime("time");
+                         
+                Payment payment = new Payment(id, mem_id, type, amount, date, time);
+                paymentList.add(payment);     
+            } 
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            s.printStackTrace();
+        }
+        return paymentList;
+    }
+    
     //This method checks if a double is in currency format i.e 2 decimals after digit
     public static boolean isCurrencyFormat(double d){
         String text = Double.toString(Math.abs(d));
