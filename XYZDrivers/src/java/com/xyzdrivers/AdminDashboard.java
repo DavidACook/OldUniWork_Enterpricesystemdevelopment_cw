@@ -72,6 +72,9 @@ public class AdminDashboard extends HttpServlet {
                 case "outstanding":
                     members = AdminDB.getAllMembersOutstanding();
                     break;
+                case "applied":
+                    members = AdminDB.getAllMembersByStatus("APPLIED");
+                    break;
                 default:
                     members = AdminDB.getAllMembers();
             }

@@ -43,13 +43,17 @@
             </div>
             <div class="child">
                 <input type="hidden" name="type" value="member"/>
-                <button name="action" class="fillbutton" value="edit">Edit Member</button>
+                <button class="fillbutton">Edit Member</button>
                 <div><button name="action" class="fillbutton" value="approve">Approve Member</button></div>
                 <button name="action" class="fillbutton" value="reject">Suspend Member</button>
                 </form>
                 <form action="View">
                     <input type="hidden" name="type" value="members"/>
                     <button name="filter" class="fillbutton" value="outstanding">Filter Outstanding Members</button>
+                </form>
+                <form action="View">
+                    <input type="hidden" name="type" value="members"/>
+                    <button name="filter" class="fillbutton" value="applied">Filter Applied Members</button>
                 </form>
                 <form action="View">
                     <input type="hidden" name="type" value="members"/>
