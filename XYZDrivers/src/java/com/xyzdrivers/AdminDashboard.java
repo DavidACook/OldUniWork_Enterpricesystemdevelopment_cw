@@ -34,28 +34,51 @@ public class AdminDashboard extends HttpServlet {
         String jsp = "/adminDashboard.jsp";
         String filter = request.getParameter("filter");
         
-        if(type != null){
-            if(type.equals("fees")){
-                AdminDB.applyAnnualFees();
-                type = "members";
-                jsp = "/adminDashboardMembers.jsp";
+        try{
+            if(type != null){
+                if(type.equals("fees")){
+                    AdminDB.applyAnnualFees();
+                    type = "members";
+                    jsp = "/adminDashboardMembers.jsp";
+                }
+                if(type.equals("turnover")){
+                    String dateString = request.getParameter("date1");
+                    java.util.Date dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+                    Date date1 = new Date(dateUtil.getTime());
+
+                    dateString = request.getParameter("date2");
+                    dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+                    Date date2 = new Date(dateUtil.getTime()); 
+                    
+                    float revenue = AdminDB.getRevenue(date1, date2);
+                    float expenditure = AdminDB.getExpenditure(date1, date2);
+                    float turnover = revenue - expenditure;
+                    
+                    request.setAttribute("revenue", revenue);
+                    request.setAttribute("expenditure", expenditure);
+                    request.setAttribute("turnover", turnover);
+                    jsp = "/adminDashboardTurnover.jsp";
+                }
+                if(type.equals("members")){
+                    ArrayList<Member> members = getFilteredMembersList(filter, request);
+                    request.setAttribute("membersList", members);
+                    jsp = "/adminDashboardMembers.jsp";
+                }
+                if(type.equals("claims")){
+                    ArrayList<Claim> claims = getFilteredClaimsList(filter, request);
+                    request.setAttribute("claimsList", claims);
+                    jsp = "/adminDashboardClaims.jsp";
+                }
+                if(type.equals("payments")){
+                    ArrayList<Payment> payments = getFilteredPaymentsList(filter, request);
+                    request.setAttribute("paymentsList", payments);
+                    jsp = "/adminDashboardPayments.jsp";
+                } 
             }
-            if(type.equals("members")){
-                ArrayList<Member> members = getFilteredMembersList(filter, request);
-                request.setAttribute("membersList", members);
-                jsp = "/adminDashboardMembers.jsp";
-            }
-            if(type.equals("claims")){
-                ArrayList<Claim> claims = getFilteredClaimsList(filter, request);
-                request.setAttribute("claimsList", claims);
-                jsp = "/adminDashboardClaims.jsp";
-            }
-            if(type.equals("payments")){
-                ArrayList<Payment> payments = getFilteredPaymentsList(filter, request);
-                request.setAttribute("paymentsList", payments);
-                jsp = "/adminDashboardPayments.jsp";
-            } 
+        } catch (Exception e){
+            
         }
+        
         System.out.println(jsp);
         RequestDispatcher view = request.getRequestDispatcher(jsp);
         view.forward(request, response);

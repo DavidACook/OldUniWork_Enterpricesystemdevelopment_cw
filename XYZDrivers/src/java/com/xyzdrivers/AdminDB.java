@@ -465,29 +465,24 @@ public class AdminDB {
     }
     
     // Overload function to deal with the 'other' Date format
-    public static float getAnnualRevenue(java.util.Date date){
-        Date newDate = new Date(date.getTime());
-        return getAnnualRevenue(newDate);
+    public static float getRevenue(java.util.Date date1, java.util.Date date2){
+        Date newDate1 = new Date(date1.getTime());
+        Date newDate2 = new Date(date2.getTime());
+        return getRevenue(newDate1, newDate2);
     }
     
-    public static float getAnnualRevenue(Date date){
+    public static float getRevenue(Date date1, Date date2){
         float totalRevenue = 0;
         Connection con = null;
         Statement stmt = null;
         ResultSet rs = null;
-
-        // Set end date to a year from now
-        Calendar cal = Calendar.getInstance();
-        cal.setTimeInMillis(date.getTime());
-        cal.add(Calendar.YEAR, 1);
-        Date nextYear = new Date(cal.getTimeInMillis());
         
         try {
             con = getConnection();
             
             stmt = con.createStatement();
-            String query = String.format("SELECT * FROM Payments WHERE "
-                    + "\"date\" BETWEEN '%s' AND '%s'", date.toString(), nextYear.toString());
+            String query = String.format("SELECT * FROM Claims WHERE "
+                    + "\"date\" BETWEEN '%s' AND '%s'", date1.toString(), date2.toString());
             rs = stmt.executeQuery(query);
             
             while(rs.next()){
@@ -495,6 +490,43 @@ public class AdminDB {
             }
             
             return totalRevenue;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return 0;
+        
+    }
+    
+    // Overload function to deal with the 'other' Date format
+    public static float getExpenditure(java.util.Date date1, java.util.Date date2){
+        Date newDate1 = new Date(date1.getTime());
+        Date newDate2 = new Date(date2.getTime());
+        return getExpenditure(newDate1, newDate2);
+    }
+    
+    public static float getExpenditure(Date date1, Date date2){
+        float totalExpenditure = 0;
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try {
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("SELECT * FROM Claims WHERE \"status\" = 'ACCEPTED' AND "
+                    + "\"date\" BETWEEN '%s' AND '%s'", date1.toString(), date2.toString());
+            rs = stmt.executeQuery(query);
+            
+            while(rs.next()){
+                totalExpenditure += rs.getFloat("amount");
+            }
+            
+            return totalExpenditure;
             
         } catch (Exception e) {
             e.printStackTrace();
