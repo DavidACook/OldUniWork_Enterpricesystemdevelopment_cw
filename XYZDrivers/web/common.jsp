@@ -11,7 +11,8 @@
 <t:wrapper>
     <jsp:attribute name="footer"></jsp:attribute>
     <jsp:attribute name="header">
-        <form action="Index"  align="left">
+        <form action="${pageContext.request.contextPath}/Index"  align="left">
+            <input type="hidden" name="logout" value="true"/>
             <input type="submit" value="Return to Homepage"/> <label>${pageTitle}</labe>
         </form>
     </jsp:attribute>

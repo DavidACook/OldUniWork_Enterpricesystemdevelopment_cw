@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -34,6 +35,11 @@ public class Index extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         RequestDispatcher rs = request.getRequestDispatcher("index.jsp");
         rs.forward(request, response);
+        
+        if(request.getParameter("logout") != null){
+            HttpSession session = request.getSession();
+            session.invalidate();
+        }
 
     }
 

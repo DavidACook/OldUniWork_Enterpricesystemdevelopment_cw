@@ -5,7 +5,11 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@include file="common.jsp" %>
+<link rel="stylesheet" type="text/css" href="styles/main.css" />
+<link rel="stylesheet" type="text/css" href="styles/centered.css" />
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/logo/favicon.ico" />
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -13,32 +17,14 @@
         <title>Member Dashboard</title>
     </head>
     <body>
-        <h1>Welcome ${memID}</h1>
-        <form method="post" action="MemberDashboard">
-            <input type="submit" name="type" value="Check Balance">
+        <h1>Welcome ${name}</h1>
+        <form method="post" action="MemberDashboard">      
             <input type="submit" name="type" value="View Claims">
             <input type="submit" name="type" value="View Payments">           
-        </form>
-        <form method="post" action="MakeClaim">
             <input type="submit" name="type" value="Make Claim">
+            <input type="submit" name="type" value="Make Payment">
+            <input type="submit" name="type" value="Check Balance">
         </form>
         ${output}
-        <p>
-            <a id="Navigate" href="./index.html">
-                <input type="button" id="homeButton"
-                    style="
-                    background-image: url(http://cdn3.blogsdna.com/wp-content/uploads/2010/03/Windows-Phone-7-Series-Icons-Pack.png);
-                    background-repeat: no-repeat;
-                    background-position: -272px -112px;
-                    cursor:pointer;
-                    height: 40px;
-                    width: 40px;
-                    border-radius: 26px;
-                    border-style: solid;
-                    border-color:#000;
-                    border-width: 3px;" title="Navigate"
-              />
-          </a> 
-        </p>
     </body>
 </html>
