@@ -481,7 +481,7 @@ public class AdminDB {
             con = getConnection();
             
             stmt = con.createStatement();
-            String query = String.format("SELECT * FROM Claims WHERE "
+            String query = String.format("SELECT * FROM Payments WHERE "
                     + "\"date\" BETWEEN '%s' AND '%s'", date1.toString(), date2.toString());
             rs = stmt.executeQuery(query);
             
@@ -518,7 +518,7 @@ public class AdminDB {
             con = getConnection();
             
             stmt = con.createStatement();
-            String query = String.format("SELECT * FROM Claims WHERE \"status\" = 'ACCEPTED' AND "
+            String query = String.format("SELECT * FROM Claims WHERE \"status\" = 'APPROVED' AND "
                     + "\"date\" BETWEEN '%s' AND '%s'", date1.toString(), date2.toString());
             rs = stmt.executeQuery(query);
             
