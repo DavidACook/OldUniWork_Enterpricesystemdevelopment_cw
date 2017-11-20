@@ -517,33 +517,14 @@ public class AdminDB {
                 //If(Count Payments Type-Fee in last year == 0)
                 if(memberPaidFee(member.getId()) == 0){
                     //Set Balance to 10
-                    addMemberFee(member.getId());
+                    member.setBalance((float)10.00);
+                    member.setStatus("SUSPENDED");
+                    updateMember(member);
                 }    
             }
         }//End loop
     }
-    
-    //This method adds the users annual fee of 10.00
-    private static void addMemberFee(String memID){
-        Connection con = null;
-        
-        try{
-            con = getConnection();
-            String sql ="UPDATE APP.\"MEMBERS\" "
-                    + "SET \"balance\" = 10.00 "
-                    + "WHERE \"id\" = '" +memID+ "'";
-            PreparedStatement prepStat = con.prepareStatement(sql);       
-            prepStat.executeUpdate();
-             
-            prepStat.close();
-            con.close();
-        }
-        catch (Exception s){
-            System.out.println("SQL statement is not executed!");
-            s.printStackTrace();
-        }  
-    }
-    
+
     //This method returns 1 if the member has paid their fee for the year
         //or 0 if they havent
     private static int memberPaidFee(String memID){
