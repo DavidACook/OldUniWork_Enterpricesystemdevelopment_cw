@@ -43,7 +43,9 @@
             </div>
             <div class="child">
                 <input type="hidden" name="type" value="member"/>
-                <input type="submit" class="fillbutton" value="Edit Member"/>
+                <button name="action" class="fillbutton" value="edit">Edit Member</button>
+                <div><button name="action" class="fillbutton" value="approve">Approve Member</button></div>
+                <button name="action" class="fillbutton" value="reject">Suspend Member</button>
                 </form>
                 <form action="View">
                     <input type="hidden" name="type" value="members"/>

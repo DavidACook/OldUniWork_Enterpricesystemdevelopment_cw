@@ -526,16 +526,9 @@ public class AdminDB {
     //This method adds the users annual fee of 10.00
     private static void addMemberFee(String memID){
         Connection con = null;
-        try {
-            Class.forName("org.apache.derby.jdbc.ClientDriver");
-            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(AdminDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-         catch (SQLException ex) {
-            Logger.getLogger(AdminDB.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try{;
+        
+        try{
+            con = getConnection();
             String sql ="UPDATE APP.\"MEMBERS\" "
                     + "SET \"balance\" = 10.00 "
                     + "WHERE \"id\" = '" +memID+ "'";
@@ -545,7 +538,7 @@ public class AdminDB {
             prepStat.close();
             con.close();
         }
-        catch (SQLException s){
+        catch (Exception s){
             System.out.println("SQL statement is not executed!");
             s.printStackTrace();
         }  

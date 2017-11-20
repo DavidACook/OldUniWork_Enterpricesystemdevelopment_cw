@@ -78,7 +78,7 @@ public class AdminEdit extends HttpServlet {
                             return;
                         case "reject":
                             member = AdminDB.getMemberByID(id);
-                            member.setStatus("REJECTED");
+                            member.setStatus("SUSPENDED");
                             AdminDB.updateMember(member);
                             response.sendRedirect("View?type=members");
                             return;
