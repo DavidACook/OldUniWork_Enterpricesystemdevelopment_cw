@@ -50,6 +50,10 @@ public class AdminDashboard extends HttpServlet {
                 request.setAttribute("paymentsList", payments);
                 jsp = "/adminDashboardPayments.jsp";
             }
+            if(type.equals("fees")){
+                AdminDB.applyAnnualFees();
+                jsp = "/adminDashboard.jsp";
+            }
         }
         System.out.println(jsp);
         RequestDispatcher view = request.getRequestDispatcher(jsp);
