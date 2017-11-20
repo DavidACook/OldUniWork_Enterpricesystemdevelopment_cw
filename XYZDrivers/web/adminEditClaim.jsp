@@ -18,15 +18,9 @@
         <title>Edit Claim</title>
     </head>
     
-    <script>
-        function onSubmit(){
-            alert("Saved Claim Data");
-        }
-    </script>
-    
     <body>
         <h1>Editing Claim</h1>
-        <form onsubmit="onSubmit()" action="ClaimEdit" method="POST">
+        <form onsubmit="alert('Saved Claim Data')" action="Edit" method="POST">
             <input name="id" type="hidden" value="${claim.id}"/>
             <table id="claim" border="1" cellpadding="5">
                 <tr>
@@ -67,7 +61,7 @@
                     <br><input type="submit" value="Save"/>
         </form>
         <form action="View">
-            <input type="hidden" name="type" value="View Claims"/>
+            <input type="hidden" name="type" value="claims"/>
             <input type="submit" value="Back to Admin Dashboard"/>
         </form>
     </body>

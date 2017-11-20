@@ -20,15 +20,9 @@
         <title>Edit Member</title>
     </head>
     
-    <script>
-        function onSubmit(){
-            alert("Saved Member Data");
-        }
-    </script>
-    
     <body>
         <h1>Editing Member</h1>
-        <form onsubmit="onSubmit()" action="MemberEdit" method="POST">
+        <form onsubmit="alert('Saved Member Data')" action="Edit" method="POST">
             <input name="id" type="hidden" value="${member.id}"/>
             <table id="member" border="1" cellpadding="5">
                 <tr>
@@ -75,7 +69,7 @@
             <input type="submit" value="Save"/>
         </form>
         <form action="View">
-            <input type="hidden" name="type" value="View Members"/>
+            <input type="hidden" name="type" value="members"/>
             <input type="submit" value="Back to Admin Dashboard"/>
         </form>
     </body>

@@ -29,12 +29,8 @@
         <servlet-class>com.xyzdrivers.Register</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>MemberEdit</servlet-name>
-        <servlet-class>com.xyzdrivers.MemberEdit</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ClaimEdit</servlet-name>
-        <servlet-class>com.xyzdrivers.ClaimEdit</servlet-class>
+        <servlet-name>Edit</servlet-name>
+        <servlet-class>com.xyzdrivers.AdminEdit</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>Index</servlet-name>
@@ -61,12 +57,8 @@
         <url-pattern>/MakeClaim</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>MemberEdit</servlet-name>
-        <url-pattern>/AdminDashboard/MemberEdit</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>ClaimEdit</servlet-name>
-        <url-pattern>/AdminDashboard/ClaimEdit</url-pattern>
+        <servlet-name>Edit</servlet-name>
+        <url-pattern>/AdminDashboard/Edit</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>Index</servlet-name>

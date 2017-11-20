@@ -24,60 +24,6 @@ import java.util.Calendar;
  */
 public class AdminDB {
     
-    public static void main(String[] args) {
-        System.out.println(" MEMBERS ");
-        System.out.println("\nList");
-        ArrayList<Member> memberList = getAllMembers();
-        for(Member m : memberList){
-            System.out.println(m);
-        }
-        
-        Member member = getMemberByID("m-wood");
-        System.out.println("\nBy ID");
-        System.out.println(member);
-        
-        System.out.println("\nUpdate");
-        member.setBalance(member.getBalance() + 1);
-        updateMember(member);
-        member = getMemberByID("m-wood");
-        System.out.println(member);
-        
-        System.out.println("\n CLAIMS ");
-        System.out.println("\nList");
-        ArrayList<Claim> claims = getAllClaims();
-        for(Claim c : claims){
-            System.out.println(c);
-        }
-        
-        System.out.println("\nList By ID");
-        claims = getAllClaimsByMember("me-aydin");
-        for(Claim c : claims){
-            System.out.println(c);
-        }
-        
-        System.out.println("\nList By Status");
-        claims = getAllClaimsByStatus("APPROVED");
-        for(Claim c : claims){
-            System.out.println(c);
-        }
-        
-        System.out.println("\nUpdate");
-        Claim claim = claims.get(0);
-        claim.setAmount(claim.getAmount() + 1);
-        updateClaim(claim);
-        claims = getAllClaimsByStatus("APPROVED");
-        System.out.println(claims.get(0));
-        
-        System.out.println("\nAnnual Revenue");
-        Calendar cal = Calendar.getInstance();
-        cal.set(2016, 0, 1);
-        Date yearAgo = new Date(cal.getTimeInMillis());
-        float revenue = getAnnualRevenue(yearAgo);
-        System.out.println(revenue);
-    }
-    
-    
-    
     private static Connection getConnection() throws Exception{
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         Connection con = DriverManager.getConnection(DBConnection.HOST, DBConnection.USER, DBConnection.PASS);
@@ -390,7 +336,7 @@ public class AdminDB {
         return null;
     }
     
-    public ArrayList<Payment> getAllPayments(){
+    public static ArrayList<Payment> getAllPayments(){
         ArrayList<Payment> paymentList = new ArrayList<>();
         Connection con = null;
         Statement stmt = null;
@@ -414,7 +360,7 @@ public class AdminDB {
         return paymentList;
     }
     
-    public static ArrayList<Payment> getAllPaymentsUnapproved(){
+    public static ArrayList<Payment> getAllPaymentsBetweenDates(Date date1, Date date2){
         ArrayList<Payment> paymentList = new ArrayList<>();
         Connection con = null;
         Statement stmt = null;
@@ -424,7 +370,55 @@ public class AdminDB {
             con = getConnection();
             
             stmt = con.createStatement();
-            String query = "SELECT * FROM Payments WHERE \"";
+            String query = String.format("SELECT * FROM Payments WHERE \"date\" BETWEEN '%s' AND '%s'", date1, date2);
+            rs = stmt.executeQuery(query);
+            
+            return getPaymentList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return paymentList;
+    }
+    
+    public static ArrayList<Payment> getAllPaymentsByType(String type){
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("SELECT * FROM Payments WHERE \"type_of_payment\" = '%s'", type);
+            rs = stmt.executeQuery(query);
+            
+            return getPaymentList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return paymentList;
+    }
+    
+    public static ArrayList<Payment> getAllPaymentsByMember(String id){
+        ArrayList<Payment> paymentList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            String query = String.format("SELECT * FROM Payments WHERE \"mem_id\" = '%s'", id);
             rs = stmt.executeQuery(query);
             
             return getPaymentList(rs);
