@@ -35,6 +35,11 @@ public class AdminDashboard extends HttpServlet {
         String filter = request.getParameter("filter");
         
         if(type != null){
+            if(type.equals("fees")){
+                AdminDB.applyAnnualFees();
+                type = "members";
+                jsp = "/adminDashboardMembers.jsp";
+            }
             if(type.equals("members")){
                 ArrayList<Member> members = getFilteredMembersList(filter, request);
                 request.setAttribute("membersList", members);
@@ -49,11 +54,7 @@ public class AdminDashboard extends HttpServlet {
                 ArrayList<Payment> payments = getFilteredPaymentsList(filter, request);
                 request.setAttribute("paymentsList", payments);
                 jsp = "/adminDashboardPayments.jsp";
-            }
-            if(type.equals("fees")){
-                AdminDB.applyAnnualFees();
-                jsp = "/adminDashboard.jsp";
-            }
+            } 
         }
         System.out.println(jsp);
         RequestDispatcher view = request.getRequestDispatcher(jsp);
