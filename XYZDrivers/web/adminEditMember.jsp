@@ -4,7 +4,7 @@
     Author     : Colin Berry
 --%>
 
-<%@page import="com.xyzdrivers.models.Member"%>
+<%@include file="common.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/table.css" />
 =======
@@ -66,9 +66,12 @@
                     </td>
                 </tr>
             </table>
+            <br/>
+            <input type="hidden" name="type" value="member"/>
             <input type="submit" value="Save"/>
         </form>
         <form action="View">
+            <br/>
             <input type="hidden" name="type" value="members"/>
             <input type="submit" value="Back to Admin Dashboard"/>
         </form>

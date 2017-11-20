@@ -58,13 +58,13 @@ public class AdminEdit extends HttpServlet {
                             AdminDB.updateClaim(claim);
                             response.sendRedirect("View?type=claims");
                             return;
-                        default:
-                            claim = AdminDB.getClaimByID(id);
-                            request.setAttribute("claim", claim);
-                            RequestDispatcher view = request.getRequestDispatcher("/adminEditClaim.jsp");
-                            view.forward(request, response);
-                            return;
                     }
+                } else {
+                    claim = AdminDB.getClaimByID(id);
+                    request.setAttribute("claim", claim);
+                    RequestDispatcher view = request.getRequestDispatcher("/adminEditClaim.jsp");
+                    view.forward(request, response);
+                    return;
                 }
             } else if(type.equals("member")) {
                 String id = request.getParameter("id");
@@ -78,22 +78,22 @@ public class AdminEdit extends HttpServlet {
                             return;
                         case "reject":
                             member = AdminDB.getMemberByID(id);
-                            member.setStatus("REJECTED");
+                            member.setStatus("SUSPENDED");
                             AdminDB.updateMember(member);
                             response.sendRedirect("View?type=members");
                             return;
-                        default:
-                            member = AdminDB.getMemberByID(id);
-                            request.setAttribute("member", member);
-                            RequestDispatcher view = request.getRequestDispatcher("/adminEditMember.jsp");
-                            view.forward(request, response);
-                            return;
                     }
+                } else {
+                    member = AdminDB.getMemberByID(id);
+                    request.setAttribute("member", member);
+                    RequestDispatcher view = request.getRequestDispatcher("/adminEditMember.jsp");
+                    view.forward(request, response);
+                    return;
                 }
             }
         }
         
-        response.sendRedirect("View?type=claims");
+        response.sendRedirect("View");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -122,25 +122,60 @@ public class AdminEdit extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try{
-            int id = Integer.parseInt(request.getParameter("id"));
-            String mem_id = request.getParameter("mem_id");
+        String type = request.getParameter("type");
+        if(type != null){
+            if(type.equals("claim")){
+                try{
+                    int id = Integer.parseInt(request.getParameter("id"));
+                    String mem_id = request.getParameter("mem_id");
 
-            String dateString = request.getParameter("date");
-            java.util.Date dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
-            Date date = new Date(dateUtil.getTime());
+                    String dateString = request.getParameter("date");
+                    java.util.Date dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+                    Date date = new Date(dateUtil.getTime());
 
-            String rationale = request.getParameter("rationale");
-            String status = request.getParameter("status");
-            float amount = Float.parseFloat(request.getParameter("amount"));
+                    String rationale = request.getParameter("rationale");
+                    String status = request.getParameter("status");
+                    float amount = Float.parseFloat(request.getParameter("amount"));
 
-            Claim claim = new Claim(id, mem_id, date, rationale, status, amount);
-            AdminDB.updateClaim(claim);
+                    Claim claim = new Claim(id, mem_id, date, rationale, status, amount);
+                    AdminDB.updateClaim(claim);
 
-        } catch (ParseException e){
-            e.printStackTrace();
+                } catch (ParseException e){
+                    e.printStackTrace();
+                } 
+                response.sendRedirect("View?type=claims");
+                return;
+                
+            } else if(type.equals("member")){
+                try{
+                    String id = request.getParameter("id");
+                    String name = request.getParameter("name");
+                    String address = request.getParameter("address");
+
+                    String dateString = request.getParameter("dob");
+                    java.util.Date dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+                    Date dob = new Date(dateUtil.getTime());
+                    
+                    dateString = request.getParameter("dor");
+                    dateUtil = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
+                    Date dor = new Date(dateUtil.getTime());
+
+                    String status = request.getParameter("status");
+                    float balance = Float.parseFloat(request.getParameter("balance"));
+
+                    Member member = new Member(id, name, address, dob, dor, status, balance);
+                    AdminDB.updateMember(member);
+
+                } catch (ParseException e){
+                    e.printStackTrace();
+                } 
+                response.sendRedirect("View?type=members");
+                return;
+                
+            }
         }
-        processRequest(request, response);
+        
+        response.sendRedirect("View");
     }
 
     /**
