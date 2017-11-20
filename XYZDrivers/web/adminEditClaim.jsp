@@ -58,7 +58,8 @@
                     </td>
                 </tr>
             </table>
-                    <br><input type="submit" value="Save"/>
+            <input type="hidden" name="type" value="claim"/>
+            <input type="submit" value="Save"/>
         </form>
         <form action="View">
             <input type="hidden" name="type" value="claims"/>

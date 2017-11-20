@@ -41,7 +41,7 @@
             </div>
             <div>
                 <input type="hidden" name="type" value="claim"/>
-                <button name="action" class="fillbutton" value="edit"/>Edit Claim</button>
+                <button class="fillbutton"/>Edit Claim</button>
                 <div><button name="action" class="fillbutton" onclick="return confirm('Approve this claim?')" value="approve"/>Approve Claim</button></div>
                 <button name="action" class="fillbutton" onclick="return confirm('Reject this claim?')" value="reject"/>Reject Claim</button>
             </form>
