@@ -13,7 +13,7 @@
     <body>
         <div class="parent">
             <div class="childtable">
-            <form id="form" onsubmit="submitRow()" action="MemberEdit">
+            <form id="form" onsubmit="submitRow()" action="Edit">
                 <table id="table">
                     <thead>
                         <tr>
@@ -42,21 +42,28 @@
                 </table>
             </div>
             <div class="child">
-            <input type="submit" class="fillbutton" value="Edit Member"/>
-            </form>
-            <form action="View">
-                <input type="hidden" name="type" value="members"/>
-                <button name="filter" class="fillbutton" value="outstanding">Filter Outstanding Members</button>
-            </form>
-            <form action="View">
-                <input type="hidden" name="type" value="members"/>
-                <button name="filter" class="fillbutton" value="status">Filter By Status</button>
-                <select class="fillselect" name="status">
-                    <option value="APPROVED">Approved</option>
-                    <option value="SUSPENDED">Suspended</option>
-                    <option value="APPLIED">Applied</option>
-                </select>
-            </form>
+                <input type="hidden" name="type" value="member"/>
+                <button class="fillbutton">Edit Member</button>
+                <div><button name="action" class="fillbutton" value="approve">Approve Member</button></div>
+                <button name="action" class="fillbutton" value="reject">Suspend Member</button>
+                </form>
+                <form action="View">
+                    <input type="hidden" name="type" value="members"/>
+                    <button name="filter" class="fillbutton" value="outstanding">Filter Outstanding Members</button>
+                </form>
+                <form action="View">
+                    <input type="hidden" name="type" value="members"/>
+                    <button name="filter" class="fillbutton" value="applied">Filter Applied Members</button>
+                </form>
+                <form action="View">
+                    <input type="hidden" name="type" value="members"/>
+                    <button name="filter" class="fillbutton" value="status">Filter By Status</button>
+                    <select class="fillselect" name="status">
+                        <option value="APPROVED">Approved</option>
+                        <option value="SUSPENDED">Suspended</option>
+                        <option value="APPLIED">Applied</option>
+                    </select>
+                </form>
             </div>
         </div>
     </body>

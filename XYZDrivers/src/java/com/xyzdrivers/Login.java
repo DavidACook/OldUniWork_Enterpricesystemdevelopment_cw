@@ -117,7 +117,7 @@ public class Login extends HttpServlet {
                     response.sendRedirect(request.getContextPath() + "/MemberDashboard");
                 }
             }else{ //user didn't exist, return them to home page to register.
-                response.sendRedirect(request.getContextPath() + "/index.jsp");
+                response.sendRedirect(request.getContextPath() + "/Index");
             }
         } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);

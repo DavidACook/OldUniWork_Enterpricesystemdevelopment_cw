@@ -4,7 +4,7 @@
     Author     : Colin Berry
 --%>
 
-<%@page import="com.xyzdrivers.models.Claim"%>
+<%@include file="common.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
@@ -58,7 +58,8 @@
                     </td>
                 </tr>
             </table>
-                    <br><input type="submit" value="Save"/>
+            <input type="hidden" name="type" value="claim"/>
+            <input type="submit" value="Save"/>
         </form>
         <form action="View">
             <input type="hidden" name="type" value="claims"/>
