@@ -22,5 +22,6 @@
         <button name="type" value="members">View All Members</button>
         <button name="type" value="claims">View All Claims</button>
         <button name="type" value="payments">View All Payments</button>
+        <button name="type" value="fees">Apply annual member Fees</button>
     </form>
 </body>
