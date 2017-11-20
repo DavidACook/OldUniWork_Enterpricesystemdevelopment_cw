@@ -13,7 +13,7 @@
     <body>
         <div class="parent">
             <div class="childtable">
-                <form id="form" onsubmit="submitRow()" action="ClaimEdit">
+                <form id="form" onsubmit="submitRow()" action="Edit">
                     <table id="table">
                         <thead>
                             <tr>
@@ -40,7 +40,10 @@
                     </table>
             </div>
             <div>
-                <input type="submit" class="fillbutton" value="Edit Claim"/>
+                <input type="hidden" name="type" value="claim"/>
+                <button name="action" class="fillbutton" value="edit"/>Edit Claim</button>
+                <div><button name="action" class="fillbutton" onclick="return confirm('Approve this claim?')" value="approve"/>Approve Claim</button></div>
+                <button name="action" class="fillbutton" onclick="return confirm('Reject this claim?')" value="reject"/>Reject Claim</button>
             </form>
                 <form action="View">
                     <input type="hidden" name="type" value="claims"/>
@@ -50,6 +53,11 @@
                         <option name="applied">Applied</option>
                         <option name="rejected">Rejected</option>
                     </select>
+                </form>
+                <form action="View">
+                    <input type="hidden" name="type" value="claims"/>
+                    <button name="filter" class="fillbutton" value="member">Filter by Member ID</button>
+                    <input type="text" class="fillinput" name="id" placeholder="a-member"/>
                 </form>
             </div>
         </div>

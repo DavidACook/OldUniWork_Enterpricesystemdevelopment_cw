@@ -41,7 +41,7 @@ public class AdminDashboard extends HttpServlet {
                 jsp = "/adminDashboardMembers.jsp";
             }
             if(type.equals("claims")){
-                ArrayList<Claim> claims = getFilteredClaimsList(filter);
+                ArrayList<Claim> claims = getFilteredClaimsList(filter, request);
                 request.setAttribute("claimsList", claims);
                 jsp = "/adminDashboardClaims.jsp";
             }
@@ -76,8 +76,27 @@ public class AdminDashboard extends HttpServlet {
         
         return members;
     }
-    private ArrayList<Claim> getFilteredClaimsList(String filter){
-        return AdminDB.getAllClaims();
+    private ArrayList<Claim> getFilteredClaimsList(String filter, HttpServletRequest request){
+        ArrayList<Claim> claims;
+        
+        if(filter != null){
+            switch(filter){
+                case "member":
+                    String mem_id = request.getParameter("id");
+                    claims = AdminDB.getAllClaimsByMember(mem_id);
+                    break;
+                case "status":
+                    String status = request.getParameter("status");
+                    claims = AdminDB.getAllClaimsByStatus(status);
+                    break;
+                default:
+                    claims = AdminDB.getAllClaims();
+            }
+        } else {
+            claims = AdminDB.getAllClaims();
+        }
+        
+        return claims;
     }
     private ArrayList<Payment> getFilteredPaymentsList(String filter, HttpServletRequest request){
         ArrayList<Payment> payments;
