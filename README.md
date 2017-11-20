@@ -1,38 +1,15 @@
-## Welcome to GitHub Pages
+University Computer Science Project- The development of a Java Enterprise System.
+Due Date: 30th of Nov
+------------------------------------------------------
+We are to design and build a system using JSP/Servlets using MVC on a Java EE such as Glassfish server - with a local Java DB Relational database backend. Then demonstrate and discuss our working system using the Netbeans IDE.
 
-You can use the [editor on GitHub](https://github.com/DavidACook/esd_cw/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+The scenario is as follows;
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+XYZ Drivers Association decides to set up a solidarity fund to subsidise members for minor accidents so that the members can avoid making claims to Insurance companies. The association provides a certain amount of subsidy once a claim is made, and sums up all claims made to the end of each year. The members are expected to pay annual membership fee and the allocated portion of the total annual charge from lumpsum of the claims.  The charges are allocated annually. Members will be able to make claims after 6 months of their membership, be allowed to make maximum 2 claims per year, and will not be supported if these circumstances are not met. 
 
-### Markdown
+The Association aims to own a web application (WebApp) to streamline its business processes and help for a smooth administration. The WebApp will let a member log on (register first if required), pay fees and outstanding balances, and be able to make a claim. Registrations for membership require personal information including name, address, date of birth, and date of registration of the applicants. (A web service may be used for address lookup purposes). Once this information is submitted, the system should record it and confirm a provisional membership returning a user name and automatically generated password as well as charging him/her with annual membership fee. Once the membership fee is paid and been confirmed by the office (admin), the person is upgraded to full membership level. Members are suspended if they did not pay annual fee and charges, and will be allowed to resume their membership once they cleared outstanding balances.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+An administrator is expected to process outstanding operations raised by the full members including confirmation of the payments, charge the members based on annual lumpsum and membership fee, and assess the eligibility of the members for the outstanding claims. They require having some facilities to browse through the list of members, search for members based on provided particular information. 
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-#### Header 4
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/DavidACook/esd_cw/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+------
+To be signed off:
