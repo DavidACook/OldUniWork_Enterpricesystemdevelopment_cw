@@ -63,7 +63,7 @@ public class Register extends HttpServlet {
         String dob = info[2];
         LocalDate registerDate = LocalDate.now();
         String status = "APPLIED";
-        double balance = 0;
+        double balance = 10;
         
         String id = generateID(name).toLowerCase();
         
