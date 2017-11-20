@@ -12,11 +12,17 @@ import com.xyzdrivers.models.Payment;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -498,5 +504,129 @@ public class AdminDB {
         
         return 0;
         
+    }
+    
+    //Code for applying member annual fees
+    public static void applyAnnualFees(){
+        //Get List of members
+        ArrayList<Member> memList = getMemberList();
+        //For Every Member
+        for(Member member : memList){
+            //IF Balance == 0
+            if(member.getBalance() == 0.0){
+                //If(Count Payments Type-Fee in last year == 0)
+                if(memberPaidFee(member.getId()) == 0){
+                    //Set Balance to 10
+                    addMemberFee(member.getId());
+                }    
+            }
+        }//End loop
+    }
+    
+    //This method adds the users annual fee of 10.00
+    private static void addMemberFee(String memID){
+        Connection con = null;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(AdminDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try{;
+            String sql ="UPDATE APP.\"MEMBERS\" "
+                    + "SET \"balance\" = 10.00 "
+                    + "WHERE \"id\" = '" +memID+ "'";
+            PreparedStatement prepStat = con.prepareStatement(sql);       
+            prepStat.executeUpdate();
+             
+            prepStat.close();
+            con.close();
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            s.printStackTrace();
+        }  
+    }
+    
+    //This method returns 1 if the member has paid their fee for the year
+        //or 0 if they havent
+    private static int memberPaidFee(String memID){
+        Connection con = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        int numFees = 0;
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(AdminDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try{
+            statement = con.createStatement();
+            DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+            java.util.Date date = Calendar.getInstance().getTime();
+            Calendar dateMoreOneYear = Calendar.getInstance();
+            dateMoreOneYear.add(Calendar.YEAR, -1);
+            String curDate = df.format(dateMoreOneYear.getTime());
+            String sql ="SELECT COUNT(*) FROM APP.\"PAYMENTS\" "
+                    + "WHERE \"mem_id\" = '" + memID +"' "
+                    + "AND \"type_of_payment\" = 'FEE' "
+                    + "AND \"date\" >=  '" + curDate + "'";
+            resultSet = statement.executeQuery(sql);
+            resultSet.next();
+            numFees = resultSet.getInt(1);
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            s.printStackTrace();
+        }     
+        return numFees;    
+    }
+    
+    //This returns an array list of all members
+    private static ArrayList<Member> getMemberList(){
+        ArrayList<Member> memberList = new ArrayList<>();
+        Connection con = null;
+        Statement statement = null;
+        ResultSet rs = null;
+        
+        try {
+            Class.forName("org.apache.derby.jdbc.ClientDriver");
+            con = DriverManager.getConnection(DBConnection.HOST,DBConnection.USER,DBConnection.PASS);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(AdminDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+         catch (SQLException ex) {
+            Logger.getLogger(AdminDB.class.getName()).log(Level.SEVERE, null, ex);
+        }    
+        try{
+            String sql = "SELECT * FROM APP.\"MEMBERS\" ";
+            statement = con.createStatement();
+            rs = statement.executeQuery(sql);
+            
+            //Create Member objects
+            while(rs.next()){
+                String memID = rs.getString("id");
+                String name = rs.getString("name");
+                String address = rs.getString("address");
+                java.sql.Date dob = rs.getDate("dob");
+                java.sql.Date dor = rs.getDate("dor"); 
+                String status = rs.getString("status");
+                float balance = rs.getFloat("balance");
+                Member member = new Member(memID, name, address, dob, dor, status, balance);
+                memberList.add(member);     
+            } 
+        }
+        catch (SQLException s){
+            System.out.println("SQL statement is not executed!");
+            s.printStackTrace();
+        }
+        return memberList;
     }
 }
