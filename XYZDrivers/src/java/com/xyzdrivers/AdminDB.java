@@ -549,7 +549,8 @@ public class AdminDB {
                 //If(Count Payments Type-Fee in last year == 0)
                 if(memberPaidFee(member.getId()) == 0){
                     //Set Balance to 10
-                    member.setBalance((float)10.00);
+                    float newBalance = member.getBalance() + (float)10.00;
+                    member.setBalance(newBalance);
                     member.setStatus("SUSPENDED");
                     updateMember(member);
                 }    
@@ -634,5 +635,72 @@ public class AdminDB {
             s.printStackTrace();
         }
         return memberList;
+    }
+    
+    //This method is to be run once a year
+        //it gets a list of approved claims in the last year
+        //It then totals up the amount for these Claims
+        //It then updates every memebrs balance with the share their owe
+    public static void annualClaimDistribution(){
+        //Get Approved Claims for this year
+        ArrayList<Claim> claimList = getThisYearApprovedClaims();
+        
+        //Total = 0
+        float total = (float)0.0;
+        //Loop through claims
+        for(Claim claim : claimList){
+            //Total = Total + Claim.amount
+            total += claim.getAmount();
+            claim.setStatus("CHARGED");
+            updateClaim(claim);
+        }//End Loop
+        
+        //Get list of members
+        ArrayList<Member> memberList = getAllMembers();
+        
+        //share is Total / number of members
+        float share = ((float)((int)((total/memberList.size()) *100)))/100;
+        
+        //Loop through members
+        for(Member member: memberList){
+            //Update memebr balacne = balance + share
+            float newBalance = member.getBalance() + share;
+            member.setBalance(newBalance);
+            member.setStatus("SUSPENDED");
+            updateMember(member);
+        }//End Loop
+    }
+    
+    //This method gets all the APPROVED claims for the last year
+    public static ArrayList<Claim> getThisYearApprovedClaims(){
+        ArrayList<Claim> claimList = new ArrayList<>();
+        Connection con = null;
+        Statement stmt = null;
+        ResultSet rs = null;
+        
+        DateFormat df = new SimpleDateFormat("YYYY-MM-dd");
+        java.util.Date date = Calendar.getInstance().getTime();
+        Calendar dateMoreOneYear = Calendar.getInstance();
+        dateMoreOneYear.add(Calendar.YEAR, -1);
+        String curDate = df.format(dateMoreOneYear.getTime());
+        String sql ="SELECT * FROM APP.\"CLAIMS\" "
+                + "WHERE \"status\" = 'APPROVED' "
+                + "AND \"date\" >=  '" + curDate + "'";
+        
+        try{
+            con = getConnection();
+            
+            stmt = con.createStatement();
+            rs = stmt.executeQuery(sql);
+            
+            claimList = getClaimList(rs);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection(con, stmt, rs);
+        }
+        
+        return claimList;
     }
 }

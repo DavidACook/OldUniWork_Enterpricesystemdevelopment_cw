@@ -49,15 +49,20 @@
                     <input type="hidden" name="type" value="claims"/>
                     <button name="filter" class="fillbutton" value="status">Filter by Status</button>
                     <select name="status" class="fillselect">
-                        <option name="approved">Approved</option>
-                        <option name="applied">Applied</option>
-                        <option name="rejected">Rejected</option>
+                        <option value="APPROVED">Approved</option>
+                        <option value="APPLIED">Applied</option>
+                        <option value="REJECTED">Rejected</option>
+                        <option value="CHARGED">Charged</option>
                     </select>
                 </form>
                 <form action="View">
                     <input type="hidden" name="type" value="claims"/>
                     <button name="filter" class="fillbutton" value="member">Filter by Member ID</button>
                     <input type="text" class="fillinput" name="id" placeholder="a-member"/>
+                </form>
+                <form action="View">
+                    <input type="hidden" name="type" value="chargeClaims"/>
+                    <button class="fillbutton">Annual claim charges</button>
                 </form>
             </div>
         </div>
