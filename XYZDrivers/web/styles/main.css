@@ -13,6 +13,7 @@ body{
 }
 
 input[type="submit"], button{
+input[type="submit"]{
     border-radius: 2px;
     background-color:  cornflowerblue;
     color: white;
