@@ -107,12 +107,11 @@ public class Register extends HttpServlet {
         
         dob = dob.replaceAll("-", "");
         
-        
-        StringBuilder password = new StringBuilder(dob.substring(2)).reverse();
+     
         
         
 
-      return password.toString();
+      return dob;
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
