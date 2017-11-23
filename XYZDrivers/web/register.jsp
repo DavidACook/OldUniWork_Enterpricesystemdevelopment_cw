@@ -42,7 +42,7 @@
         <h3>Address:</h3>
          
             <input type="text" id="addr1Text" name="addr1" required placeholder="Street"/><br>            
-            <input type="text" id="addr2Text" name="addr2" required placeholder="Town"/><br>
+            <input type="text" id="addr2Text" name="addr2" placeholder="Town"/><br>
             <input type="text" id="addr3Text" name="addr3" required placeholder="City"/><br>
             <input type="text" id="addr4Text" name="addr4" required placeholder="Post Code"/><br>
             
