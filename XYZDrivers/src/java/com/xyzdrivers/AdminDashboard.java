@@ -39,7 +39,10 @@ public class AdminDashboard extends HttpServlet {
                 if(type.equals("fees")){
                     AdminDB.applyAnnualFees();
                     type = "members";
-                    jsp = "/adminDashboardMembers.jsp";
+                }
+                if(type.equals("chargeClaims")){
+                    AdminDB.annualClaimDistribution();
+                    type = "claims";
                 }
                 if(type.equals("turnover")){
                     String dateString = request.getParameter("date1");
