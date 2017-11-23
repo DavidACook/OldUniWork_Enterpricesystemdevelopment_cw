@@ -13,6 +13,8 @@
     <jsp:attribute name="header">
         <form action="${pageContext.request.contextPath}/Index"  align="left">
             <input type="hidden" name="logout" value="true"/>
+
+            <input type="submit" value="Logout"/> <label>${pageTitle}</labe>
             <input class="wrapper" type="submit" value="Return to Homepage"/> <label>${pageTitle}</labe>
         </form>
     </jsp:attribute>

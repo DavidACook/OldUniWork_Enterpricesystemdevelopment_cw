@@ -127,7 +127,7 @@ public class MemberDB {
             
             //Close connections with database
             statement.close(); 
-            // prepStat.close();
+            prepStat.close();
             con.close();
         }
         catch (SQLException s){
@@ -196,7 +196,7 @@ public class MemberDB {
             Logger.getLogger(MemberDB.class.getName()).log(Level.SEVERE, null, ex);
         }    
         try{
-            retString += "<br>" +memberCanMakeClaim(memID)+ "</br>";
+            retString += memberCanMakeClaim(memID);
             if(retString.equals("Claim unsuccessfull")){
                 retString = "Claim successfull";
                 //Get number of claims
@@ -281,7 +281,7 @@ public class MemberDB {
             LocalDate resultDate = resultSet.getDate(1).toLocalDate();
             resultDate.plusMonths(6);
             if(date.before(java.sql.Date.valueOf(resultDate.plusMonths(6)))){
-                retString = "You cannot make claims until you have been reigstered for 6 months!";
+                retString = "<br>You cannot make claims until you have been reigstered for 6 months!";
             }
                 
             //Check user hasnt made for than two claims
@@ -289,7 +289,8 @@ public class MemberDB {
             resultSet.next();
             int numClaims = resultSet.getInt(1);
             if(numClaims >= 2){
-                retString = "You can only make 2 claims per year!";
+                System.out.println();
+                retString = "<br>You can only make 2 claims per year!";
             }
             
             //Check user is APPROVED
@@ -297,7 +298,7 @@ public class MemberDB {
             resultSet.next();
             String memStatus = resultSet.getString(1);
             if(!memStatus.equals("APPROVED")){
-                retString = "You must be an APPROVED member to make claims!";
+                retString = "<br>You must be an APPROVED member to make claims!";
             }
             
             //Close connections

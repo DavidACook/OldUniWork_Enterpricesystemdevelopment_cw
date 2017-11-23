@@ -12,7 +12,7 @@ body{
     text-align: center;
 }
 
-
+input[type="submit"], button{
 input[type="submit"]{
     border-radius: 2px;
     background-color:  cornflowerblue;
@@ -37,24 +37,44 @@ input[type="date"], input[type="text"], input[type="number"], input[type="passwo
 
 }
 
-input:focus{
+input:focus, button:focus{
     outline-color: cornflowerblue;
 }
 
-table {
-    margin: 15px auto 0;
-    margin-left: auto;
-    margin-right: auto;
+form{
+    margin: 0 0 0 0;
+}
+
+.parent {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    margin: 15px 15px 5px 5px;
+}
+
+.childtable {
+    flex-grow: 9;
+    overflow-y: auto;
+}
+
+.fillbutton{
+    margin-top:6px;
+    width: 90%;
+}
+
+.fillselect {
+    width: 90%;
+    border: 1px solid lightgrey;
+}
+
+.fillinput {
+    width: 90% !important
 }
 
 .footer {
     position: absolute;
     bottom: 0;
-    right: 0;
-    left: 0;
-}
-
-.header {
     right: 0;
     left: 0;
 }
