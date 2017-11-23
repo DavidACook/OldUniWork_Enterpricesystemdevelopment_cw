@@ -9,7 +9,6 @@
 <%@include file="common.jsp" %>
 <link rel="stylesheet" type="text/css" href="styles/main.css" />
 <link rel="stylesheet" type="text/css" href="styles/centered.css" />
-
 <link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/logo/favicon.ico" />
 <!DOCTYPE html>
 <html>

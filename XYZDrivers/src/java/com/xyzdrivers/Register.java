@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -104,15 +105,23 @@ public class Register extends HttpServlet {
 
     public String generatePassword(String dob) {
         
+        String[] split = dob.split("-");
         
-        dob = dob.replaceAll("-", "");
+        String year = split[0];
+        String month = split[1];
+        String day = split[2];
         
+        StringBuilder sb = new StringBuilder();
         
-        StringBuilder password = new StringBuilder(dob.substring(2)).reverse();
+        sb.append(day);
+        sb.append(month);
+        sb.append(year.charAt(2));
+        sb.append(year.charAt(3));
+     
         
         
 
-      return password.toString();
+      return sb.toString();
     }
     
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
