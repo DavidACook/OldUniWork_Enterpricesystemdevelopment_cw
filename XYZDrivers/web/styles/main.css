@@ -12,8 +12,7 @@ body{
     text-align: center;
 }
 
-input[type="submit"], button
-input[type="submit"]{
+input[type="submit"], button{
     border-radius: 2px;
     background-color:  cornflowerblue;
     color: white;
