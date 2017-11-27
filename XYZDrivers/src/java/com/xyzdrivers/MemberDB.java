@@ -86,7 +86,7 @@ public class MemberDB {
 
                 //If member has paid anual fee in last year
                 if(numPayments > 0){
-                    type = "CLAIM";
+                    type = "CLAIM_SHARE";
                     amount = balance;
                 }
                 else{ 

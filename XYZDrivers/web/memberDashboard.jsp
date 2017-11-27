@@ -1,7 +1,10 @@
 <%-- 
     Document   : memberDashboard
     Created on : 06-Nov-2017, 11:26:26
-    Author     : Colin Berry
+    Author     : Charlie Arnold
+
+This page creates the member landing pad from which 
+the user can do member activities.
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

@@ -1,7 +1,9 @@
 <%-- 
     Document   : memberDashboardPayment
     Created on : 19-Nov-2017, 16:32:19
-    Author     : Charles
+    Author     : Charlie
+
+This page displays all the payments made by a member in a table format.
 --%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.xyzdrivers.models.Claim"%>
