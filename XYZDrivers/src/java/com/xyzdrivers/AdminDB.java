@@ -641,9 +641,10 @@ public class AdminDB {
         //it gets a list of approved claims in the last year
         //It then totals up the amount for these Claims
         //It then updates every memebrs balance with the share their owe
-    public static void annualClaimDistribution(){
+    public static float[] annualClaimDistribution(){
         //Get Approved Claims for this year
         ArrayList<Claim> claimList = getThisYearApprovedClaims();
+        float[] responses = new float[3];
         
         //Total = 0
         float total = (float)0.0;
@@ -669,6 +670,10 @@ public class AdminDB {
             member.setStatus("SUSPENDED");
             updateMember(member);
         }//End Loop
+        responses[0] = total;
+        responses[1] = share;
+        responses[2] = memberList.size();
+        return responses;
     }
     
     //This method gets all the APPROVED claims for the last year

@@ -15,9 +15,9 @@
     </head>
     <body>
         <h1>${param.date1} to ${param.date2}<h1>
-        <h1>Revenue</h1>
+        <h1>Revenue (Payments)</h1>
         <h2><c:out value="${revenue}"/></h2>
-        <h1>Expenditure</h1>
+        <h1>Expenditure (Claims)</h1>
         <h2><c:out value="${expenditure}"/></h2>
         <h1>Turnover</h1>
         <h2><c:out value="${turnover}"/></h2>

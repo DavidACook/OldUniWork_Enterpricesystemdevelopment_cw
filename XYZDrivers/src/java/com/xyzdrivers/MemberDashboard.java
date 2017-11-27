@@ -45,17 +45,28 @@ public class MemberDashboard extends HttpServlet {
         if(type != null){
             switch(type){
                 case "Return": break;
-                case "Check Balance": output = "Member balance: " 
-                        + MemberDB.checkBalance(memID); break;
+                case "Check Balance": 
+                    output = "Member balance: " + MemberDB.checkBalance(memID);
+                    break;
                 case "View Claims": ArrayList<Claim> claimList = MemberDB.getClaimList(memID); 
                     request.setAttribute("claimsList", claimList); 
                     jsp = "memberDashboardClaims.jsp"; break;
-                case "View Payments": ArrayList<Payment> paymentList = MemberDB.getPaymentList(memID); 
+                case "View Payments": 
+                    ArrayList<Payment> paymentList = MemberDB.getPaymentList(memID); 
                     request.setAttribute("paymentsList", paymentList);
                     jsp = "memberDashboardPayment.jsp"; break;
-                case "Make Claim": jsp = "makeClaim.jsp"; break;
-                case "Make Payment": output = MemberDB.makePayment(memID); break;
-                case "Submit Claim": String rationale = request.getParameter("rationale");
+                case "Make Claim": 
+                    jsp = "makeClaim.jsp";
+                    break;
+                case "Make Payment": 
+                    output = "Member balance: " + MemberDB.checkBalance(memID);
+                    jsp = "memberDashboardPayBalance.jsp";
+                    break;
+                case "Process Payment":
+                    output = MemberDB.makePayment(memID);
+                    break;
+                case "Submit Claim": 
+                    String rationale = request.getParameter("rationale");
                     double amount = Double.valueOf(request.getParameter("amount"));
                     output = MemberDB.makeClaim(memID, rationale, amount);    
                     break;   
