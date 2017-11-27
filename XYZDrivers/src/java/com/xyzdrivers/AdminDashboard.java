@@ -41,7 +41,13 @@ public class AdminDashboard extends HttpServlet {
                     type = "members";
                 }
                 if(type.equals("chargeClaims")){
-                    AdminDB.annualClaimDistribution();
+                    try{
+                        float[] responses = AdminDB.annualClaimDistribution();
+                        System.out.println(responses);
+                        request.setAttribute("claimTotal", responses[0]);
+                        request.setAttribute("claimShare", responses[1]);
+                        request.setAttribute("claimMembers", (int)responses[2]);
+                    } catch (Exception e) {}
                     type = "claims";
                 }
                 if(type.equals("turnover")){
