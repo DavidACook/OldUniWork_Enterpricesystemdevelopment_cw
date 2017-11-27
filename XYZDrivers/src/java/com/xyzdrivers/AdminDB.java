@@ -30,12 +30,14 @@ import java.util.logging.Logger;
  */
 public class AdminDB {
     
+    // Gets a connection object connected to the database
     private static Connection getConnection() throws Exception{
         Class.forName("org.apache.derby.jdbc.ClientDriver");
         Connection con = DriverManager.getConnection(DBConnection.HOST, DBConnection.USER, DBConnection.PASS);
         return con;
     }
     
+    // Closes all connection related objects safely
     private static void closeConnection(Connection con, Statement stmt, ResultSet rs){
         try{
             if(con != null){
@@ -52,6 +54,7 @@ public class AdminDB {
         }
     }
     
+    // Returns an ArrayList given a ResultSet from the Members table
     private static ArrayList<Member> getMemberList(ResultSet rs) throws Exception{
         ArrayList<Member> memberList = new ArrayList<>();
         
@@ -72,6 +75,7 @@ public class AdminDB {
         return memberList;
     }
     
+    // Returns an ArrayList given a ResultSet from the Claims table
     private static ArrayList<Claim> getClaimList(ResultSet rs) throws Exception{
         ArrayList<Claim> claimList = new ArrayList<>();
         
@@ -90,6 +94,7 @@ public class AdminDB {
         return claimList;
     }
     
+    // Returns an ArrayList given a ResultSet from the Payments table
     private static ArrayList<Payment> getPaymentList(ResultSet rs) throws Exception{
         ArrayList<Payment> paymentList = new ArrayList<>();
         
@@ -108,6 +113,7 @@ public class AdminDB {
         return paymentList;
     }
     
+    // Gets all members from the Members table
     public static ArrayList<Member> getAllMembers(){
         ArrayList<Member> memberList = new ArrayList<>();
         Connection con = null;
@@ -132,6 +138,7 @@ public class AdminDB {
         return memberList;
     }
     
+    // Gets all members from the Members table that have a positive balance (owe money)
     public static ArrayList<Member> getAllMembersOutstanding(){
         ArrayList<Member> memberList = new ArrayList<>();
         Connection con = null;
@@ -202,6 +209,7 @@ public class AdminDB {
         return null;
     }
     
+    // Writes a member object to the database when it already exists
     public static void updateMember(Member member){
         Connection con = null;
         Statement stmt = null;
@@ -226,6 +234,7 @@ public class AdminDB {
         }
     }
     
+    // Gets all claims from the Claims table
     public static ArrayList<Claim> getAllClaims(){
         ArrayList<Claim> claims = new ArrayList<>();
         Connection con = null;
@@ -342,6 +351,7 @@ public class AdminDB {
         return null;
     }
     
+    // Gets all payments from the Payments table
     public static ArrayList<Payment> getAllPayments(){
         ArrayList<Payment> paymentList = new ArrayList<>();
         Connection con = null;
@@ -508,6 +518,7 @@ public class AdminDB {
         return getExpenditure(newDate1, newDate2);
     }
     
+    // Gets total expenditure (total of claims) over a date period
     public static float getExpenditure(Date date1, Date date2){
         float totalExpenditure = 0;
         Connection con = null;
