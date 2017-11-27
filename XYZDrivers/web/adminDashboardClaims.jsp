@@ -46,6 +46,14 @@
                 <button name="action" class="fillbutton" onclick="return confirm('Reject this claim?')" value="reject"/>Reject Claim</button>
             </form>
                 <form action="View">
+                    <input type="hidden" name="type" value="turnover"/>
+                    <button name="filter" class="fillbutton" value="dates">Turnover Between Dates</button>
+                    <div>
+                        <input class="fillinput" name="date1" type="date" value="2015-01-01"/>
+                        <input class="fillinput" name="date2" type="date" value="2016-01-01"/>
+                    </div>
+                </form>
+                <form action="View">
                     <input type="hidden" name="type" value="claims"/>
                     <button name="filter" class="fillbutton" value="status">Filter by Status</button>
                     <select name="status" class="fillselect">
