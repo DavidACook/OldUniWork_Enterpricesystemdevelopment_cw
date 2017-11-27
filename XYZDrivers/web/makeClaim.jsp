@@ -1,7 +1,9 @@
 <%-- 
     Document   : makeClaim
     Created on : 16-Nov-2017, 10:46:06
-    Author     : Charles
+    Author     : Charlie
+
+This page provides a form the user to submit a claim.
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
