@@ -32,4 +32,32 @@
                 JAX-WS WSIMPORT SECTION
                 ===================
             -->
+    <target name="wsimport-init" depends="init">
+        <fail if="${wsimport.bad.version}" message="WsImport ant task defined in the classpath ${j2ee.platform.wsimport.classpath} has a serious bug. See http://wiki.netbeans.org/MetroIssue for details."/>
+        <mkdir dir="${build.generated.sources.dir}/jax-ws"/>
+        <property name="j2ee.platform.wsimport.classpath" value="${libs.jaxws21.classpath}"/>
+        <taskdef name="wsimport" classname="com.sun.tools.ws.ant.WsImport">
+            <classpath path="${java.home}/../lib/tools.jar:${j2ee.platform.wsimport.classpath}:${javac.classpath}"/>
+        </taskdef>
+        <condition property="conf-dir" value="${conf.dir}/" else="">
+            <isset property="conf.dir"/>
+        </condition>
+    </target>
+    <target name="wsimport-client-NewWebService" depends="wsimport-init">
+        <mkdir dir="${build.generated.dir}/jax-wsCache/NewWebService"/>
+        <wsimport sourcedestdir="${build.generated.dir}/jax-wsCache/NewWebService" destdir="${build.generated.dir}/jax-wsCache/NewWebService" wsdl="${basedir}/${conf-dir}xml-resources/web-service-references/NewWebService/wsdl/localhost_8080/NewWebService/NewWebService.wsdl" catalog="catalog.xml" encoding="${source.encoding}" extension="true" verbose="true" fork="false" wsdlLocation="http://localhost:8080/NewWebService/NewWebService?wsdl" xnocompile="true" xendorsed="true">
+            <depends file="${basedir}/${conf-dir}xml-resources/web-service-references/NewWebService/wsdl/localhost_8080/NewWebService/NewWebService.wsdl"/>
+            <produces dir="${build.generated.dir}/jax-wsCache/NewWebService"/>
+        </wsimport>
+        <copy todir="${build.generated.sources.dir}/jax-ws">
+            <fileset dir="${build.generated.dir}/jax-wsCache/NewWebService">
+                <include name="**/*.java"/>
+            </fileset>
+        </copy>
+    </target>
+    <target name="wsimport-client-clean-NewWebService" depends="-init-project">
+        <delete dir="${build.generated.sources.dir}/jax-ws/xyzdriverswsapplication"/>
+        <delete dir="${build.generated.dir}/jax-wsCache/NewWebService"/>
+    </target>
+    <target name="wsimport-client-generate" depends="wsimport-client-NewWebService"/>
 </project>

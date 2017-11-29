@@ -34,6 +34,7 @@ public class AdminDashboard extends HttpServlet {
         String jsp = "/adminDashboard.jsp";
         String filter = request.getParameter("filter");
         
+        // Respond depending on the page requested via the 'type' parameter
         try{
             if(type != null){
                 if(type.equals("fees")){
@@ -93,6 +94,7 @@ public class AdminDashboard extends HttpServlet {
         view.forward(request, response);
     }
     
+    // Gives adminDashboardMembers.jsp the appopriate list of members given the 'filter' parameter
     private ArrayList<Member> getFilteredMembersList(String filter, HttpServletRequest request){
         ArrayList<Member> members;
         
@@ -116,6 +118,8 @@ public class AdminDashboard extends HttpServlet {
         
         return members;
     }
+    
+    // Gives adminDashboardClaims.jsp the appopriate list of claims given the 'filter' parameter
     private ArrayList<Claim> getFilteredClaimsList(String filter, HttpServletRequest request){
         ArrayList<Claim> claims;
         
@@ -138,6 +142,8 @@ public class AdminDashboard extends HttpServlet {
         
         return claims;
     }
+    
+    // Gives adminDashboardPayments.jsp the appopriate list of payments given the 'filter' parameter
     private ArrayList<Payment> getFilteredPaymentsList(String filter, HttpServletRequest request){
         ArrayList<Payment> payments;
         
