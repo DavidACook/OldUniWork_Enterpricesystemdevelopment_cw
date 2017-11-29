@@ -1,7 +1,9 @@
 <%-- 
     Document   : memberDashboardClaims
     Created on : 19-Nov-2017, 16:18:03
-    Author     : Charles
+    Author     : Charlie Arnold
+
+This page displays all the claims submitted by a member in a table format.
 --%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="com.xyzdrivers.models.Claim"%>
