@@ -4,10 +4,9 @@
     Author     : Colin Berry
 --%>
 
-<%@page import="com.xyzdrivers.models.Member"%>
+<%@include file="common.jsp"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/table.css" />
-=======
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/main.css" />
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/styles/centered.css" />
@@ -20,15 +19,9 @@
         <title>Edit Member</title>
     </head>
     
-    <script>
-        function onSubmit(){
-            alert("Saved Member Data");
-        }
-    </script>
-    
     <body>
         <h1>Editing Member</h1>
-        <form onsubmit="onSubmit()" action="MemberEdit" method="POST">
+        <form onsubmit="alert('Saved Member Data')" action="Edit" method="POST">
             <input name="id" type="hidden" value="${member.id}"/>
             <table id="member" border="1" cellpadding="5">
                 <tr>
@@ -72,10 +65,13 @@
                     </td>
                 </tr>
             </table>
+            <br/>
+            <input type="hidden" name="type" value="member"/>
             <input type="submit" value="Save"/>
         </form>
         <form action="View">
-            <input type="hidden" name="type" value="View Members"/>
+            <br/>
+            <input type="hidden" name="type" value="members"/>
             <input type="submit" value="Back to Admin Dashboard"/>
         </form>
     </body>

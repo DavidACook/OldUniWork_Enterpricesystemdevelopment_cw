@@ -1,7 +1,10 @@
 <%-- 
     Document   : memberDashboard
     Created on : 06-Nov-2017, 11:26:26
-    Author     : Colin Berry
+    Author     : Charlie Arnold
+
+This page creates the member landing pad from which 
+the user can do member activities.
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -17,14 +20,13 @@
         <title>Member Dashboard</title>
     </head>
     <body>
-        <h1>Welcome ${memID}</h1>
-        <form method="post" action="MemberDashboard">
-            <input type="submit" name="type" value="Check Balance">
+        <h1>Welcome ${name}</h1>
+        <form method="post" action="MemberDashboard">      
             <input type="submit" name="type" value="View Claims">
             <input type="submit" name="type" value="View Payments">           
-        </form>
-        <form method="post" action="MakeClaim">
             <input type="submit" name="type" value="Make Claim">
+            <input type="submit" name="type" value="Make Payment">
+            <input type="submit" name="type" value="Check Balance">
         </form>
         ${output}
     </body>

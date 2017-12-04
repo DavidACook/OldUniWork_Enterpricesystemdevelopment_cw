@@ -5,9 +5,11 @@
  */
 package com.xyzdrivers;
 
+import com.xyzdrivers.models.Claim;
+import com.xyzdrivers.models.Payment;
 import com.xyzdrivers.models.User;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -42,22 +44,38 @@ public class MemberDashboard extends HttpServlet {
         String jsp = "memberDashboard.jsp";
         if(type != null){
             switch(type){
-                case "Check Balance": output = "Member balance: " 
-                        + MemberDB.checkBalance(memID); break;
-                case "View Claims": output = MemberDB.listAllClaims(memID); break;
-                case "View Payments": output = MemberDB.listAllPayments(memID); break;
-                case "Submit Claim": String rationale = request.getParameter("rationale");
-                    double amount = Double.valueOf(request.getParameter("amount"));
-                    if(MemberDB.makeClaim(memID, rationale, amount))
-                        output = "Claim successfull";
-                    else
-                        output = "Claim unsuccessfull";
+                case "Return": break;
+                case "Check Balance": 
+                    output = "Member balance: " + MemberDB.checkBalance(memID);
                     break;
+                case "View Claims": ArrayList<Claim> claimList = MemberDB.getClaimList(memID); 
+                    request.setAttribute("claimsList", claimList); 
+                    jsp = "memberDashboardClaims.jsp"; break;
+                case "View Payments": 
+                    ArrayList<Payment> paymentList = MemberDB.getPaymentList(memID); 
+                    request.setAttribute("paymentsList", paymentList);
+                    jsp = "memberDashboardPayment.jsp"; break;
+                case "Make Claim": 
+                    jsp = "makeClaim.jsp";
+                    break;
+                case "Make Payment": 
+                    output = "Member balance: " + MemberDB.checkBalance(memID);
+                    jsp = "memberDashboardPayBalance.jsp";
+                    break;
+                case "Process Payment":
+                    output = MemberDB.makePayment(memID);
+                    break;
+                case "Submit Claim": 
+                    String rationale = request.getParameter("rationale");
+                    double amount = Double.valueOf(request.getParameter("amount"));
+                    output = MemberDB.makeClaim(memID, rationale, amount);    
+                    break;   
                 default: output = "error"; break;
             }
             request.setAttribute("output", output);
         }
         request.setAttribute("memID", memID);
+        request.setAttribute("name", MemberDB.getName(memID));
         RequestDispatcher view = request.getRequestDispatcher(jsp);
         view.forward(request, response);
     }

@@ -7,12 +7,14 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="t" tagdir="/WEB-INF/tags" %>
-
+<link rel="icon" type="image/x-icon" href="${pageContext.request.contextPath}/logo/favicon.ico" />
 <t:wrapper>
     <jsp:attribute name="footer"></jsp:attribute>
     <jsp:attribute name="header">
-        <form action="Index"  align="left">
-            <input type="submit" value="Return to Homepage"/> <label>${pageTitle}</labe>
+        <form action="${pageContext.request.contextPath}/Index"  align="left">
+            <input type="hidden" name="logout" value="true"/>
+            <input type="submit" value="Logout"/> <label>${pageTitle}</labe>
+            <input type="submit" value="Logout"/>
         </form>
     </jsp:attribute>
 </t:wrapper>
